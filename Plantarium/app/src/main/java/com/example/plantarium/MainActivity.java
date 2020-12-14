@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.plantarium.Models.UserAuth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,8 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "Main Activity";
     SignInButton signInButton;
     public static GoogleSignInClient mGoogleSignInClient;
+    public static GoogleSignInAccount account;
     private static final int RC_SIGN_IN = 007;
-    UserAuth userAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +63,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.login_button:
                 // Check for existing Google Sign In account, if the user is already signed in
                 // the GoogleSignInAccount will be non-null.
-                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+                account = GoogleSignIn.getLastSignedInAccount(this);
 
                 if (account == null){
                     signIn();
                     account = GoogleSignIn.getLastSignedInAccount(this);
+                } else {
+                    updateUI(account);
                 }
-                updateUI(account);
+                //updateUI(account);
                 break;
             // ...
         }
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+             account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
@@ -121,5 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static GoogleSignInClient getmGoogleSignInClient(){
         return  mGoogleSignInClient;
+    }
+    public static GoogleSignInAccount getAccount(){
+        return  account;
     }
 }

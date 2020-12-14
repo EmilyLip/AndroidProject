@@ -23,9 +23,8 @@ public class PlantsView extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plants_view);
-        Log.i(TAG, "UI activity_plants_view");
         TextView greetingMessage = findViewById(R.id.greeting_message);
-        greetingMessage.setText("שלום" );
+        greetingMessage.setText("שלום " + MainActivity.getAccount().getDisplayName());
         Button logoutButton = findViewById(R.id.logout_button);
         findViewById(R.id.logout_button).setOnClickListener((View.OnClickListener) this);
     }
