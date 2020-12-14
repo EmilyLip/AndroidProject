@@ -48,8 +48,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView.setText("התחברות עם חשבון גוגל");
 
         findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
+    }
 
+    public void onStart() {
+        super.onStart();
+        TextView textView = (TextView) signInButton.getChildAt(0);
+        textView.setText("התחברות עם חשבון גוגל");
 
+        findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
     }
 
     @Override
@@ -104,7 +110,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void updateUI(Object o) {
         if (o instanceof GoogleSignInAccount) {
-            setContentView(R.layout.activity_plants_view);
+            //setContentView(R.layout.activity_plants_view);
+            Intent intent = new Intent(getApplicationContext(), PlantsView.class);
+            startActivity(intent);
+
         } else {
             Log.i(TAG, "UI updated");
         }

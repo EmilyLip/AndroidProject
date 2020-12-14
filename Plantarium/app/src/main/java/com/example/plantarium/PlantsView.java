@@ -2,6 +2,7 @@ package com.example.plantarium;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,9 +23,9 @@ public class PlantsView extends AppCompatActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plants_view);
-
+        Log.i(TAG, "UI activity_plants_view");
         TextView greetingMessage = findViewById(R.id.greeting_message);
-        //greetingMessage.setText("שלום" + userAuth.mGoogleSignInClient.toString());
+        greetingMessage.setText("שלום" );
         Button logoutButton = findViewById(R.id.logout_button);
         findViewById(R.id.logout_button).setOnClickListener((View.OnClickListener) this);
     }
@@ -43,5 +44,7 @@ public class PlantsView extends AppCompatActivity implements View.OnClickListene
 
     private void signOut() {
         MainActivity.getmGoogleSignInClient().signOut();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }
