@@ -5,21 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.plantarium.Models.UserAuth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.io.Serializable;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener , Serializable {
+
+    private static final String TAG = "Main Activity";
     SignInButton signInButton;
-    GoogleSignInClient mGoogleSignInClient;
+    public static GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 007;
+    UserAuth userAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         signInButton = (SignInButton) findViewById(R.id.login_button);
+
         TextView textView = (TextView) signInButton.getChildAt(0);
         textView.setText("התחברות עם חשבון גוגל");
+
         findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
+
 
     }
 
@@ -46,7 +56,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_button:
-                signIn();
+                // Check for existing Google Sign In account, if the user is already signed in
+                // the GoogleSignInAccount will be non-null.
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+                if (account == null){
+                    signIn();
+                    account = GoogleSignIn.getLastSignedInAccount(this);
+                }
+                updateUI(account);
                 break;
             // ...
         }
@@ -57,4 +75,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            updateUI(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            updateUI(null);
+        }
+    }
+
+    private void updateUI(Object o) {
+        if (o instanceof GoogleSignInAccount) {
+            setContentView(R.layout.activity_plants_view);
+        } else {
+            Log.i(TAG, "UI updated");
+        }
+    }
+
+    public static GoogleSignInClient getmGoogleSignInClient(){
+        return  mGoogleSignInClient;
+    }
 }
