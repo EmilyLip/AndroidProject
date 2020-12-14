@@ -32,19 +32,20 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitXY"
-            android:text="התחברות עם חשבון גוגל"
-            android:textColor="#1D1D1E"
-            android:textSize="24sp"
-            app:backgroundTint="#FFFFFF"
-            android:layout_marginTop="90dp"
-            android:drawableLeft="@drawable/google_logo">
-        </Button>
+       <com.google.android.gms.common.SignInButton
+           android:id="@+id/login_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center_horizontal"
+           android:scaleType="fitXY"
+           android:text="התחברות עם חשבון גוגל"
+           android:textColor="#1D1D1E"
+           android:textSize="24sp"
+           app:backgroundTint="#FFFFFF"
+           android:layout_marginTop="90dp"
+           >
+       </com.google.android.gms.common.SignInButton>
+
 
         <TextView
             android:id="@+id/dedication_note"

@@ -5,6 +5,9 @@ import android.view.View;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.gms.common.SignInButton;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -13,8 +16,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button loginButton = findViewById(R.id.login_button);
-        loginButton.setOnClickListener(this);
+        SignInButton signInButton = (SignInButton) findViewById(R.id.login_button);
+
+        TextView textView = (TextView) signInButton.getChildAt(0);
+        textView.setText("התחברות עם חשבון גוגל");
     }
 
     @Override
