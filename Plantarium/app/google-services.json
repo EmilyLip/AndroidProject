@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "381077395604",
+    "project_id": "plantarium-1607933143782",
+    "storage_bucket": "plantarium-1607933143782.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381077395604:android:87c1e47ef55618c364fc81",
+        "android_client_info": {
+          "package_name": "com.example.plantarium"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381077395604-64cs4beifrfgsog28h9cv6st1hr4114e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7BWUKj04B4w49N9h4ZnNmRXBF0qAKGP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381077395604-64cs4beifrfgsog28h9cv6st1hr4114e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
