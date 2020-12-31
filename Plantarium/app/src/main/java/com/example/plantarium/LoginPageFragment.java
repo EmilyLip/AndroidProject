@@ -1,6 +1,7 @@
 package com.example.plantarium;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,7 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
 
     SignInButton signInButton;
     View view;
+    User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,10 +108,9 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
             account = completedTask.getResult(ApiException.class);
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("message");
-            User user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl());
+            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl());
             myRef.child("users").child(account.getId()).setValue(user);
 
-            //myRef.setValue( "hello " + account.getDisplayName());
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {

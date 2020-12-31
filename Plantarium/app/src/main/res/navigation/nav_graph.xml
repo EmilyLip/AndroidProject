@@ -23,5 +23,10 @@
             android:id="@+id/action_plantsViewFragment_pop"
             app:popUpTo="@id/plantsViewFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="user"
+            app:argType="com.example.plantarium.Models.User"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>
