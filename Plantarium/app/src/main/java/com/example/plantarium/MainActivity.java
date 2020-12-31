@@ -19,111 +19,11 @@ import com.google.android.gms.tasks.Task;
 
 import java.io.Serializable;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener , Serializable {
-
-    private static final String TAG = "Main Activity";
-    SignInButton signInButton;
-    public static GoogleSignInClient mGoogleSignInClient;
-    public static GoogleSignInAccount account;
-    private static final int RC_SIGN_IN = 007;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        signInButton = (SignInButton) findViewById(R.id.login_button);
-
-        TextView textView = (TextView) signInButton.getChildAt(0);
-        textView.setText("התחברות עם חשבון גוגל");
-
-        findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
-    }
-
-    public void onStart() {
-        super.onStart();
-        TextView textView = (TextView) signInButton.getChildAt(0);
-        textView.setText("התחברות עם חשבון גוגל");
-
-        findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.login_button:
-                // Check for existing Google Sign In account, if the user is already signed in
-                // the GoogleSignInAccount will be non-null.
-                account = GoogleSignIn.getLastSignedInAccount(this);
-
-                if (account == null){
-                    signIn();
-                    account = GoogleSignIn.getLastSignedInAccount(this);
-                } else {
-                    updateUI(account);
-                }
-                //updateUI(account);
-                break;
-            // ...
-        }
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-             account = completedTask.getResult(ApiException.class);
-
-            // Signed in successfully, show authenticated UI.
-            updateUI(account);
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            updateUI(null);
-        }
-    }
-
-    private void updateUI(Object o) {
-        if (o instanceof GoogleSignInAccount) {
-            //setContentView(R.layout.activity_plants_view);
-            Intent intent = new Intent(getApplicationContext(), PlantsView.class);
-            startActivity(intent);
-
-        } else {
-            Log.i(TAG, "UI updated");
-        }
-    }
-
-    public static GoogleSignInClient getmGoogleSignInClient(){
-        return  mGoogleSignInClient;
-    }
-    public static GoogleSignInAccount getAccount(){
-        return  account;
     }
 }

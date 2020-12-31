@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginPageFragment">
 
+    <fragment
+        android:id="@+id/loginPageFragment"
+        android:name="com.example.plantarium.LoginPageFragment"
+        android:label="fragment_login_page"
+        tools:layout="@layout/fragment_login_page" >
+        <action
+            android:id="@+id/action_loginPage_to_plantsView"
+            app:destination="@id/plantsViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/plantsViewFragment"
+        android:name="com.example.plantarium.PlantsViewFragment"
+        android:label="fragment_plants_view"
+        tools:layout="@layout/fragment_plants_view" >
+        <action
+            android:id="@+id/action_plantsViewFragment_pop"
+            app:popUpTo="@id/plantsViewFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
