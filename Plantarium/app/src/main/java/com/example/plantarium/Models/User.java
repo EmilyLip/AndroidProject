@@ -3,7 +3,9 @@ package com.example.plantarium.Models;
 
 import android.net.Uri;
 
-public class User   {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     // DM
     private String _email;
