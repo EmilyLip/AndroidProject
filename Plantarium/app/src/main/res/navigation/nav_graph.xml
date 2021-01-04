@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_loginPage_to_plantsView"
             app:destination="@id/plantsViewFragment" />
+        <action
+            android:id="@+id/action_loginPage_to_noPlaces"
+            app:destination="@id/noPlacesFragment" />
     </fragment>
     <fragment
         android:id="@+id/plantsViewFragment"
@@ -29,4 +32,18 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+    <fragment
+        android:id="@+id/noPlacesFragment"
+        android:name="com.example.plantarium.NoPlacesFragment"
+        android:label="fragment_no_places"
+        tools:layout="@layout/fragment_no_places" >
+        <action
+            android:id="@+id/action_noPlaces_to_addPlace"
+            app:destination="@id/addPlaceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPlaceFragment"
+        android:name="com.example.plantarium.AddPlaceFragment"
+        android:label="fragment_manage_place"
+        tools:layout="@layout/fragment_manage_place" />
 </navigation>

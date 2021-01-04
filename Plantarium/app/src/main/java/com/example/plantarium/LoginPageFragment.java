@@ -1,7 +1,6 @@
 package com.example.plantarium;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -123,7 +122,7 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
 
     private void updateUI(Object o) {
         if (o instanceof GoogleSignInAccount) {
-            Navigation.findNavController(view).navigate(R.id.action_loginPage_to_plantsView);
+            Navigation.findNavController(view).navigate(R.id.action_loginPage_to_noPlaces);
         } else {
             Log.i(TAG, "UI updated");
         }
