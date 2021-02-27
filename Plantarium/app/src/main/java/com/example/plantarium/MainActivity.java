@@ -1,25 +1,17 @@
 package com.example.plantarium;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.TextView;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
-
-import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +19,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFFFF")));
+        actionBar.setTitle(Html.fromHtml("<font color='#008290'>Plantarium</font>"));
+        NavController navController = Navigation.findNavController(this, R.id.fragment_navhost);
+        //NavigationUI.setupActionBarWithNavController(this, navController);
+
+
     }
 
     @Override

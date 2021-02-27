@@ -36,7 +36,7 @@
         android:id="@+id/noPlacesFragment"
         android:name="com.example.plantarium.NoPlacesFragment"
         android:label="fragment_no_places"
-        tools:layout="@layout/fragment_no_places" >
+        tools:layout="@layout/fragment_no_places">
         <action
             android:id="@+id/action_noPlaces_to_addPlace"
             app:destination="@id/addPlaceFragment" />
