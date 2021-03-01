@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogoutDialogFragment">
+    android:background="#DEE8E7"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    tools:context=".LogoutDialogFragment"
+    android:id="@+id/frame_layout_logout_dialog">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="350dp"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/logout_question"
+            android:layout_width="210dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center|top"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="להתנתק מהחשבון?"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/logout_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/google_logo"
+                android:text="התנתק"
+                android:textColor="#1D1D1E"
+                android:textSize="12sp"
+                app:backgroundTint="#FFFFFF"></Button>
+
+            <Button
+                android:id="@+id/cancel_logout_button"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:text="ביטול"
+                android:textColor="#1D1D1E"
+                android:textSize="18sp"
+                app:backgroundTint="#008290"></Button>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

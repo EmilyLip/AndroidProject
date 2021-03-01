@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".LoginPageFragment">
+    tools:context=".LoginPageFragment"
+    android:id="@+id/frame_layout"
+    android:tag="login_page_tag">
 
     <LinearLayout
         android:id="@+id/main_logo"

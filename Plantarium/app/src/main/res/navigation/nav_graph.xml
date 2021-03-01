@@ -46,4 +46,13 @@
         android:name="com.example.plantarium.AddPlaceFragment"
         android:label="fragment_manage_place"
         tools:layout="@layout/fragment_manage_place" />
+    <dialog
+        android:id="@+id/logoutDialogFragment"
+        android:name="com.example.plantarium.LogoutDialogFragment"
+        android:label="fragment_logout_dialog"
+        tools:layout="@layout/fragment_logout_dialog" >
+        <action
+            android:id="@+id/action_logoutDialogFragment_to_loginPageFragment"
+            app:destination="@id/loginPageFragment" />
+    </dialog>
 </navigation>

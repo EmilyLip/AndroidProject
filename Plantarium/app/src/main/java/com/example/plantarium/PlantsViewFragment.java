@@ -48,4 +48,5 @@ public class PlantsViewFragment extends Fragment implements View.OnClickListener
         LoginPageFragment.getmGoogleSignInClient().signOut();
         Navigation.findNavController(view).navigate(R.id.action_plantsViewFragment_pop);
     }
+    
 }

@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class LoginPageFragment extends Fragment  implements View.OnClickListener , Serializable {
 
@@ -105,10 +106,6 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             account = completedTask.getResult(ApiException.class);
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("message");
-            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl());
-            myRef.child("users").child(account.getId()).setValue(user);
 
             // Signed in successfully, show authenticated UI.
             updateUI(account);
@@ -122,6 +119,10 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
 
     private void updateUI(Object o) {
         if (o instanceof GoogleSignInAccount) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("message");
+            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl(), new Date());
+            myRef.child("users").child(account.getId()).setValue(user);
             Navigation.findNavController(view).navigate(R.id.action_loginPage_to_noPlaces);
         } else {
             Log.i(TAG, "UI updated");
