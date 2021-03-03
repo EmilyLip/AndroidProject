@@ -4,22 +4,27 @@ package com.example.plantarium.Models;
 import android.net.Uri;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.util.Date;
 
 public class User implements Serializable {
 
     // DM
+    private String _id;
     private String _email;
     private String _fullname;
     private String _image_url;
-    private Date last_login_time;
+    private Date _last_login_time;
 
-   public User(String email, String fullname, Uri image_url, Date date){
+   public User(String email, String fullname, String image_url, Date date, String id){
        this.setEmail(email);
        this.setFullname(fullname);
        this.setImageURL(image_url);
-       setLastLoginTime(date);
+       this.setLastLoginTime(date);
+       this.setId(id);
+   }
+
+   public User() {
+
    }
 
    // getters
@@ -36,7 +41,11 @@ public class User implements Serializable {
     }
 
     public Date getLastLoginTime() {
-       return this.last_login_time;
+       return this._last_login_time;
+    }
+
+    public String getId(){
+        return this._id;
     }
 
     //setters
@@ -49,11 +58,15 @@ public class User implements Serializable {
        this._fullname = fullname;
     }
 
-    public void setImageURL(Uri image_url){
-        this._image_url = image_url.toString();
+    public void setImageURL(String image_url){
+        this._image_url = image_url;
     }
 
     public void setLastLoginTime(Date date){
-        this.last_login_time = new Date(date.getTime());
+        this._last_login_time = new Date(date.getTime());
+    }
+
+    public void setId(String id){
+        this._id = id;
     }
 }

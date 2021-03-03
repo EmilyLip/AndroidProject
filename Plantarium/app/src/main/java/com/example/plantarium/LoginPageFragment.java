@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.plantarium.Models.DBModels.UserModel;
 import com.example.plantarium.Models.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -20,8 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -33,6 +32,7 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
     public static GoogleSignInAccount account;
     private static final String TAG = "Main Fragment";
     private static final int RC_SIGN_IN = 7;
+    UserModel userModel = new UserModel();
 
     SignInButton signInButton;
     View view;
@@ -119,10 +119,14 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
 
     private void updateUI(Object o) {
         if (o instanceof GoogleSignInAccount) {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("message");
-            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl(), new Date());
-            myRef.child("users").child(account.getId()).setValue(user);
+            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl().toString(),
+                            new Date(), account.getId());
+            userModel.updateUser(user, new UserModel.AddUserListener() {
+                @Override
+                public void onComplete() {
+                    Log.i(TAG, "user logged in");
+                }
+            });
             Navigation.findNavController(view).navigate(R.id.action_loginPage_to_noPlaces);
         } else {
             Log.i(TAG, "UI updated");

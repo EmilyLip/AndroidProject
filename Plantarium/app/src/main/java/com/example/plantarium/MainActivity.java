@@ -54,7 +54,4 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.onNavDestinationSelected(item,navController);
     }
 
-    public void onDialogLogoutClose(){
-        navController.navigate(R.id.action_logoutDialogFragment_to_loginPageFragment);
-    }
 }
