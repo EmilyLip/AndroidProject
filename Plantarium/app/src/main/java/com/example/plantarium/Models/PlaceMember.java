@@ -11,7 +11,7 @@ public class PlaceMember {
     }
 
     public PlaceMember(){
-        
+
     }
 
     public String getUserId() {
