@@ -9,6 +9,10 @@ public class Place implements Serializable {
     private String _name;
     private String _image_url;
 
+    public Place(){
+
+    }
+
     public Place(int _id, String _name, String _image_url) {
        setId(_id);
        setName(_name);

@@ -11,6 +11,10 @@ public class Plant implements Serializable {
     // if watering is on sunday array[0] = 1
     private int[] _watering_days = {0, 0, 0, 0, 0, 0, 0, 0};
 
+    public Plant() {
+
+    }
+
     public Plant(int _id, String _name, String _image_url, int _place_id, int[] _watering_days) {
         this._id = _id;
         this._name = _name;

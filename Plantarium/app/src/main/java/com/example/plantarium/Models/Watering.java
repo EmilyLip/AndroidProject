@@ -11,6 +11,10 @@ public class Watering implements Serializable {
     private String _image_url;
     private Date _watering_date;
 
+    public Watering() {
+
+    }
+
     public Watering(int _id, int _plant_id, String _user_id, String _image_url, Date _watering_date) {
         this._id = _id;
         this._plant_id = _plant_id;
