@@ -36,9 +36,6 @@ public class AddPlaceFragment extends Fragment {
 
     private void showFileChooser() {
         Intent intent = new Intent();
-        //intent.setType("image/*");
-        //intent.setAction(Intent.ACTION_GET_CONTENT);
-        //startActivityForResult(Intent.createChooser(intent, "Upload Picture"), PICK_IMAGE_REQUEST);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
