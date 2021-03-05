@@ -8,6 +8,7 @@ public class Place implements Serializable {
     private int _id;
     private String _name;
     private String _image_url;
+    public static int curr_id = 0;
 
     public Place(){
 
@@ -17,6 +18,7 @@ public class Place implements Serializable {
        setId(_id);
        setName(_name);
        setImageurl(_image_url);
+       curr_id++;
     }
 
     public int getId() {
