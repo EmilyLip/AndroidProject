@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -28,6 +29,7 @@ public class AddPlaceFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     View view;
+    PlaceModel placeModel = new PlaceModel();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,10 +58,12 @@ public class AddPlaceFragment extends Fragment {
     }
 
     private void savePlace() {
-        AppCompatEditText placeName = view.findViewById(R.id.edit_place_name);
-       Place newPlace = new Place(Place.curr_id, placeName.getText().toString(), "");
-
+       AppCompatEditText placeName = view.findViewById(R.id.edit_place_name);
+        ImageView placeImage = (ImageView) view.findViewById(R.id.place_image);
+       Bitmap imageBitmap =  placeImage.get
+       placeModel.uploadPlaceImage();
        // save to DB
+        Place newPlace = new Place(Place.curr_id, placeName.getText().toString(), "");
     }
 
     private void showFileChooser() {
