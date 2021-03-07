@@ -11,9 +11,6 @@
         android:label="fragment_login_page"
         tools:layout="@layout/fragment_login_page" >
         <action
-            android:id="@+id/action_loginPage_to_plantsView"
-            app:destination="@id/plantsViewFragment" />
-        <action
             android:id="@+id/action_loginPage_to_noPlaces"
             app:destination="@id/noPlacesFragment" />
     </fragment>
@@ -45,7 +42,11 @@
         android:id="@+id/addPlaceFragment"
         android:name="com.example.plantarium.AddPlaceFragment"
         android:label="fragment_manage_place"
-        tools:layout="@layout/fragment_manage_place" />
+        tools:layout="@layout/fragment_manage_place" >
+        <action
+            android:id="@+id/action_addPlace_to_emptyPlaceView"
+            app:destination="@id/emptyPlaceView" />
+    </fragment>
     <dialog
         android:id="@+id/logoutDialogFragment"
         android:name="com.example.plantarium.LogoutDialogFragment"
@@ -55,4 +56,9 @@
             android:id="@+id/action_logoutDialogFragment_to_loginPageFragment"
             app:destination="@id/loginPageFragment" />
     </dialog>
+    <fragment
+        android:id="@+id/emptyPlaceView"
+        android:name="com.example.plantarium.EmptyPlaceViewFragment"
+        android:label="fragment_empty_place_view"
+        tools:layout="@layout/fragment_empty_place_view" />
 </navigation>

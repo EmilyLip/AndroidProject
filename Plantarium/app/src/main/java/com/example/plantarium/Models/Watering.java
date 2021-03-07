@@ -2,11 +2,12 @@ package com.example.plantarium.Models;
 
 import java.util.Date;
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Watering implements Serializable {
     // DM
-    private int _id;
-    private int _plant_id;
+    private String _id;
+    private String _plant_id;
     private String _user_id;
     private String _image_url;
     private Date _watering_date;
@@ -15,27 +16,30 @@ public class Watering implements Serializable {
 
     }
 
-    public Watering(int _id, int _plant_id, String _user_id, String _image_url, Date _watering_date) {
-        this._id = _id;
+    public Watering(String _plant_id, String _user_id, String _image_url, Date _watering_date) {
+        UUID uuid = UUID.randomUUID();
+        String uuidAsString = uuid.toString();
+
+        this._id = uuidAsString;
         this._plant_id = _plant_id;
         this._user_id = _user_id;
         this._image_url = _image_url;
         this._watering_date = _watering_date;
     }
 
-    public int getId() {
+    public String getId() {
         return _id;
     }
 
-    public void setId(int _id) {
+    public void setId(String _id) {
         this._id = _id;
     }
 
-    public int getPlantId() {
+    public String getPlantId() {
         return _plant_id;
     }
 
-    public void setPlantId(int _plant_id) {
+    public void setPlantId(String _plant_id) {
         this._plant_id = _plant_id;
     }
 
