@@ -150,14 +150,6 @@ public class AddPlaceFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        //if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-         //   Bundle extras = data.getExtras();
-          //  Bitmap imageBitmap = (Bitmap) extras.get("data");
-          //  placeImage.setImageBitmap(imageBitmap);
-          //  if(!placeName.getText().toString().isEmpty()) {
-         //       savePlaceBtn.setEnabled(true);
-        //    }
-     //   }
         if(resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case 0:

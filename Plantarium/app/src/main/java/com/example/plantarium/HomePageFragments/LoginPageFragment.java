@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.DBModels.UserModel;
+import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.User;
 import com.example.plantarium.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class LoginPageFragment extends Fragment  implements View.OnClickListener , Serializable {
 
@@ -34,6 +37,7 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
     private static final String TAG = "Main Fragment";
     private static final int RC_SIGN_IN = 7;
     UserModel userModel = new UserModel();
+    PlaceModel placeModel = new PlaceModel();
 
     SignInButton signInButton;
     View view;
@@ -126,6 +130,13 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
                 @Override
                 public void onComplete() {
                     Log.i(TAG, "user logged in");
+                }
+            });
+
+            placeModel.getAllPlaces(new PlaceModel.GetAllPlacesListener() {
+                @Override
+                public void onComplete(List<Place> places) {
+                    Log.w(TAG, places.get(0).getName());
                 }
             });
             Navigation.findNavController(view).navigate(R.id.action_loginPage_to_noPlaces);
