@@ -1,4 +1,4 @@
-package com.example.plantarium;
+package com.example.plantarium.HomePageFragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.plantarium.Models.DBModels.UserModel;
 import com.example.plantarium.Models.User;
+import com.example.plantarium.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

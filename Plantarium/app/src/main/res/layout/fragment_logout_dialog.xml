@@ -7,7 +7,7 @@
     android:background="#DEE8E7"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    tools:context=".LogoutDialogFragment"
+    tools:context=".HomePageFragments.LogoutDialogFragment"
     android:id="@+id/frame_layout_logout_dialog">
 
     <LinearLayout

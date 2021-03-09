@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginPageFragment"
-        android:name="com.example.plantarium.LoginPageFragment"
+        android:name="com.example.plantarium.HomePageFragments.LoginPageFragment"
         android:label="fragment_login_page"
         tools:layout="@layout/fragment_login_page" >
         <action
@@ -15,23 +15,8 @@
             app:destination="@id/noPlacesFragment" />
     </fragment>
     <fragment
-        android:id="@+id/plantsViewFragment"
-        android:name="com.example.plantarium.PlantsViewFragment"
-        android:label="fragment_plants_view"
-        tools:layout="@layout/fragment_plants_view" >
-        <action
-            android:id="@+id/action_plantsViewFragment_pop"
-            app:popUpTo="@id/plantsViewFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="user"
-            app:argType="com.example.plantarium.Models.User"
-            app:nullable="true"
-            android:defaultValue="@null" />
-    </fragment>
-    <fragment
         android:id="@+id/noPlacesFragment"
-        android:name="com.example.plantarium.NoPlacesFragment"
+        android:name="com.example.plantarium.PlacesFragments.NoPlacesFragment"
         android:label="fragment_no_places"
         tools:layout="@layout/fragment_no_places">
         <action
@@ -40,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/addPlaceFragment"
-        android:name="com.example.plantarium.AddPlaceFragment"
+        android:name="com.example.plantarium.PlacesFragments.AddPlaceFragment"
         android:label="fragment_manage_place"
         tools:layout="@layout/fragment_manage_place" >
         <action
@@ -49,7 +34,7 @@
     </fragment>
     <dialog
         android:id="@+id/logoutDialogFragment"
-        android:name="com.example.plantarium.LogoutDialogFragment"
+        android:name="com.example.plantarium.HomePageFragments.LogoutDialogFragment"
         android:label="fragment_logout_dialog"
         tools:layout="@layout/fragment_logout_dialog" >
         <action
@@ -58,7 +43,11 @@
     </dialog>
     <fragment
         android:id="@+id/emptyPlaceView"
-        android:name="com.example.plantarium.EmptyPlaceViewFragment"
+        android:name="com.example.plantarium.PlacesFragments.EmptyPlaceViewFragment"
         android:label="fragment_empty_place_view"
-        tools:layout="@layout/fragment_empty_place_view" />
+        tools:layout="@layout/fragment_empty_place_view" >
+        <argument
+            android:name="Place"
+            app:argType="com.example.plantarium.Models.Place" />
+    </fragment>
 </navigation>

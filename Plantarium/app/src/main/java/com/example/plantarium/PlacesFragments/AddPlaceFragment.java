@@ -1,4 +1,4 @@
-package com.example.plantarium;
+package com.example.plantarium.PlacesFragments;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +20,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.plantarium.R;
 
 import static android.app.Activity.RESULT_OK;
-
 
 public class AddPlaceFragment extends Fragment {
 
@@ -31,6 +33,9 @@ public class AddPlaceFragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     View view;
+    Button savePlaceBtn;
+    ImageView placeImage;
+    AppCompatEditText placeName;
     PlaceModel placeModel = new PlaceModel();
 
     @Override
@@ -38,6 +43,11 @@ public class AddPlaceFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=  inflater.inflate(R.layout.fragment_manage_place, container, false);
+
+        placeImage = (ImageView) view.findViewById(R.id.place_image);
+        savePlaceBtn = (Button) view.findViewById(R.id.save_place_btn);
+        placeName = view.findViewById(R.id.edit_place_name);
+        savePlaceBtn.setEnabled(false);
 
         ImageButton createPlaceBtn =  (ImageButton) view.findViewById(R.id.addImageButton);
         createPlaceBtn.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +57,7 @@ public class AddPlaceFragment extends Fragment {
             }
         });
 
-        Button savePlaceBtn = (Button) view.findViewById(R.id.save_place_btn);
+
         savePlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,16 +66,32 @@ public class AddPlaceFragment extends Fragment {
             }
         });
 
+        placeName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                BitmapDrawable image =  (BitmapDrawable)placeImage.getDrawable();
+                if(!s.toString().isEmpty() && image != null ){
+                    savePlaceBtn.setEnabled(true);
+                }
+                else {
+                    savePlaceBtn.setEnabled(false);
+                }
+            }
+        });
+
         return view;
     }
 
     private void savePlace() {
-        AppCompatEditText placeName = view.findViewById(R.id.edit_place_name);
-        ImageView placeImage = (ImageView) view.findViewById(R.id.place_image);
         Bitmap imageBitmap =  ((BitmapDrawable)placeImage.getDrawable()).getBitmap();
-
         Place newPlace = new Place(placeName.getText().toString());
-
         placeModel.uploadPlaceImage(imageBitmap, newPlace.getId(),
                 new PlaceModel.UploadImageListenr() {
             @Override
@@ -75,7 +101,8 @@ public class AddPlaceFragment extends Fragment {
                 placeModel.updatePlace(newPlace, new PlaceModel.UpdatePlaceListener() {
                     @Override
                     public void onComplete() {
-                        Navigation.findNavController(view).navigate(R.id.action_addPlace_to_emptyPlaceView);
+                        AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
+                        Navigation.findNavController(view).navigate(action);
                     }
                 });
             }
@@ -97,8 +124,10 @@ public class AddPlaceFragment extends Fragment {
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ImageView placeImage = (ImageView) view.findViewById(R.id.place_image);
             placeImage.setImageBitmap(imageBitmap);
+            if(!placeName.getText().toString().isEmpty()) {
+                savePlaceBtn.setEnabled(true);
+            }
         }
     }
 }

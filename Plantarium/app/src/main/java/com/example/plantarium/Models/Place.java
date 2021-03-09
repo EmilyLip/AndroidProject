@@ -1,9 +1,9 @@
+
 package com.example.plantarium.Models;
 
-import com.example.plantarium.LoginPageFragment;
+import com.example.plantarium.HomePageFragments.LoginPageFragment;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.UUID;
 
 public class Place implements Serializable {

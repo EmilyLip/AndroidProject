@@ -1,4 +1,4 @@
-package com.example.plantarium;
+package com.example.plantarium.HomePageFragments;
 
 
 
@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+
+import com.example.plantarium.HomePageFragments.LoginPageFragment;
+import com.example.plantarium.R;
 
 
 public class LogoutDialogFragment extends DialogFragment implements View.OnClickListener {
