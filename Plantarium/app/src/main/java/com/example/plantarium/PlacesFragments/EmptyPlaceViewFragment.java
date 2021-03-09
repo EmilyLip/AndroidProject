@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import com.example.plantarium.PlacesFragments.EmptyPlaceViewFragmentArgs;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.R;
+import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.perfmark.Tag;
 
 public class EmptyPlaceViewFragment extends Fragment {
@@ -27,6 +29,11 @@ public class EmptyPlaceViewFragment extends Fragment {
         view =  inflater.inflate(R.layout.fragment_empty_place_view, container, false);
 
         Place place = EmptyPlaceViewFragmentArgs.fromBundle(getArguments()).getPlace();
+        CircleImageView placeImage =view.findViewById(R.id.place_image);
+
+        if (place.getImageUrl() != null){
+            Picasso.get().load(place.getImageUrl()).into(placeImage);
+        }
         Log.d(TAG, place.getName());
         return view;
     }

@@ -1,11 +1,16 @@
 package com.example.plantarium.PlacesFragments;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -25,6 +30,10 @@ import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 public class AddPlaceFragment extends Fragment {
@@ -110,23 +119,71 @@ public class AddPlaceFragment extends Fragment {
     }
 
     private void showFileChooser() {
-        Intent intent = new Intent();
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            // display error state to the user
-        }
+        final CharSequence[] options = { "צלם תמונה", "בחר מהגלריה","בטל" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("בחר תמונה עבור המקום שלך");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("צלם תמונה")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+
+                } else if (options[item].equals("בחר מהגלריה")) {
+                    //Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    //startActivityForResult(pickPhoto , 1);
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickerIntent.setType("image/*");
+                    startActivityForResult(photoPickerIntent, 1);
+
+                } else if (options[item].equals("בטל")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            placeImage.setImageBitmap(imageBitmap);
-            if(!placeName.getText().toString().isEmpty()) {
-                savePlaceBtn.setEnabled(true);
+        //if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+         //   Bundle extras = data.getExtras();
+          //  Bitmap imageBitmap = (Bitmap) extras.get("data");
+          //  placeImage.setImageBitmap(imageBitmap);
+          //  if(!placeName.getText().toString().isEmpty()) {
+         //       savePlaceBtn.setEnabled(true);
+        //    }
+     //   }
+        if(resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bundle extras = data.getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        placeImage.setImageBitmap(imageBitmap);
+                        if(!placeName.getText().toString().isEmpty()) {
+                            savePlaceBtn.setEnabled(true);
+                        }
+                    }
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        try {
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                            placeImage.setImageBitmap(bitmap);
+                            if(!placeName.getText().toString().isEmpty()) {
+                                savePlaceBtn.setEnabled(true);
+                            }
+                        } catch (IOException e) {
+
+                        }
+                    }
+                    break;
             }
         }
     }
