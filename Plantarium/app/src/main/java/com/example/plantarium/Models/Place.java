@@ -2,8 +2,12 @@
 package com.example.plantarium.Models;
 
 import com.example.plantarium.HomePageFragments.LoginPageFragment;
+import com.google.firebase.database.ServerValue;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Place implements Serializable {
@@ -12,6 +16,8 @@ public class Place implements Serializable {
     private String _name;
     private String _image_url;
     private String creator_id;
+    private Date _create_date;
+    private Long last_updated;
 
     public Place(){
 
@@ -24,6 +30,7 @@ public class Place implements Serializable {
         setId(uuidAsString);
         setName(_name);
         setCreatorId(LoginPageFragment.getAccount().getId());
+        setCreateDate(new Date());
     }
 
 
@@ -35,6 +42,7 @@ public class Place implements Serializable {
         setName(_name);
         setImageUrl(_image_url);
         setCreatorId(LoginPageFragment.getAccount().getId());
+        setCreateDate(new Date());
     }
 
     public String getId() {
@@ -68,4 +76,32 @@ public class Place implements Serializable {
     public void setCreatorId(String creatorId) {
         this.creator_id = creatorId;
     }
+
+    public Long getLastUpdated() {
+        return last_updated;
+    }
+
+    public void setLastUpdated(Long last_updated) {
+        this.last_updated = last_updated;
+    }
+
+    public Date getCreateDate() {
+        return _create_date;
+    }
+
+    public void setCreateDate(Date _create_date) {
+        this._create_date = _create_date;
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", _id);
+        result.put("name", _name);
+        result.put("creatorId", creator_id);
+        result.put("imageUrl", _image_url);
+        result.put("createDate", _create_date);
+        result.put("lastUpdated", ServerValue.TIMESTAMP);
+        return result;
+    }
+
 }

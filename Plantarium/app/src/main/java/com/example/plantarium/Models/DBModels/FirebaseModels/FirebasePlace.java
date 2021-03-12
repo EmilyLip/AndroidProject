@@ -32,7 +32,7 @@ public class FirebasePlace {
     public void updatePlace(Place place, PlaceModel.UpdatePlaceListener listener) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
         String placeId = String.valueOf(place.getId());
-        mDatabase.child("places").child(placeId).setValue(place)
+        mDatabase.child("places").child(placeId).setValue(place.toMap())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

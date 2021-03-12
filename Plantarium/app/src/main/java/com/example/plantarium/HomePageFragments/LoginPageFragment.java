@@ -133,12 +133,12 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
                 }
             });
 
-            placeModel.getAllPlaces(new PlaceModel.GetAllPlacesListener() {
-                @Override
-                public void onComplete(List<Place> places) {
-                    Log.w(TAG, places.get(0).getName());
-                }
-            });
+           userModel.getUserByID(account.getId(), new UserModel.GetUsertListener() {
+               @Override
+               public void onComplete(User user) {
+                   Log.i(TAG, "user logged in");
+               }
+           });
             Navigation.findNavController(view).navigate(R.id.action_loginPage_to_noPlaces);
         } else {
             Log.i(TAG, "UI updated");

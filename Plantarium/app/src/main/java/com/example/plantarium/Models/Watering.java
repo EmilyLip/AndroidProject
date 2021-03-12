@@ -11,6 +11,7 @@ public class Watering implements Serializable {
     private String _user_id;
     private String _image_url;
     private Date _watering_date;
+    private Long last_updated;
 
     public Watering() {
 
@@ -65,5 +66,13 @@ public class Watering implements Serializable {
 
     public void setWateringDate(Date _watering_date) {
         this._watering_date = _watering_date;
+    }
+
+    public Long getLastUpdated() {
+        return last_updated;
+    }
+
+    public void setLastUpdated(Long last_updated) {
+        this.last_updated = last_updated;
     }
 }

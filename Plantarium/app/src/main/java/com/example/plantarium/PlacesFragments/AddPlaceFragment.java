@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
 import com.example.plantarium.Models.DBModels.PlaceModel;
@@ -44,6 +45,7 @@ public class AddPlaceFragment extends Fragment {
     View view;
     Button savePlaceBtn;
     ImageView placeImage;
+    ProgressBar progressBar;
     AppCompatEditText placeName;
     PlaceModel placeModel = new PlaceModel();
 
@@ -56,7 +58,10 @@ public class AddPlaceFragment extends Fragment {
         placeImage = (ImageView) view.findViewById(R.id.place_image);
         savePlaceBtn = (Button) view.findViewById(R.id.save_place_btn);
         placeName = view.findViewById(R.id.edit_place_name);
+        progressBar = view.findViewById(R.id.progressBar);
+
         savePlaceBtn.setEnabled(false);
+        progressBar.setVisibility(View.INVISIBLE);
 
         ImageButton createPlaceBtn =  (ImageButton) view.findViewById(R.id.addImageButton);
         createPlaceBtn.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +106,7 @@ public class AddPlaceFragment extends Fragment {
     private void savePlace() {
         Bitmap imageBitmap =  ((BitmapDrawable)placeImage.getDrawable()).getBitmap();
         Place newPlace = new Place(placeName.getText().toString());
+        progressBar.setVisibility(View.VISIBLE);
         placeModel.uploadPlaceImage(imageBitmap, newPlace.getId(),
                 new PlaceModel.UploadImageListenr() {
             @Override
@@ -111,6 +117,7 @@ public class AddPlaceFragment extends Fragment {
                     @Override
                     public void onComplete() {
                         AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
+                        progressBar.setVisibility(View.INVISIBLE);
                         Navigation.findNavController(view).navigate(action);
                     }
                 });

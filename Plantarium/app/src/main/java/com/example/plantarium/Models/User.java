@@ -1,19 +1,25 @@
 package com.example.plantarium.Models;
 
-
-import android.net.Uri;
+import com.google.firebase.Timestamp;
+import com.google.firebase.database.ServerValue;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class User implements Serializable {
 
+    static final long serialUID = 40L;
+
     // DM
-    private String _id;
-    private String _email;
-    private String _fullname;
-    private String _image_url;
-    private Date _last_login_time;
+    public  String _id;
+    public String _email;
+    public String _fullname;
+    public String _image_url;
+    public Date _last_login_time;
+    public Long last_updated;
 
    public User(String email, String fullname, String image_url, Date date, String id){
        this.setEmail(email);
@@ -68,5 +74,24 @@ public class User implements Serializable {
 
     public void setId(String id){
         this._id = id;
+    }
+
+    public Long getLastUpdated() {
+        return last_updated;
+    }
+
+    public void setLastUpdated(Long last_updated) {
+        this.last_updated = last_updated;
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", _id);
+        result.put("fullname", _fullname);
+        result.put("email", _email);
+        result.put("imageUrl", _image_url);
+        result.put("lastLoginTime", _last_login_time);
+        result.put("lastUpdated", ServerValue.TIMESTAMP);
+        return result;
     }
 }

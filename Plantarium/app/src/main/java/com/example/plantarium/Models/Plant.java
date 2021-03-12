@@ -11,6 +11,7 @@ public class Plant implements Serializable {
     private String _place_id;
     // if watering is on sunday array[0] = 1
     private int[] _watering_days = {0, 0, 0, 0, 0, 0, 0, 0};
+    private Long last_updated;
 
     public Plant() {
 
@@ -65,5 +66,13 @@ public class Plant implements Serializable {
 
     public void setWateringDays(int[] _watering_days) {
         this._watering_days = _watering_days;
+    }
+
+    public Long getLastUpdated() {
+        return last_updated;
+    }
+
+    public void setLastUpdated(Long last_updated) {
+        this.last_updated = last_updated;
     }
 }

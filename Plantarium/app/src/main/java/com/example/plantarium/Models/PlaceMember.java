@@ -4,6 +4,7 @@ public class PlaceMember {
     //DM
     private String _user_id;
     private String _place_id;
+    private Long last_updated;
 
     public PlaceMember(String _user_id, String _place_id) {
         this._user_id = _user_id;
@@ -28,5 +29,13 @@ public class PlaceMember {
 
     public void setPlaceId(String place_id) {
         this._place_id = place_id;
+    }
+
+    public Long getLastUpdated() {
+        return last_updated;
+    }
+
+    public void setLastUpdated(Long last_updated) {
+        this.last_updated = last_updated;
     }
 }

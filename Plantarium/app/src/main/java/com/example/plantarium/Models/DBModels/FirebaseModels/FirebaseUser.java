@@ -13,6 +13,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Map;
+
 public class FirebaseUser {
 
     public void getUserByID(String userId, UserModel.GetUsertListener listener) {
@@ -33,7 +35,7 @@ public class FirebaseUser {
 
     public void updateUser(User user, UserModel.AddUserListener listener) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
-        mDatabase.child("users").child(user.getId()).setValue(user)
+        mDatabase.child("users").child(user.getId()).setValue(user.toMap())
             .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
