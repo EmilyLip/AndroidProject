@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.Plantarium"
-    tools:context=".PlacesFragments.EmptyPlaceViewFragment">
-
-    <!-- Circular Image View  -->
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".PlacesFragments.AddMemberToPlace">
 
     <ProgressBar
         android:id="@+id/progressBarImage"
@@ -50,47 +47,47 @@
         app:layout_constraintVertical_bias="0.062" />
 
     <TextView
-        android:id="@+id/quite_text"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="די שקט פה.. "
-        android:textColor="#008290"
+        android:text="הוו משתתף חדש!"
+        android:textColor="#FD9F83"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/place_image"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/place_name"
+        app:layout_constraintVertical_bias="0.087" />
+
+    <EditText
+        android:id="@+id/member_email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="מה האימייל שלו/ה?"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.107" />
 
     <Button
-        android:id="@+id/addMemberBtn"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:text="הגיע הזמן לצרף חברים"
-        android:textColorHighlight="#FFFFFF"
-        android:textSize="18sp"
-        app:backgroundTint="#008290"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quite_text"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <TextView
-        android:id="@+id/be_alone_text"
+        android:id="@+id/sendInviteBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="או שבינתיים נהיה כאן לבד"
+        android:layout_height="60dp"
+        android:text="שלח הזמנה להצטרפות!"
         android:textColor="#008290"
-        android:textSize="18sp"
+        android:textSize="24sp"
+        app:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addMemberBtn"
-        app:layout_constraintVertical_bias="0.161" />
-
+        app:layout_constraintTop_toBottomOf="@+id/member_email"
+        app:layout_constraintVertical_bias="0.12"
+        app:strokeColor="#C0C0C0"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

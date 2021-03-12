@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.DBModels.UserModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.User;
+import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
 import com.example.plantarium.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -133,13 +135,24 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
                 }
             });
 
-           userModel.getUserByID(account.getId(), new UserModel.GetUsertListener() {
+            NavController nav = Navigation.findNavController(view);
+
+           placeModel.getAllPlaces(new PlaceModel.GetAllPlacesListener() {
                @Override
-               public void onComplete(User user) {
-                   Log.i(TAG, "user logged in");
+               public void onComplete(List<Place> places) {
+                 for (Place place: places){
+                     if(place.getCreatorId().equals(account.getId())){
+                         if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
+                             LoginPageFragmentDirections.ActionLoginPageFragmentToEmptyPlaceView action = LoginPageFragmentDirections.actionLoginPageFragmentToEmptyPlaceView(place);
+                             nav.navigate(action);
+                         }
+                     }
+                 }
+                 if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
+                     nav.navigate(R.id.action_loginPage_to_noPlaces);
+                 }
                }
            });
-            Navigation.findNavController(view).navigate(R.id.action_loginPage_to_noPlaces);
         } else {
             Log.i(TAG, "UI updated");
         }

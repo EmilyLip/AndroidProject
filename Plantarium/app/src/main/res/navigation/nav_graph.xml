@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_loginPage_to_noPlaces"
             app:destination="@id/noPlacesFragment" />
+        <action
+            android:id="@+id/action_loginPageFragment_to_emptyPlaceView"
+            app:destination="@id/emptyPlaceView" />
     </fragment>
     <fragment
         android:id="@+id/noPlacesFragment"
@@ -48,6 +51,18 @@
         tools:layout="@layout/fragment_empty_place_view" >
         <argument
             android:name="Place"
+            app:argType="com.example.plantarium.Models.Place" />
+        <action
+            android:id="@+id/action_emptyPlaceView_to_addMemberToPlace"
+            app:destination="@id/addMemberToPlace" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMemberToPlace"
+        android:name="com.example.plantarium.PlacesFragments.AddMemberToPlace"
+        android:label="fragment_add_member_to_place"
+        tools:layout="@layout/fragment_add_member_to_place" >
+        <argument
+            android:name="place"
             app:argType="com.example.plantarium.Models.Place" />
     </fragment>
 </navigation>
