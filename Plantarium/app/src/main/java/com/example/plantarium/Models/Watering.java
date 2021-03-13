@@ -1,78 +1,86 @@
 package com.example.plantarium.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Entity
 public class Watering implements Serializable {
     // DM
-    private String _id;
-    private String _plant_id;
-    private String _user_id;
-    private String _image_url;
-    private Date _watering_date;
-    private Long last_updated;
+    @PrimaryKey
+    @NonNull
+    private String id;
+    private String plantId;
+    private String userId;
+    private String imageUrl;
+    private Long wateringDate;
+    private Long lastUpdated;
 
     public Watering() {
 
     }
 
-    public Watering(String _plant_id, String _user_id, String _image_url, Date _watering_date) {
+    public Watering(String _plant_id, String _user_id, String _image_url, Long _watering_date) {
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
 
-        this._id = uuidAsString;
-        this._plant_id = _plant_id;
-        this._user_id = _user_id;
-        this._image_url = _image_url;
-        this._watering_date = _watering_date;
+        this.id = uuidAsString;
+        this.plantId = _plant_id;
+        this.userId = _user_id;
+        this.imageUrl = _image_url;
+        this.wateringDate = _watering_date;
     }
 
+    @NonNull
     public String getId() {
-        return _id;
+        return id;
     }
 
-    public void setId(String _id) {
-        this._id = _id;
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public String getPlantId() {
-        return _plant_id;
+        return plantId;
     }
 
-    public void setPlantId(String _plant_id) {
-        this._plant_id = _plant_id;
+    public void setPlantId(String plantId) {
+        this.plantId = plantId;
     }
 
     public String getUserId() {
-        return _user_id;
+        return userId;
     }
 
-    public void setUserId(String _user_id) {
-        this._user_id = _user_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getImageUrl() {
-        return _image_url;
+        return imageUrl;
     }
 
-    public void setImageUrl(String _image_url) {
-        this._image_url = _image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public Date getWateringDate() {
-        return _watering_date;
+    public Long getWateringDate() {
+        return wateringDate;
     }
 
-    public void setWateringDate(Date _watering_date) {
-        this._watering_date = _watering_date;
+    public void setWateringDate(Long wateringDate) {
+        this.wateringDate = wateringDate;
     }
 
     public Long getLastUpdated() {
-        return last_updated;
+        return lastUpdated;
     }
 
-    public void setLastUpdated(Long last_updated) {
-        this.last_updated = last_updated;
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

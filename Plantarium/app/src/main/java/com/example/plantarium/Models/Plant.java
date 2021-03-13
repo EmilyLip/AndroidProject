@@ -1,17 +1,28 @@
 package com.example.plantarium.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.google.common.base.Converter;
+
 import java.io.Serializable;
 import java.util.UUID;
 
+@Entity
 public class Plant implements Serializable {
     // DM
-    private String _id;
-    private String _name;
-    private String _image_url;
-    private String _place_id;
+    @PrimaryKey
+    @NonNull
+    private String id;
+    private String name;
+    private String imageUrl;
+    private String plcaeId;
     // if watering is on sunday array[0] = 1
-    private int[] _watering_days = {0, 0, 0, 0, 0, 0, 0, 0};
-    private Long last_updated;
+   // TODO: Zohar you need to convert this watering days
+    //private int[] wateringDays = {0, 0, 0, 0, 0, 0, 0, 0};
+    private Long lastUpdated;
 
     public Plant() {
 
@@ -21,58 +32,59 @@ public class Plant implements Serializable {
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
 
-        this._id = uuidAsString;
-        this._name = _name;
-        this._image_url = _image_url;
-        this._place_id = _place_id;
-        this._watering_days = _watering_days;
+        this.id = uuidAsString;
+        this.name = _name;
+        this.imageUrl = _image_url;
+        this.plcaeId = _place_id;
+        //this.wateringDays = _watering_days;
     }
 
+    @NonNull
     public String getId() {
-        return _id;
+        return id;
     }
 
-    public void setId(String _id) {
-        this._id = _id;
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public String getName() {
-        return _name;
+        return name;
     }
 
-    public void setName(String _name) {
-        this._name = _name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImageUrl() {
-        return _image_url;
+        return imageUrl;
     }
 
-    public void setImageUrl(String _image_url) {
-        this._image_url = _image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getPlaceId() {
-        return _place_id;
+    public String getPlcaeId() {
+        return plcaeId;
     }
 
-    public void setPlaceId(String _place_id) {
-        this._place_id = _place_id;
+    public void setPlcaeId(String plcaeId) {
+        this.plcaeId = plcaeId;
     }
 
-    public int[] getWateringDays() {
-        return _watering_days;
-    }
-
-    public void setWateringDays(int[] _watering_days) {
-        this._watering_days = _watering_days;
-    }
+//    public int[] getWateringDays() {
+//        return wateringDays;
+//    }
+//
+//    public void setWateringDays(int[] wateringDays) {
+//        this.wateringDays = wateringDays;
+//    }
 
     public Long getLastUpdated() {
-        return last_updated;
+        return lastUpdated;
     }
 
-    public void setLastUpdated(Long last_updated) {
-        this.last_updated = last_updated;
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

@@ -1,5 +1,9 @@
 package com.example.plantarium.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.database.ServerValue;
 
@@ -8,24 +12,26 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Entity
 public class User implements Serializable {
 
     static final long serialUID = 40L;
 
     // DM
-    public  String _id;
-    public String _email;
-    public String _fullname;
-    public String _image_url;
-    public Date _last_login_time;
-    public Long last_updated;
+    @PrimaryKey
+    @NonNull
+    public  String id;
+    public String email;
+    public String fullname;
+    public String imageUrl;
+    public Long lastLoginTime;
+    public Long lastUpdated;
 
-   public User(String email, String fullname, String image_url, Date date, String id){
+   public User(String email, String fullname, String image_url, String id){
        this.setEmail(email);
        this.setFullname(fullname);
        this.setImageURL(image_url);
-       this.setLastLoginTime(date);
+       this.setLastLoginTime(new Date().getTime());
        this.setId(id);
    }
 
@@ -35,62 +41,62 @@ public class User implements Serializable {
 
    // getters
    public String getEmail(){
-       return this._email;
+       return this.email;
    }
 
     public String getFullname(){
-        return this._fullname;
+        return this.fullname;
     }
 
     public String getImageURL(){
-        return this._image_url;
+        return this.imageUrl;
     }
 
-    public Date getLastLoginTime() {
-       return this._last_login_time;
+    public Long getLastLoginTime() {
+       return this.lastLoginTime;
     }
 
     public String getId(){
-        return this._id;
+        return this.id;
     }
 
     //setters
 
     public void setEmail(String email){
-        this._email = email;
+        this.email = email;
     }
 
     public void setFullname(String fullname){
-       this._fullname = fullname;
+       this.fullname = fullname;
     }
 
     public void setImageURL(String image_url){
-        this._image_url = image_url;
+        this.imageUrl = image_url;
     }
 
-    public void setLastLoginTime(Date date){
-        this._last_login_time = new Date(date.getTime());
+    public void setLastLoginTime(Long date){
+        this.lastLoginTime = date;
     }
 
     public void setId(String id){
-        this._id = id;
+        this.id = id;
     }
 
     public Long getLastUpdated() {
-        return last_updated;
+        return lastUpdated;
     }
 
     public void setLastUpdated(Long last_updated) {
-        this.last_updated = last_updated;
+        this.lastUpdated = last_updated;
     }
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", _id);
-        result.put("fullname", _fullname);
-        result.put("email", _email);
-        result.put("imageUrl", _image_url);
-        result.put("lastLoginTime", _last_login_time);
+        result.put("id", id);
+        result.put("fullname", fullname);
+        result.put("email", email);
+        result.put("imageUrl", imageUrl);
+        result.put("lastLoginTime", lastLoginTime);
         result.put("lastUpdated", ServerValue.TIMESTAMP);
         return result;
     }

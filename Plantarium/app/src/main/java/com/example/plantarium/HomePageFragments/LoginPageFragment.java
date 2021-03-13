@@ -126,8 +126,7 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
 
     private void updateUI(Object o) {
         if (o instanceof GoogleSignInAccount) {
-            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl().toString(),
-                            new Date(), account.getId());
+            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl().toString(), account.getId());
             userModel.updateUser(user, new UserModel.AddUserListener() {
                 @Override
                 public void onComplete() {

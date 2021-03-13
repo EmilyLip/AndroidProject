@@ -1,6 +1,10 @@
 
 package com.example.plantarium.Models;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.example.plantarium.HomePageFragments.LoginPageFragment;
 import com.google.firebase.database.ServerValue;
 
@@ -10,14 +14,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Entity
 public class Place implements Serializable {
     // DM
-    private String _id;
-    private String _name;
-    private String _image_url;
-    private String creator_id;
-    private Date _create_date;
-    private Long last_updated;
+    @PrimaryKey
+    @NonNull
+    private String id;
+    private String name;
+    private String imageUrl;
+    private String creatorId;
+    private Long createDate;
+    private Long lastUpdated;
 
     public Place(){
 
@@ -30,7 +37,7 @@ public class Place implements Serializable {
         setId(uuidAsString);
         setName(_name);
         setCreatorId(LoginPageFragment.getAccount().getId());
-        setCreateDate(new Date());
+        setCreateDate(new Date().getTime());
     }
 
 
@@ -42,64 +49,65 @@ public class Place implements Serializable {
         setName(_name);
         setImageUrl(_image_url);
         setCreatorId(LoginPageFragment.getAccount().getId());
-        setCreateDate(new Date());
+        setCreateDate(new Date().getTime());
     }
 
     public String getId() {
-        return this._id;
+        return this.id;
     }
 
     public String getName() {
-        return this._name;
-    }
-
-    public String getImageUrl() {
-        return this._image_url;
+        return this.name;
     }
 
     public String getCreatorId () {
-        return this.creator_id;
+        return this.creatorId;
     }
 
     public void setId(String _id) {
-        this._id = _id;
+        this.id = _id;
     }
 
     public void setName(String _name) {
-        this._name = _name;
-    }
-
-    public void setImageUrl(String _image_url) {
-        this._image_url = _image_url;
+        this.name = _name;
     }
 
     public void setCreatorId(String creatorId) {
-        this.creator_id = creatorId;
+        this.creatorId = creatorId;
     }
 
     public Long getLastUpdated() {
-        return last_updated;
+        return lastUpdated;
     }
 
     public void setLastUpdated(Long last_updated) {
-        this.last_updated = last_updated;
+        this.lastUpdated = last_updated;
     }
 
-    public Date getCreateDate() {
-        return _create_date;
+    public Long getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateDate(Date _create_date) {
-        this._create_date = _create_date;
+    public void setCreateDate(Long _create_date) {
+        this.createDate = _create_date;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", _id);
-        result.put("name", _name);
-        result.put("creatorId", creator_id);
-        result.put("imageUrl", _image_url);
-        result.put("createDate", _create_date);
+        result.put("id", id);
+        result.put("name", name);
+        result.put("creatorId", creatorId);
+        result.put("imageUrl", imageUrl);
+        result.put("createDate", createDate);
         result.put("lastUpdated", ServerValue.TIMESTAMP);
         return result;
     }
