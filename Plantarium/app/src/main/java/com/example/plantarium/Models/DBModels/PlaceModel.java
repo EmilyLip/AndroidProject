@@ -3,6 +3,8 @@ package com.example.plantarium.Models.DBModels;
 import android.graphics.Bitmap;
 
 import com.example.plantarium.Models.DBModels.FirebaseModels.FirebasePlace;
+import com.example.plantarium.Models.DBModels.RoomModels.RoomPlace;
+import com.example.plantarium.Models.DBModels.RoomModels.RoomUser;
 import com.example.plantarium.Models.Place;
 
 import java.util.LinkedList;
@@ -10,6 +12,7 @@ import java.util.List;
 
 public class PlaceModel {
     FirebasePlace modelFirebase = new FirebasePlace();
+    RoomPlace modelSql = new RoomPlace();
 
     public interface  UploadImageListenr {
         void onComplete(String url);

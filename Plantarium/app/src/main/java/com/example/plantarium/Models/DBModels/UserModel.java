@@ -1,13 +1,14 @@
 package com.example.plantarium.Models.DBModels;
 
 import com.example.plantarium.Models.DBModels.FirebaseModels.FirebaseUser;
+import com.example.plantarium.Models.DBModels.RoomModels.RoomUser;
 import com.example.plantarium.Models.User;
 
 public class UserModel {
     public final static UserModel instance = new UserModel();
 
     FirebaseUser modelFirebase = new FirebaseUser();
-    //ModelSql modelSql = new ModelSql();
+    RoomUser modelSql = new RoomUser();
 
     public UserModel(){
 
