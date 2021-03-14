@@ -32,5 +32,6 @@ public class UserModel {
 
     public void updateUser(User user, final AddUserListener listener){
         modelFirebase.updateUser(user, listener);
+        modelSql.addUser(user, listener);
     }
 }

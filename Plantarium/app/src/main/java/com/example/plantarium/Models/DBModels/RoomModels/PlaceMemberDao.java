@@ -7,19 +7,19 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.plantarium.Models.Place;
+import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.User;
 
 import java.util.List;
 
 @Dao
-public interface PlaceDao {
-    @Query("select * from Place")
-    LiveData<List<Place>> getAllPlaces();
+public interface PlaceMemberDao {
+    @Query("select * from User")
+    LiveData<List<PlaceMember>> getAllPlaceMembers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(Place... place);
+    void insertAll(PlaceMember... placeMember);
 
     @Delete
-    void delete(Place place);
+    void delete(PlaceMember placeMember);
 }
