@@ -3,6 +3,7 @@ package com.example.plantarium.PlacesFragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AddMemberToPlace extends Fragment {
     View view;
     TextView placeName;
+    AppCompatEditText memberMail;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class AddMemberToPlace extends Fragment {
         Place place = AddMemberToPlaceArgs.fromBundle(getArguments()).getPlace();
         CircleImageView placeImage = view.findViewById(R.id.place_image);
         placeName = view.findViewById(R.id.place_name);
+        memberMail = view.findViewById(R.id.member_email);
         Button inviteMemberBtn = view.findViewById(R.id.sendInviteBtn);
 
         placeName.setText(place.getName());
@@ -40,7 +44,7 @@ public class AddMemberToPlace extends Fragment {
         inviteMemberBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String to= "emily7975@gmail.com";
+                String to= memberMail.getText().toString();
                 String subject="נוספת למקום חדש!";
                 String message="תצטרף לאפליקציית plantarium ";
 

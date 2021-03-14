@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -135,23 +136,17 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
             });
 
             NavController nav = Navigation.findNavController(view);
-
-           placeModel.getAllPlaces(new PlaceModel.GetAllPlacesListener() {
-               @Override
-               public void onComplete(List<Place> places) {
-                 for (Place place: places){
-                     if(place.getCreatorId().equals(account.getId())){
-                         if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
-                             LoginPageFragmentDirections.ActionLoginPageFragmentToEmptyPlaceView action = LoginPageFragmentDirections.actionLoginPageFragmentToEmptyPlaceView(place);
-                             nav.navigate(action);
-                         }
-                     }
-                 }
-                 if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
-                     nav.navigate(R.id.action_loginPage_to_noPlaces);
-                 }
-               }
-           });
+//             for (Place place: places.getValue()){
+//                 if(place.getCreatorId().equals(account.getId())){
+//                     if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
+//                         LoginPageFragmentDirections.ActionLoginPageFragmentToEmptyPlaceView action = LoginPageFragmentDirections.actionLoginPageFragmentToEmptyPlaceView(place);
+//                         nav.navigate(action);
+//                     }
+//                 }
+//             }
+//             if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
+                 nav.navigate(R.id.action_loginPage_to_noPlaces);
+             //}
         } else {
             Log.i(TAG, "UI updated");
         }
