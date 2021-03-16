@@ -1,6 +1,7 @@
 package com.example.plantarium.Models.DBModels.RoomModels;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Dao
 public interface PlaceMemberDao {
-    @Query("select * from User")
+    @Query("select * from PlaceMember")
     LiveData<List<PlaceMember>> getAllPlaceMembers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

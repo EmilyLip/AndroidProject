@@ -13,7 +13,7 @@ import java.util.List;
 
 public class RoomUser {
     public LiveData<List<User>> getAllUsers(){
-        return AppLocalDb.db.userDao().getAllStudents();
+        return AppLocalDb.db.userDao().getAllUsers();
     }
 
     public interface AddUserListener{

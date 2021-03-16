@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.DBModels.UserModel;
 import com.example.plantarium.Models.Place;
+import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.User;
 import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
 import com.example.plantarium.R;
@@ -41,6 +44,7 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
     private static final int RC_SIGN_IN = 7;
     UserModel userModel = new UserModel();
     PlaceModel placeModel = new PlaceModel();
+    private LoginPageViewModel viewModel;
 
     SignInButton signInButton;
     View view;
@@ -67,6 +71,14 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
         textView.setText("התחברות עם חשבון גוגל");
 
         view.findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
+        viewModel= new ViewModelProvider(this).get(LoginPageViewModel.class);
+
+        viewModel.getList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
+            @Override
+            public void onChanged(List<PlaceMember> students) {
+                updateUI(account);
+            }
+        });
 
         return view;
     }
@@ -136,17 +148,20 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
             });
 
             NavController nav = Navigation.findNavController(view);
-//             for (Place place: places.getValue()){
-//                 if(place.getCreatorId().equals(account.getId())){
-//                     if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
-//                         LoginPageFragmentDirections.ActionLoginPageFragmentToEmptyPlaceView action = LoginPageFragmentDirections.actionLoginPageFragmentToEmptyPlaceView(place);
-//                         nav.navigate(action);
-//                     }
-//                 }
-//             }
-//             if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
-                 nav.navigate(R.id.action_loginPage_to_noPlaces);
-             //}
+            List<PlaceMember> placeMembers = viewModel.getList().getValue();
+            if(placeMembers != null){
+                for (PlaceMember place: placeMembers){
+                        if(place.getUserEmail().equals(account.getEmail())){
+                            if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
+                                LoginPageFragmentDirections.ActionLoginPageFragmentToEmptyPlaceView action = LoginPageFragmentDirections.actionLoginPageFragmentToEmptyPlaceView(new Place("emily", "https://firebasestorage.googleapis.com/v0/b/plantarium-1607933143782.appspot.com/o/images%2F091c63f3-830d-4844-a8c8-55fe61d167d7?alt=media&token=3d588d3b-2f6e-4704-a084-0872f263591f"));
+                                nav.navigate(action);
+                            }
+                        }
+                    }
+                    if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
+                        nav.navigate(R.id.action_loginPage_to_noPlaces);
+                }
+            }
         } else {
             Log.i(TAG, "UI updated");
         }

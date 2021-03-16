@@ -14,7 +14,7 @@ import java.util.List;
 @Dao
 public interface UserDao {
     @Query("select * from User")
-    LiveData<List<User>> getAllStudents();
+    LiveData<List<User>> getAllUsers();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(User... user);

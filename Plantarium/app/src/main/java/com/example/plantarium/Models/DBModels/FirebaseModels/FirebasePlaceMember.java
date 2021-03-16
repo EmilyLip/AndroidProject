@@ -6,12 +6,14 @@ import androidx.annotation.NonNull;
 
 import com.example.plantarium.Models.DBModels.PlaceMemberModel;
 import com.example.plantarium.Models.DBModels.UserModel;
+import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,8 +23,12 @@ import java.util.List;
 
 public class FirebasePlaceMember {
 
-    public void getAllPlaceMembers(PlaceMemberModel.GetAllPlaceMembersListener listener) {
+    public interface GetAllStudentsListener{
+        void onComplete(List<PlaceMember> list);
+    }
+    public void getAllPlaceMembers(Long lastUpdated, final GetAllStudentsListener listener) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
+        //Timestamp ts = new Timestamp(lastUpdated,0);
         mDatabase.child("placeMembers").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -30,13 +36,32 @@ public class FirebasePlaceMember {
                 if (task.isSuccessful()){
                     for (DataSnapshot doc: task.getResult().getChildren()) {
                         PlaceMember place = doc.getValue(PlaceMember.class);
-                        data.add(place);
+                        if(place.getLastUpdated() > lastUpdated)
+                            data.add(place);
                     }
                 }
                 listener.onComplete(data);
             }
         });
     }
+
+
+//    public void getAllPlaceMembers(PlaceMemberModel.GetAllPlaceMembersListListener listener) {
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
+//        mDatabase.child("placeMembers").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                List<PlaceMember> data = new LinkedList<PlaceMember>();
+//                if (task.isSuccessful()){
+//                    for (DataSnapshot doc: task.getResult().getChildren()) {
+//                        PlaceMember place = doc.getValue(PlaceMember.class);
+//                        data.add(place);
+//                    }
+//                }
+//                listener.onComplete(data);
+//            }
+//        });
+//    }
 
     public void updatePlaceMember(PlaceMember placeMember, PlaceMemberModel.UpdatePlaceListener listener) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
