@@ -17,7 +17,7 @@ public class RoomPlace {
     public interface AddPlaceListener{
         void onComplete();
     }
-    public void addPlace(final Place place, final PlaceModel.UpdatePlaceListener listener){
+    public void addPlace(Place place, final PlaceModel.UpdatePlaceListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {

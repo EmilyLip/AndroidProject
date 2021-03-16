@@ -33,6 +33,7 @@ public class PlaceModel {
 
     public void updatePlace(Place place, final UpdatePlaceListener listenr){
         modelFirebase.updatePlace(place, listenr);
+        modelSql.addPlace(place, listenr);
     }
 
 //    public void getAllPlaces(final GetAllPlacesListener listener){

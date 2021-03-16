@@ -18,7 +18,7 @@ public interface PlaceDao {
     LiveData<List<Place>> getAllPlaces();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(Place place);
+    void insertAll(Place... place);
 
     @Delete
     void delete(Place place);

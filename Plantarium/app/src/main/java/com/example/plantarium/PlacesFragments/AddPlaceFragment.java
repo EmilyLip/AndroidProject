@@ -13,6 +13,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavGraphNavigator;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -26,6 +28,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.example.plantarium.HomePageFragments.LoginPageFragment;
+import com.example.plantarium.Models.DBModels.PlaceMemberModel;
+import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
@@ -48,6 +53,7 @@ public class AddPlaceFragment extends Fragment {
     ProgressBar progressBar;
     AppCompatEditText placeName;
     PlaceModel placeModel = new PlaceModel();
+    PlaceMemberModel placeMemberModel = new PlaceMemberModel();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,6 +112,8 @@ public class AddPlaceFragment extends Fragment {
     private void savePlace() {
         Bitmap imageBitmap =  ((BitmapDrawable)placeImage.getDrawable()).getBitmap();
         Place newPlace = new Place(placeName.getText().toString());
+        PlaceMember newPlaceMember = new PlaceMember(LoginPageFragment.getAccount().getEmail(), newPlace.getId());
+
         progressBar.setVisibility(View.VISIBLE);
         placeModel.uploadPlaceImage(imageBitmap, newPlace.getId(),
                 new PlaceModel.UploadImageListenr() {
@@ -113,12 +121,20 @@ public class AddPlaceFragment extends Fragment {
             public void onComplete(String url) {
                 // save to DB
                 newPlace.setImageUrl(url);
+                NavController nav = Navigation.findNavController(view);
                 placeModel.updatePlace(newPlace, new PlaceModel.UpdatePlaceListener() {
                     @Override
                     public void onComplete() {
-                        AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Navigation.findNavController(view).navigate(action);
+                        placeMemberModel.updatePlaceMember(newPlaceMember, new PlaceMemberModel.UpdatePlaceListener() {
+                            @Override
+                            public void onComplete() {
+                                if (nav.getCurrentDestination().getId() == R.id.addPlaceFragment) {
+                                    AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    nav.navigate(action);
+                                }
+                            }
+                        });
                     }
                 });
             }

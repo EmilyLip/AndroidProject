@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.database.ServerValue;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -59,5 +63,14 @@ public class PlaceMember {
 
     public void setLastUpdated(Long last_updated) {
         this.lastUpdated = last_updated;
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("userEmail", userEmail);
+        result.put("placeId", placeId);
+        result.put("lastUpdated", ServerValue.TIMESTAMP);
+        return result;
     }
 }
