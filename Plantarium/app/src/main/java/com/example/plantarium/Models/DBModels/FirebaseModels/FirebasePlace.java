@@ -48,30 +48,11 @@ public class FirebasePlace {
         });
     }
 
-//    public void getAllPlaces(final PlaceModel.GetAllPlacesListener listener) {
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
-//        mDatabase.child("places").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                List<Place> data = new LinkedList<Place>();
-//                if (task.isSuccessful()){
-//                    for (DataSnapshot doc: task.getResult().getChildren()) {
-//                        Place place = doc.getValue(Place.class);
-//                        data.add(place);
-//                    }
-//                }
-//                listener.onComplete(data);
-//            }
-//        });
-//    }
-
-
     public interface GetAllPlacesListener{
         void onComplete(List<Place> list);
     }
     public void getAllPlaces(Long lastUpdated, final GetAllPlacesListener listener) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
-        Timestamp ts = new Timestamp(lastUpdated,0);
         mDatabase.child("places").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -79,7 +60,7 @@ public class FirebasePlace {
                 if (task.isSuccessful()){
                     for (DataSnapshot doc: task.getResult().getChildren()) {
                         Place place = doc.getValue(Place.class);
-                        if(place.getLastUpdated() > ts.getSeconds())
+                        if(place.getLastUpdated() > lastUpdated)
                             data.add(place);
                     }
                 }

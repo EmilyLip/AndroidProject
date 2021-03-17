@@ -34,13 +34,12 @@ public class PlaceMemberModel {
     public interface  GetAllPlaceMembersListener {
         void onComplete();
     }
-
     public void refreshAllPlaceMembers(final GetAllPlaceMembersListener listener) {
         //1. get local last update date
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
         long lastUpdated = sp.getLong("lastUpdatedPlaceMember",0);
         //2. get all updated record from firebase from the last update date
-        modelFirebase.getAllPlaceMembers(lastUpdated, new FirebasePlaceMember.GetAllStudentsListener() {
+        modelFirebase.getAllPlaceMembers(lastUpdated, new FirebasePlaceMember.GetAllPlaceMembersListener() {
             @Override
             public void onComplete(List<PlaceMember> result) {
                 //3. insert the new updates to the local db
@@ -61,12 +60,12 @@ public class PlaceMemberModel {
         });
     }
 
-    public interface  UpdatePlaceListener {
+    public interface  UpdatePlaceMemberListener {
         void onComplete();
     }
 
-    public void updatePlaceMember(final PlaceMember place, final UpdatePlaceListener listener) {
-        modelFirebase.updatePlaceMember(place, new UpdatePlaceListener() {
+    public void updatePlaceMember(final PlaceMember place, final UpdatePlaceMemberListener listener) {
+        modelFirebase.updatePlaceMember(place, new UpdatePlaceMemberListener() {
             @Override
             public void onComplete() {
                 refreshAllPlaceMembers(new GetAllPlaceMembersListener() {
@@ -78,19 +77,4 @@ public class PlaceMemberModel {
             }
         });
     }
-
-//    public void updatePlaceMember(PlaceMember place, final UpdatePlaceListener listenr){
-//        modelFirebase.updatePlaceMember(place, new UpdatePlaceListener(){
-//            @Override
-//            public void onComplete() {
-//                refreshAllPlaceMembers(new GetAllPlaceMembersListener() {
-//                    @Override
-//                    public void onComplete() {
-//                        listener.onComplete();
-//                    }
-//                });
-//            }
-//        });
-//        //modelSql.addPlaceMember(place, listenr);
-//    }
 }

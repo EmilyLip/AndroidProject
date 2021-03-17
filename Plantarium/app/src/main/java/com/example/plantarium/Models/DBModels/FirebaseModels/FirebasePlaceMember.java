@@ -23,12 +23,11 @@ import java.util.List;
 
 public class FirebasePlaceMember {
 
-    public interface GetAllStudentsListener{
+    public interface GetAllPlaceMembersListener{
         void onComplete(List<PlaceMember> list);
     }
-    public void getAllPlaceMembers(Long lastUpdated, final GetAllStudentsListener listener) {
+    public void getAllPlaceMembers(Long lastUpdated, final GetAllPlaceMembersListener listener) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
-        //Timestamp ts = new Timestamp(lastUpdated,0);
         mDatabase.child("placeMembers").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -45,25 +44,7 @@ public class FirebasePlaceMember {
         });
     }
 
-
-//    public void getAllPlaceMembers(PlaceMemberModel.GetAllPlaceMembersListListener listener) {
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
-//        mDatabase.child("placeMembers").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                List<PlaceMember> data = new LinkedList<PlaceMember>();
-//                if (task.isSuccessful()){
-//                    for (DataSnapshot doc: task.getResult().getChildren()) {
-//                        PlaceMember place = doc.getValue(PlaceMember.class);
-//                        data.add(place);
-//                    }
-//                }
-//                listener.onComplete(data);
-//            }
-//        });
-//    }
-
-    public void updatePlaceMember(PlaceMember placeMember, PlaceMemberModel.UpdatePlaceListener listener) {
+    public void updatePlaceMember(PlaceMember placeMember, PlaceMemberModel.UpdatePlaceMemberListener listener) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
         mDatabase.child("placeMembers").child(placeMember.getId()).setValue(placeMember.toMap())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

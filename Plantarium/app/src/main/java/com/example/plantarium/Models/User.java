@@ -30,7 +30,7 @@ public class User implements Serializable {
    public User(String email, String fullname, String image_url, String id){
        this.setEmail(email);
        this.setFullname(fullname);
-       this.setImageURL(image_url);
+       this.setImageUrl(image_url);
        this.setLastLoginTime(new Date().getTime());
        this.setId(id);
    }
@@ -48,7 +48,7 @@ public class User implements Serializable {
         return this.fullname;
     }
 
-    public String getImageURL(){
+    public String getImageUrl(){
         return this.imageUrl;
     }
 
@@ -70,7 +70,7 @@ public class User implements Serializable {
        this.fullname = fullname;
     }
 
-    public void setImageURL(String image_url){
+    public void setImageUrl(String image_url){
         this.imageUrl = image_url;
     }
 

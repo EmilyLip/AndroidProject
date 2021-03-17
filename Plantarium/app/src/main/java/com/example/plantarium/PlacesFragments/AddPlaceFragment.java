@@ -125,7 +125,7 @@ public class AddPlaceFragment extends Fragment {
                 placeModel.updatePlace(newPlace, new PlaceModel.UpdatePlaceListener() {
                     @Override
                     public void onComplete() {
-                        placeMemberModel.updatePlaceMember(newPlaceMember, new PlaceMemberModel.UpdatePlaceListener() {
+                        placeMemberModel.updatePlaceMember(newPlaceMember, new PlaceMemberModel.UpdatePlaceMemberListener() {
                             @Override
                             public void onComplete() {
                                 if (nav.getCurrentDestination().getId() == R.id.addPlaceFragment) {

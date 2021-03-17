@@ -4,6 +4,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.plantarium.Models.DBModels.UserModel;
+import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -13,6 +14,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class FirebaseUser {
@@ -46,6 +49,27 @@ public class FirebaseUser {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("TAG","failed updating user");
+            }
+        });
+    }
+
+    public interface GetAllUsersListener{
+        void onComplete(List<User> list);
+    }
+    public void getAllUsers(Long lastUpdated, final FirebaseUser.GetAllUsersListener listener) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("message");
+        mDatabase.child("users").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                List<User> data = new LinkedList<User>();
+                if (task.isSuccessful()){
+                    for (DataSnapshot doc: task.getResult().getChildren()) {
+                        User user = doc.getValue(User.class);
+                        if(user.getLastUpdated() > lastUpdated)
+                            data.add(user);
+                    }
+                }
+                listener.onComplete(data);
             }
         });
     }
