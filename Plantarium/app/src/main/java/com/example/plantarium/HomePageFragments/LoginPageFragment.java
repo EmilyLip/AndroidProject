@@ -43,7 +43,6 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
     private static final String TAG = "Main Fragment";
     private static final int RC_SIGN_IN = 7;
     UserModel userModel = new UserModel();
-    PlaceModel placeModel = new PlaceModel();
     private LoginPageViewModel viewModel;
 
     SignInButton signInButton;
@@ -73,9 +72,9 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
         view.findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
         viewModel= new ViewModelProvider(this).get(LoginPageViewModel.class);
 
-        viewModel.getList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
+        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
             @Override
-            public void onChanged(List<PlaceMember> students) {
+            public void onChanged(List<Place> students) {
                 updateUI(account);
             }
         });
@@ -148,16 +147,16 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
             });
 
             NavController nav = Navigation.findNavController(view);
-            List<PlaceMember> placeMembers = viewModel.getList().getValue();
+            List<Place> placeMembers = viewModel.getUsersPlaceList().getValue();
             if(placeMembers != null){
-                for (PlaceMember place: placeMembers){
-                        if(place.getUserEmail().equals(account.getEmail())){
+                //for (PlaceMember place: placeMembers){
+                        if(placeMembers.size() != 0){
                             if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
-                                LoginPageFragmentDirections.ActionLoginPageFragmentToEmptyPlaceView action = LoginPageFragmentDirections.actionLoginPageFragmentToEmptyPlaceView(new Place("emily", "https://firebasestorage.googleapis.com/v0/b/plantarium-1607933143782.appspot.com/o/images%2F091c63f3-830d-4844-a8c8-55fe61d167d7?alt=media&token=3d588d3b-2f6e-4704-a084-0872f263591f"));
-                                nav.navigate(action);
+                                nav.navigate(R.id.action_loginPage_to_placesList);
                             }
                         }
-                    }
+                  //  }
+
                     if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
                         nav.navigate(R.id.action_loginPage_to_noPlaces);
                 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 import com.example.plantarium.Models.*;
 import com.example.plantarium.MyApplication;
 
-@Database(entities = {User.class, Plant.class, PlaceMember.class, Watering.class, Place.class}, version = 15)
+@Database(entities = {User.class, Plant.class, PlaceMember.class, Watering.class, Place.class}, version = 17)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract PlaceDao placeDao();
@@ -18,7 +18,7 @@ public class AppLocalDb{
     static public AppLocalDbRepository db =
             Room.databaseBuilder(MyApplication.context,
                     AppLocalDbRepository.class,
-                    "dbFileName.db")
+                    "dbFile.db")
                     .fallbackToDestructiveMigration()
                     .build();
 }
