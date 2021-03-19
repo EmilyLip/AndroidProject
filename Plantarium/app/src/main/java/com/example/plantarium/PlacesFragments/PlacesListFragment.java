@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +15,18 @@ import android.widget.ProgressBar;
 
 import com.example.plantarium.HomePageFragments.LoginPageViewModel;
 import com.example.plantarium.Models.Place;
+import com.example.plantarium.MyApplication;
 import com.example.plantarium.R;
 
 import java.util.List;
 
 public class PlacesListFragment extends Fragment {
     View view;
+    RecyclerView placesList;
+    RecyclerView.LayoutManager layoutManager;
     private PlacesListViewModel viewModel;
+    PlacesListAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -33,6 +40,13 @@ public class PlacesListFragment extends Fragment {
                view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
             }
         });
+
+        placesList = view.findViewById(R.id.places_list_rv);
+        placesList.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(MyApplication.context);
+        placesList.setLayoutManager(layoutManager);
+        adapter = new PlacesListAdapter( viewModel.getUsersPlaceList().getValue());
+        placesList.setAdapter(adapter);
 
         return view;
     }
