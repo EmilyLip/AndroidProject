@@ -8,12 +8,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
-import com.example.plantarium.HomePageFragments.LoginPageViewModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.MyApplication;
 import com.example.plantarium.R;
@@ -47,6 +46,14 @@ public class PlacesListFragment extends Fragment {
         placesList.setLayoutManager(layoutManager);
         adapter = new PlacesListAdapter( viewModel.getUsersPlaceList().getValue());
         placesList.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new PlacesListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Log.d("TAG","row was clicked " + viewModel.getUsersPlaceList().getValue().get(position).getName());
+                // TODO: Zohar you can navigate to place plants here
+            }
+        });
 
         return view;
     }

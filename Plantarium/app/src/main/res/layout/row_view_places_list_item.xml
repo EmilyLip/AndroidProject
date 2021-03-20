@@ -51,7 +51,7 @@
         android:id="@+id/leave_place"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="#00FFFFFF"
+        android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/edit_place"
         app:layout_constraintStart_toStartOf="parent"

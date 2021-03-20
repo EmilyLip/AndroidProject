@@ -23,10 +23,15 @@ import java.util.Vector;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.MyViewHolder> {
+    List<Place> mData;
+    private OnItemClickListener mListener;
 
-   List<Place> mData;
     public PlacesListAdapter( List<Place> data){
         mData = data;
+    }
+
+    void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -35,8 +40,19 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.My
         ImageButton editPlace;
         ImageButton leavePlace;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener !=  null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onClick(position);
+                        }
+                    }
+                }
+            });
             placeImage = itemView.findViewById(R.id.place_image);
             placeName = itemView.findViewById(R.id.place_name_title);
             editPlace = itemView.findViewById(R.id.edit_place);
@@ -50,7 +66,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.My
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) MyApplication.context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View view = inflater.inflate(R.layout.row_view_places_list_item, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
+        MyViewHolder holder = new MyViewHolder(view, mListener);
         return holder;
     }
 
@@ -59,12 +75,16 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.My
         Place place = mData.get(position);
         Picasso.get().load(place.getImageUrl()).into(holder.placeImage);
         holder.placeName.setText(place.getName());
-        holder.editPlace.setImageResource(R.drawable.edit_96px);
-        holder.leavePlace.setImageResource(R.drawable.exit_96px);
+        holder.editPlace.setImageResource(R.drawable.edit);
+        holder.leavePlace.setImageResource(R.drawable.exit_place);
     }
 
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    public interface OnItemClickListener {
+        void onClick(int position);
     }
 }
