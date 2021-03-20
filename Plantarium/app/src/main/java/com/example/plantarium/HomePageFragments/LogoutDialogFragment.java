@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.plantarium.HomePageFragments.LoginPageFragment;
+import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.R;
 
 

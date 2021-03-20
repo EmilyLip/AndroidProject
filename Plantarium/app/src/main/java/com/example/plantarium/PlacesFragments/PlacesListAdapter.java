@@ -81,7 +81,9 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.My
 
     @Override
     public int getItemCount() {
+        if(mData != null)
         return mData.size();
+        else return 0;
     }
 
     public interface OnItemClickListener {

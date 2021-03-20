@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +38,9 @@ public class PlacesListFragment extends Fragment {
             @Override
             public void onChanged(List<Place> students) {
                view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
+               if(viewModel.getUsersPlaceList().getValue().size() == 0 ){
+                   Navigation.findNavController(view).navigate(R.id.action_placesList_to_noPlaces);
+               }
             }
         });
 

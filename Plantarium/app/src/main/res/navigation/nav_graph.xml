@@ -32,8 +32,8 @@
         android:label="fragment_manage_place"
         tools:layout="@layout/fragment_manage_place" >
         <action
-            android:id="@+id/action_addPlace_to_emptyPlaceView"
-            app:destination="@id/emptyPlaceView" />
+            android:id="@+id/action_addPlace_to_placesList"
+            app:destination="@id/placesListFragment" />
     </fragment>
     <dialog
         android:id="@+id/logoutDialogFragment"
@@ -69,5 +69,9 @@
         android:id="@+id/placesListFragment"
         android:name="com.example.plantarium.PlacesFragments.PlacesListFragment"
         android:label="fragment_places_list"
-        tools:layout="@layout/fragment_places_list" />
+        tools:layout="@layout/fragment_places_list" >
+        <action
+            android:id="@+id/action_placesList_to_noPlaces"
+            app:destination="@id/noPlacesFragment" />
+    </fragment>
 </navigation>

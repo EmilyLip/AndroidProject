@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.plantarium.HomePageFragments.LoginPageFragment;
 import com.example.plantarium.Models.DBModels.PlaceMemberModel;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
@@ -17,7 +18,7 @@ public class PlacesListViewModel extends ViewModel {
 
     public PlacesListViewModel(){
         Log.d("TAG","PlacesListViewModel");
-        userPlaces = PlaceModel.instance.getAllPlaces();
+        userPlaces = PlaceModel.instance.getAllPlaces(LoginPageFragment.account.getEmail());
     }
 
     LiveData<List<Place>> getUsersPlaceList(){

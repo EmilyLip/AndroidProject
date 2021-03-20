@@ -70,14 +70,14 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
         textView.setText("התחברות עם חשבון גוגל");
 
         view.findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
-        viewModel= new ViewModelProvider(this).get(LoginPageViewModel.class);
-
-        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
-            @Override
-            public void onChanged(List<Place> students) {
-                updateUI(account);
-            }
-        });
+//        viewModel= new ViewModelProvider(this).get(LoginPageViewModel.class);
+//
+//        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
+//            @Override
+//            public void onChanged(List<Place> students) {
+//                updateUI(account);
+//            }
+//        });
 
         return view;
     }
@@ -138,7 +138,8 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
 
     private void updateUI(Object o) {
         if (o instanceof GoogleSignInAccount) {
-            user = new User(account.getEmail(), account.getDisplayName(), account.getPhotoUrl().toString(), account.getId());
+            String imageUrl = (account.getPhotoUrl() != null) ? account.getPhotoUrl().toString() : "";
+            user = new User(account.getEmail(), account.getDisplayName(), imageUrl, account.getId());
             userModel.updateUser(user, new UserModel.AddUserListener() {
                 @Override
                 public void onComplete() {
@@ -147,22 +148,9 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
             });
 
             NavController nav = Navigation.findNavController(view);
-            List<Place> placeMembers = viewModel.getUsersPlaceList().getValue();
-            if(placeMembers != null){
-                //for (PlaceMember place: placeMembers){
-                        if(placeMembers.size() != 0){
-                            if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
-                                nav.navigate(R.id.action_loginPage_to_placesList);
-                            }
-                        }
-                  //  }
-
-                    if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
-                        nav.navigate(R.id.action_loginPage_to_noPlaces);
-                }
+            if (nav.getCurrentDestination().getId() == R.id.loginPageFragment) {
+                nav.navigate(R.id.action_loginPage_to_placesList);
             }
-        } else {
-            Log.i(TAG, "UI updated");
         }
     }
 
