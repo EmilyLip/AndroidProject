@@ -19,7 +19,7 @@ public class LoginPageViewModel extends ViewModel {
     public LoginPageViewModel(){
         Log.d("TAG","LoginPageViewModel");
         pmList = PlaceMemberModel.instance.getAllPlaceMembers();
-        userPlaces = PlaceModel.instance.getAllPlaces();
+        userPlaces = PlaceModel.instance.getAllPlaces(LoginPageFragment.account.getEmail());
     }
 
     LiveData<List<PlaceMember>> getPlaceMembersList(){

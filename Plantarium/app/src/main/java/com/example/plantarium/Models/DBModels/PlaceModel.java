@@ -54,9 +54,9 @@ public class PlaceModel {
     }
 
     LiveData<List<Place>> places;
-    public LiveData<List<Place>> getAllPlaces() {
+    public LiveData<List<Place>> getAllPlaces(String Email) {
         if (places == null){
-            places = modelSql.getAllPlacesByUser(LoginPageFragment.account.getEmail());
+            places = modelSql.getAllPlacesByUser(Email);
             refreshAllPlaces(null);
         }
         return places;
