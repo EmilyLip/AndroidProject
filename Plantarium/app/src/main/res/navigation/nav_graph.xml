@@ -14,8 +14,8 @@
             android:id="@+id/action_loginPage_to_noPlaces"
             app:destination="@id/noPlacesFragment" />
         <action
-            android:id="@+id/action_loginPageFragment_to_emptyPlaceView"
-            app:destination="@id/emptyPlaceView" />
+            android:id="@+id/action_loginPage_to_placesList"
+            app:destination="@id/placesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/noPlacesFragment"
@@ -65,4 +65,9 @@
             android:name="place"
             app:argType="com.example.plantarium.Models.Place" />
     </fragment>
+    <fragment
+        android:id="@+id/placesListFragment"
+        android:name="com.example.plantarium.PlacesFragments.PlacesListFragment"
+        android:label="fragment_places_list"
+        tools:layout="@layout/fragment_places_list" />
 </navigation>

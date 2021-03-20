@@ -1,4 +1,4 @@
-package com.example.plantarium.HomePageFragments;
+package com.example.plantarium.PlacesFragments;
 
 import android.util.Log;
 
@@ -12,18 +12,12 @@ import com.example.plantarium.Models.PlaceMember;
 
 import java.util.List;
 
-public class LoginPageViewModel extends ViewModel {
-    private LiveData<List<PlaceMember>> pmList;
+public class PlacesListViewModel extends ViewModel {
     private LiveData<List<Place>> userPlaces;
 
-    public LoginPageViewModel(){
-        Log.d("TAG","LoginPageViewModel");
-        pmList = PlaceMemberModel.instance.getAllPlaceMembers();
+    public PlacesListViewModel(){
+        Log.d("TAG","PlacesListViewModel");
         userPlaces = PlaceModel.instance.getAllPlaces();
-    }
-
-    LiveData<List<PlaceMember>> getPlaceMembersList(){
-        return pmList;
     }
 
     LiveData<List<Place>> getUsersPlaceList(){

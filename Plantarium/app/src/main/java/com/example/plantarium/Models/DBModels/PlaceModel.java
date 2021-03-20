@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.plantarium.HomePageFragments.LoginPageFragment;
 import com.example.plantarium.Models.DBModels.FirebaseModels.FirebasePlace;
 import com.example.plantarium.Models.DBModels.FirebaseModels.FirebasePlaceMember;
 import com.example.plantarium.Models.DBModels.RoomModels.RoomPlace;
@@ -55,7 +56,7 @@ public class PlaceModel {
     LiveData<List<Place>> places;
     public LiveData<List<Place>> getAllPlaces() {
         if (places == null){
-            places = modelSql.getAllPlaces();
+            places = modelSql.getAllPlacesByUser(LoginPageFragment.account.getEmail());
             refreshAllPlaces(null);
         }
         return places;

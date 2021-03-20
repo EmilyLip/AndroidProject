@@ -14,6 +14,10 @@ public class RoomPlace {
         return AppLocalDb.db.placeDao().getAllPlaces();
     }
 
+    public LiveData<List<Place>> getAllPlacesByUser(String email){
+        return AppLocalDb.db.placeDao().getAllPlacesByUser(email);
+    }
+
     public interface AddPlaceListener{
         void onComplete();
     }
