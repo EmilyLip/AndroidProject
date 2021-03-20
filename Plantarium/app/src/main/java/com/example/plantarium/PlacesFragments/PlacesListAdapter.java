@@ -59,6 +59,8 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.My
         Place place = mData.get(position);
         Picasso.get().load(place.getImageUrl()).into(holder.placeImage);
         holder.placeName.setText(place.getName());
+        holder.editPlace.setImageResource(R.drawable.edit_96px);
+        holder.leavePlace.setImageResource(R.drawable.exit_96px);
     }
 
     @Override
