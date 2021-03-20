@@ -3,11 +3,12 @@ package com.example.plantarium.Models;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
-import com.google.common.base.Converter;
+import com.google.firebase.database.ServerValue;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +19,7 @@ public class Plant implements Serializable {
     private String id;
     private String name;
     private String imageUrl;
-    private String plcaeId;
+    private String placeId;
     // if watering is on sunday array[0] = 1
    // TODO: Zohar you need to convert this watering days
     //private int[] wateringDays = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -35,8 +36,18 @@ public class Plant implements Serializable {
         this.id = uuidAsString;
         this.name = _name;
         this.imageUrl = _image_url;
-        this.plcaeId = _place_id;
+        this.placeId = _place_id;
         //this.wateringDays = _watering_days;
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name", name);
+        result.put("imageUrl", imageUrl);
+        result.put("placeId", placeId);
+        result.put("lastUpdated", ServerValue.TIMESTAMP);
+        return result;
     }
 
     @NonNull
@@ -64,12 +75,12 @@ public class Plant implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public String getPlcaeId() {
-        return plcaeId;
+    public String getPlaceId() {
+        return placeId;
     }
 
-    public void setPlcaeId(String plcaeId) {
-        this.plcaeId = plcaeId;
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 
 //    public int[] getWateringDays() {
