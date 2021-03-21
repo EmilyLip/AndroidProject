@@ -27,7 +27,12 @@
         android:id="@+id/addPlaceFragment"
         android:name="com.example.plantarium.PlacesFragments.AddPlaceFragment"
         android:label="fragment_manage_place"
-        tools:layout="@layout/fragment_manage_place" />
+        tools:layout="@layout/fragment_manage_place" >
+        <argument
+            android:name="place"
+            app:argType="com.example.plantarium.Models.Place"
+            app:nullable="true" />
+    </fragment>
     <dialog
         android:id="@+id/logoutDialogFragment"
         android:name="com.example.plantarium.HomePageFragments.LogoutDialogFragment"
@@ -67,14 +72,14 @@
             android:id="@+id/action_placesList_to_noPlaces"
             app:destination="@id/noPlacesFragment" />
         <action
-            android:id="@+id/action_placesList_to_addPlace"
-            app:destination="@id/addPlaceFragment" />
-        <action
             android:id="@+id/action_placesList_to_leavePlaceDialog"
             app:destination="@id/leavePlaceDialog" />
         <action
             android:id="@+id/action_placesList_to_placePlants"
             app:destination="@id/placePlantsFragment" />
+        <action
+            android:id="@+id/action_placesList_to_addPlace"
+            app:destination="@id/addPlaceFragment" />
     </fragment>
     <dialog
         android:id="@+id/leavePlaceDialog"

@@ -30,6 +30,7 @@ import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import static android.app.Activity.RESULT_CANCELED;
@@ -47,6 +48,7 @@ public class AddPlaceFragment extends Fragment {
     AppCompatEditText placeName;
     PlaceModel placeModel = new PlaceModel();
     PlaceMemberModel placeMemberModel = new PlaceMemberModel();
+    Place place;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +64,15 @@ public class AddPlaceFragment extends Fragment {
         savePlaceBtn.setEnabled(false);
         progressBar.setVisibility(View.INVISIBLE);
 
+        place = AddPlaceFragmentArgs.fromBundle(getArguments()).getPlace();
+        if (place != null && place.getImageUrl() != null){
+            Picasso.get().load(place.getImageUrl()).into(placeImage);
+        }
+        if (place != null){
+            Picasso.get().load(place.getImageUrl()).into(placeImage);
+            placeName.setText(place.getName());
+        }
+
         ImageButton createPlaceBtn =  (ImageButton) view.findViewById(R.id.addImageButton);
         createPlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,12 +81,14 @@ public class AddPlaceFragment extends Fragment {
             }
         });
 
-
         savePlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // save place to db
-                savePlace();
+                if(place == null)
+                    savePlace();
+                else
+                    editPlace();
             }
         });
 
@@ -132,6 +145,28 @@ public class AddPlaceFragment extends Fragment {
                 });
             }
         } );
+    }
+
+    private void editPlace() {
+        Bitmap imageBitmap =  ((BitmapDrawable)placeImage.getDrawable()).getBitmap();
+        place.setName(placeName.getText().toString());
+        progressBar.setVisibility(View.VISIBLE);
+        placeModel.uploadPlaceImage(imageBitmap, place.getId(),
+                new PlaceModel.UploadImageListenr() {
+                    @Override
+                    public void onComplete(String url) {
+                        // save to DB
+                        place.setImageUrl(url);
+                        NavController nav = Navigation.findNavController(view);
+                        placeModel.updatePlace(place, new PlaceModel.UpdatePlaceListener() {
+                            @Override
+                            public void onComplete() {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                nav.popBackStack();
+                            }
+                        });
+                    }
+                } );
     }
 
     private void showFileChooser() {
