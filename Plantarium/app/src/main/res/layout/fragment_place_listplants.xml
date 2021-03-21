@@ -22,6 +22,7 @@
         android:layout_height="80dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:cropToPadding="true"
         android:src="@drawable/google_logo"
         app:civ_border_color="@color/dark_blue"
@@ -37,6 +38,7 @@
         android:id="@+id/place_plants_place_name"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
+        android:layout_marginStart="8dp"
         android:gravity="center"
         android:text="TextView"
         android:textColor="@color/dark_blue"
@@ -46,7 +48,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/place_plants_place_image"
-        app:layout_constraintTop_toTopOf="@+id/place_plants_place_image" />
+        app:layout_constraintTop_toTopOf="@+id/place_plants_place_image"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/placef_plantslist"
