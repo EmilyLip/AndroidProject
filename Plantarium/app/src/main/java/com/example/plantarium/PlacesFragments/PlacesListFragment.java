@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -74,9 +75,11 @@ public class PlacesListFragment extends Fragment {
                 Log.d("TAG","row was clicked " + viewModel.getUsersPlaceList().getValue().get(position).getName());
                 // TODO: Zohar you can navigate to place plants here
                 Place place = viewModel.getUsersPlaceList().getValue().get(position);
-//                PlacesListFragmentDirections.ActionPlacesListToPlacePlants action = new PlacesListFragmentDirections.actionPlacesListToPlacePlants(place);
-//                action.setPlace(place);
-//                Navigation.findNavController(view).navigate(action);
+                NavController nav = Navigation.findNavController(view);
+                if (nav.getCurrentDestination().getId() == R.id.placesListFragment) {
+                   PlacesListFragmentDirections.ActionPlacesListToPlacePlants action = PlacesListFragmentDirections.actionPlacesListToPlacePlants(place);
+                    nav.navigate(action);
+                }
             }
         });
 

@@ -72,6 +72,9 @@
         <action
             android:id="@+id/action_placesList_to_leavePlaceDialog"
             app:destination="@id/leavePlaceDialog" />
+        <action
+            android:id="@+id/action_placesList_to_placePlants"
+            app:destination="@id/placePlantsFragment" />
     </fragment>
     <dialog
         android:id="@+id/leavePlaceDialog"
@@ -82,4 +85,12 @@
             android:name="place"
             app:argType="com.example.plantarium.Models.Place" />
     </dialog>
+    <fragment
+        android:id="@+id/placePlantsFragment"
+        android:name="com.example.plantarium.PlaceFragments.PlacePlantsFragment"
+        android:label="PlacePlantsFragment" >
+        <argument
+            android:name="place"
+            app:argType="com.example.plantarium.Models.Place" />
+    </fragment>
 </navigation>

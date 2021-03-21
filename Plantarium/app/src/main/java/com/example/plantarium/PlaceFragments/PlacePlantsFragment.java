@@ -39,21 +39,20 @@ public class PlacePlantsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_place_listplants, container, false);
 
-//        Place place = PlacePlantsFragmentArgs.fromBundle(getArguments()).getPlace();
-        Place place = new Place("zohar");
+        Place place = PlacePlantsFragmentArgs.fromBundle(getArguments()).getPlace();
         TextView placeName = view.findViewById(R.id.place_plants_place_name);
-        CircleImageView placeImage = view.findViewById(R.id.place_image);
+        //CircleImageView placeImage = view.findViewById(R.id.place_image);
         plantsList = view.findViewById(R.id.placef_plantslist);
         ProgressBar progressBar = view.findViewById(R.id.listplant_progressBarImage);
 
         placeName.setText(place.getName());
-        placeImage.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        if (place.getImageUrl() != null){
-            Picasso.get().load(place.getImageUrl()).into(placeImage);
-            placeImage.setVisibility(View.VISIBLE);
-            progressBar.setVisibility(View.INVISIBLE);
-        }
+        //placeImage.setVisibility(View.INVISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
+//        if (place.getImageUrl() != null){
+//            Picasso.get().load(place.getImageUrl()).into(placeImage);
+//            placeImage.setVisibility(View.VISIBLE);
+//            progressBar.setVisibility(View.INVISIBLE);
+//        }
 
         plantsList.setHasFixedSize(true);
 
