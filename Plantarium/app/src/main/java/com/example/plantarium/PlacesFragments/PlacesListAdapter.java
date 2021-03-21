@@ -74,6 +74,17 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.My
                 }
             }
         });
+
+        holder.editPlace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController nav = Navigation.findNavController(v);
+                if (nav.getCurrentDestination().getId() == R.id.placesListFragment) {
+                   PlacesListFragmentDirections.ActionPlacesListToAddPlace action = PlacesListFragmentDirections.actionPlacesListToAddPlace(place);
+                   nav.navigate(action);
+                }
+            }
+        });
     }
 
     @Override

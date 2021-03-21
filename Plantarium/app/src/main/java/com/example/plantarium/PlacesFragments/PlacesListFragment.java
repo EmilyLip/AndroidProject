@@ -88,7 +88,11 @@ public class PlacesListFragment extends Fragment {
         addPlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_placesList_to_addPlace);
+                NavController nav = Navigation.findNavController(v);
+                if (nav.getCurrentDestination().getId() == R.id.placesListFragment) {
+                    PlacesListFragmentDirections.ActionPlacesListToAddPlace action = PlacesListFragmentDirections.actionPlacesListToAddPlace(null);
+                    nav.navigate(action);
+                }
             }
         });
 
