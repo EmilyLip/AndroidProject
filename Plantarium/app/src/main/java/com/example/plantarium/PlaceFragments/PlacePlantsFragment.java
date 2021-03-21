@@ -9,13 +9,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.plantarium.Models.DBModels.PlantModel;
+import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.Plant;
 import com.example.plantarium.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,10 +39,22 @@ public class PlacePlantsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_place_listplants, container, false);
 
+//        Place place = PlacePlantsFragmentArgs.fromBundle(getArguments()).getPlace();
+        Place place = new Place("zohar");
         TextView placeName = view.findViewById(R.id.place_plants_place_name);
-        placeName.setText("דירה");
+        CircleImageView placeImage = view.findViewById(R.id.place_image);
+        plantsList = view.findViewById(R.id.placef_plantslist);
+        ProgressBar progressBar = view.findViewById(R.id.listplant_progressBarImage);
 
-        plantsList =  view.findViewById(R.id.placef_plantslist);
+        placeName.setText(place.getName());
+        placeImage.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        if (place.getImageUrl() != null){
+            Picasso.get().load(place.getImageUrl()).into(placeImage);
+            placeImage.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+
         plantsList.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getContext());
@@ -46,7 +64,6 @@ public class PlacePlantsFragment extends Fragment {
         PlantAdapter adapter = new PlantAdapter(data, getLayoutInflater());
 
         plantsList.setAdapter(adapter);
-
         plantsList.addItemDecoration(new MarginItemDecoration(40));
 
         return view;
