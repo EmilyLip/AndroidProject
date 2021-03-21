@@ -56,6 +56,10 @@ public class PlacesListFragment extends Fragment {
             public void onClick(int position) {
                 Log.d("TAG","row was clicked " + viewModel.getUsersPlaceList().getValue().get(position).getName());
                 // TODO: Zohar you can navigate to place plants here
+                Place place = viewModel.getUsersPlaceList().getValue().get(position);
+//                PlacesListFragmentDirections.ActionPlacesListToPlacePlants action = new PlacesListFragmentDirections.actionPlacesListToPlacePlants(place);
+//                action.setPlace(place);
+//                Navigation.findNavController(view).navigate(action);
             }
         });
 

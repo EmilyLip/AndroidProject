@@ -12,6 +12,7 @@ abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract PlaceDao placeDao();
     public abstract PlaceMemberDao placeMemberDao();
+    public abstract PlantDao plantDao();
 }
 
 public class AppLocalDb{
