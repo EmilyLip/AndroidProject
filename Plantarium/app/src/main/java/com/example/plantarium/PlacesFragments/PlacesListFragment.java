@@ -13,8 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
+import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
+import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.MyApplication;
 import com.example.plantarium.R;
 
@@ -25,7 +28,7 @@ public class PlacesListFragment extends Fragment {
     RecyclerView placesList;
     RecyclerView.LayoutManager layoutManager;
     private PlacesListViewModel viewModel;
-    PlacesListAdapter adapter;
+    public PlacesListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,22 +37,36 @@ public class PlacesListFragment extends Fragment {
         view=  inflater.inflate(R.layout.fragment_places_list, container, false);
         viewModel= new ViewModelProvider(this).get(PlacesListViewModel.class);
 
-        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
-            @Override
-            public void onChanged(List<Place> students) {
-               view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
-               if(viewModel.getUsersPlaceList().getValue().size() == 0 ){
-                   Navigation.findNavController(view).navigate(R.id.action_placesList_to_noPlaces);
-               }
-            }
-        });
-
         placesList = view.findViewById(R.id.places_list_rv);
         placesList.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(MyApplication.context);
         placesList.setLayoutManager(layoutManager);
         adapter = new PlacesListAdapter( viewModel.getUsersPlaceList().getValue());
         placesList.setAdapter(adapter);
+        view.findViewById(R.id.progressBarList).setVisibility(View.VISIBLE);
+
+        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
+            @Override
+            public void onChanged(List<Place> places) {
+                adapter.updateList(places);
+                view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
+                if(places.size() == 0 ){
+                    Navigation.findNavController(view).navigate(R.id.action_placesList_to_noPlaces);
+                }
+            }
+        });
+
+        viewModel.getPlaceMembersListList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
+            @Override
+            public void onChanged(List<PlaceMember> placeMembers) {
+                PlaceModel.instance.refreshAllPlaces(new PlaceModel.GetAllPlacesListener() {
+                    @Override
+                    public void onComplete() {
+                        view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        });
 
         adapter.setOnItemClickListener(new PlacesListAdapter.OnItemClickListener() {
             @Override
@@ -60,6 +77,15 @@ public class PlacesListFragment extends Fragment {
 //                PlacesListFragmentDirections.ActionPlacesListToPlacePlants action = new PlacesListFragmentDirections.actionPlacesListToPlacePlants(place);
 //                action.setPlace(place);
 //                Navigation.findNavController(view).navigate(action);
+            }
+        });
+
+        ImageButton addPlaceBtn = view.findViewById(R.id.add_place_btn);
+
+        addPlaceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_placesList_to_addPlace);
             }
         });
 

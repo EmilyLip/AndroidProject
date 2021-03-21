@@ -16,12 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.DBModels.UserModel;
-import com.example.plantarium.Models.Place;
-import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.User;
-import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
 import com.example.plantarium.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -32,8 +28,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 public class LoginPageFragment extends Fragment  implements View.OnClickListener , Serializable {
 
@@ -43,7 +37,6 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
     private static final String TAG = "Main Fragment";
     private static final int RC_SIGN_IN = 7;
     UserModel userModel = new UserModel();
-    private LoginPageViewModel viewModel;
 
     SignInButton signInButton;
     View view;
@@ -70,14 +63,6 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
         textView.setText("התחברות עם חשבון גוגל");
 
         view.findViewById(R.id.login_button).setOnClickListener((View.OnClickListener) this);
-//        viewModel= new ViewModelProvider(this).get(LoginPageViewModel.class);
-//
-//        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
-//            @Override
-//            public void onChanged(List<Place> students) {
-//                updateUI(account);
-//            }
-//        });
 
         return view;
     }

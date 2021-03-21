@@ -1,11 +1,8 @@
 package com.example.plantarium.PlacesFragments;
 
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +11,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavGraphNavigator;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -31,14 +27,11 @@ import android.widget.ProgressBar;
 import com.example.plantarium.HomePageFragments.LoginPageFragment;
 import com.example.plantarium.Models.DBModels.PlaceMemberModel;
 import com.example.plantarium.Models.PlaceMember;
-import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.R;
 
 import java.io.IOException;
-import java.io.InputStream;
-
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
@@ -131,7 +124,7 @@ public class AddPlaceFragment extends Fragment {
                                 if (nav.getCurrentDestination().getId() == R.id.addPlaceFragment) {
                                     //AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
                                     progressBar.setVisibility(View.INVISIBLE);
-                                    nav.navigate(R.id.action_addPlace_to_placesList);
+                                    nav.popBackStack();
                                 }
                             }
                         });

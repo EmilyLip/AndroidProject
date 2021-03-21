@@ -35,7 +35,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/logout_button"
+                android:id="@+id/cancel_leave_btn"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_gravity="left"
@@ -47,7 +47,7 @@
                 app:backgroundTint="#FFFFFF"></Button>
 
             <Button
-                android:id="@+id/cancel_logout_button"
+                android:id="@+id/leave_btn"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_gravity="right"

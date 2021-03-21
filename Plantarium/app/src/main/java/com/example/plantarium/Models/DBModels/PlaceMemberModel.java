@@ -2,6 +2,7 @@ package com.example.plantarium.Models.DBModels;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -74,6 +75,19 @@ public class PlaceMemberModel {
                         listener.onComplete();
                     }
                 });
+            }
+        });
+    }
+
+    public interface  getPlaceMemberByPlaceAndUserListener {
+        void onComplete(PlaceMember o);
+    }
+
+    public void getPlaceMemberByPlaceAndUser(String user_email, String place_id, final getPlaceMemberByPlaceAndUserListener listener) {
+        modelSql.getPlaceMemberByPlaceAndUser(user_email, place_id, new getPlaceMemberByPlaceAndUserListener() {
+            @Override
+            public void onComplete(PlaceMember o) {
+                listener.onComplete((PlaceMember) o);
             }
         });
     }

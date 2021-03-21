@@ -18,6 +18,7 @@ public class PlaceMember {
     private String id;
     private String userEmail;
     private String placeId;
+    private int deleted; // 0 no 1 yes
     private Long lastUpdated;
 
     public PlaceMember(String _user_email, String _place_id) {
@@ -30,6 +31,14 @@ public class PlaceMember {
 
     public PlaceMember(){
 
+    }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
     }
 
     public String getUserEmail() {
@@ -70,6 +79,7 @@ public class PlaceMember {
         result.put("id", id);
         result.put("userEmail", userEmail);
         result.put("placeId", placeId);
+        result.put("deleted", deleted);
         result.put("lastUpdated", ServerValue.TIMESTAMP);
         return result;
     }

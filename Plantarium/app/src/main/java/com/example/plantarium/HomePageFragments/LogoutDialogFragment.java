@@ -14,8 +14,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.plantarium.HomePageFragments.LoginPageFragment;
-import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.R;
 
 
@@ -29,8 +27,8 @@ public class LogoutDialogFragment extends DialogFragment implements View.OnClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_logout_dialog, container, false);
-        view.findViewById(R.id.logout_button).setOnClickListener((View.OnClickListener) this);
-        view.findViewById(R.id.cancel_logout_button).setOnClickListener((View.OnClickListener) this);
+        view.findViewById(R.id.cancel_leave_btn).setOnClickListener((View.OnClickListener) this);
+        view.findViewById(R.id.leave_btn).setOnClickListener((View.OnClickListener) this);
         return view;
     }
 
@@ -41,12 +39,12 @@ public class LogoutDialogFragment extends DialogFragment implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.logout_button:
+            case R.id.cancel_leave_btn:
                 signOut();
                 NavHostFragment.findNavController(this).navigate(R.id.action_logoutDialogFragment_to_loginPageFragment);
                 this.dismiss();
                 break;
-            case R.id.cancel_logout_button:
+            case R.id.leave_btn:
                 this.dismiss();
                 break;
         }
