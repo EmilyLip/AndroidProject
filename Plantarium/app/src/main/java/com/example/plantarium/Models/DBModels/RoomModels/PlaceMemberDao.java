@@ -8,6 +8,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.User;
 
@@ -23,4 +24,7 @@ public interface PlaceMemberDao {
 
     @Delete
     void delete(PlaceMember placeMember);
+
+    @Query("select * from PlaceMember pm where pm.placeId= :place_id and pm.userEmail = :user_email")
+    PlaceMember getPlaceMemberByPlaceAndUser(String user_email, String place_id);
 }

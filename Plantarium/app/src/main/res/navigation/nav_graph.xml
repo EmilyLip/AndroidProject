@@ -11,9 +11,6 @@
         android:label="fragment_login_page"
         tools:layout="@layout/fragment_login_page" >
         <action
-            android:id="@+id/action_loginPage_to_noPlaces"
-            app:destination="@id/noPlacesFragment" />
-        <action
             android:id="@+id/action_loginPage_to_placesList"
             app:destination="@id/placesListFragment" />
     </fragment>
@@ -30,11 +27,7 @@
         android:id="@+id/addPlaceFragment"
         android:name="com.example.plantarium.PlacesFragments.AddPlaceFragment"
         android:label="fragment_manage_place"
-        tools:layout="@layout/fragment_manage_place" >
-        <action
-            android:id="@+id/action_addPlace_to_placesList"
-            app:destination="@id/placesListFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_manage_place" />
     <dialog
         android:id="@+id/logoutDialogFragment"
         android:name="com.example.plantarium.HomePageFragments.LogoutDialogFragment"
@@ -74,17 +67,30 @@
             android:id="@+id/action_placesList_to_noPlaces"
             app:destination="@id/noPlacesFragment" />
         <action
+            android:id="@+id/action_placesList_to_addPlace"
+            app:destination="@id/addPlaceFragment" />
+        <action
+            android:id="@+id/action_placesList_to_leavePlaceDialog"
+            app:destination="@id/leavePlaceDialog" />
+        <action
             android:id="@+id/action_placesList_to_placePlants"
             app:destination="@id/placePlantsFragment" />
     </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.plantarium.MainActivity"
-        android:label="fragment_place_listplants"
-        tools:layout="@layout/fragment_place_listplants" />
+    <dialog
+        android:id="@+id/leavePlaceDialog"
+        android:name="com.example.plantarium.PlacesFragments.leavePlaceDialog"
+        android:label="fragment_leave_place_dialog"
+        tools:layout="@layout/fragment_leave_place_dialog" >
+        <argument
+            android:name="place"
+            app:argType="com.example.plantarium.Models.Place" />
+    </dialog>
     <fragment
         android:id="@+id/placePlantsFragment"
         android:name="com.example.plantarium.PlaceFragments.PlacePlantsFragment"
-        android:label="fragment_place_listplants"
-        tools:layout="@layout/fragment_place_listplants"/>
+        android:label="PlacePlantsFragment" >
+        <argument
+            android:name="place"
+            app:argType="com.example.plantarium.Models.Place" />
+    </fragment>
 </navigation>
