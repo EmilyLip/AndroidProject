@@ -16,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.plantarium.HomePageFragments.LoginPageFragment;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.MyApplication;
 import com.example.plantarium.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -46,26 +48,35 @@ public class PlacesListFragment extends Fragment {
         placesList.setAdapter(adapter);
         view.findViewById(R.id.progressBarList).setVisibility(View.VISIBLE);
 
+        PlaceModel.instance.refreshAllPlaces(new PlaceModel.GetAllPlacesListener() {
+            @Override
+            public void onComplete() {
+                view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
+            }
+        });
+
         viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<Place>>() {
             @Override
             public void onChanged(List<Place> places) {
                 adapter.updateList(places);
                 view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
-                if(places.size() == 0 ){
-                    Navigation.findNavController(view).navigate(R.id.action_placesList_to_noPlaces);
-                }
             }
         });
 
         viewModel.getPlaceMembersListList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
             @Override
             public void onChanged(List<PlaceMember> placeMembers) {
-                PlaceModel.instance.refreshAllPlaces(new PlaceModel.GetAllPlacesListener() {
-                    @Override
-                    public void onComplete() {
-                        view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
+                boolean isFoundInPlace = false;
+                if(placeMembers != null && placeMembers.size() > 0 ){
+                    for(PlaceMember placeMember : placeMembers){
+                        if(placeMember.getUserEmail().equals(LoginPageFragment.getAccount().getEmail()) && placeMember.getDeleted() != 1){
+                            isFoundInPlace = true;
+                        }
                     }
-                });
+                    if(!isFoundInPlace){
+                        Navigation.findNavController(view).navigate(R.id.action_placesList_to_noPlaces);
+                    }
+                }
             }
         });
 
@@ -83,7 +94,7 @@ public class PlacesListFragment extends Fragment {
             }
         });
 
-        ImageButton addPlaceBtn = view.findViewById(R.id.add_place_btn);
+        FloatingActionButton addPlaceBtn = view.findViewById(R.id.add_place_btn);
 
         addPlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override

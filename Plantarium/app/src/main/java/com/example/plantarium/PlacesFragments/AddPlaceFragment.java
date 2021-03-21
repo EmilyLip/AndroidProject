@@ -135,9 +135,9 @@ public class AddPlaceFragment extends Fragment {
                             @Override
                             public void onComplete() {
                                 if (nav.getCurrentDestination().getId() == R.id.addPlaceFragment) {
-                                    //AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
+                                    AddPlaceFragmentDirections.ActionAddPlaceFragmentToPlacePlantsFragment action = AddPlaceFragmentDirections.actionAddPlaceFragmentToPlacePlantsFragment(newPlace);
                                     progressBar.setVisibility(View.INVISIBLE);
-                                    nav.popBackStack();
+                                    nav.navigate(action);
                                 }
                             }
                         });

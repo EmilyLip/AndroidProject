@@ -6,4 +6,10 @@
         android:icon="@drawable/icon"
         android:title="Item"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/go_to_places"
+        android:icon="@drawable/places"
+        android:title="Item"
+        app:showAsAction="always" />
 </menu>

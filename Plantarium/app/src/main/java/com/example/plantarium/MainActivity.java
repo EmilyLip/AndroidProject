@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Locale;
@@ -38,9 +39,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFFFF")));
         actionBar.setTitle(Html.fromHtml("<font color='#008290'>Plantarium</font>"));
         navController = Navigation.findNavController(this, R.id.fragment_navhost);
-        //NavigationUI.setupActionBarWithNavController(this, navController);
+
         NavigationView navigationView = findViewById(R.id.nav_controller_view_tag);
-        //NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override

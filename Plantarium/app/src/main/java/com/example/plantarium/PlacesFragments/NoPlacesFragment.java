@@ -3,6 +3,7 @@ package com.example.plantarium.PlacesFragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -27,11 +28,13 @@ public class NoPlacesFragment extends Fragment {
         createPlaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_noPlaces_to_addPlace);
+                NavController nav = Navigation.findNavController(view);
+                if (nav.getCurrentDestination().getId() == R.id.noPlacesFragment) {
+                    NoPlacesFragmentDirections.ActionNoPlacesToAddPlace action = NoPlacesFragmentDirections.actionNoPlacesToAddPlace(null);
+                    nav.navigate(action);
+                }
             }
         });
         return view;
     }
-
-
 }
