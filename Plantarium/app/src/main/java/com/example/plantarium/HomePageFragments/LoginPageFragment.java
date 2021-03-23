@@ -3,6 +3,9 @@ package com.example.plantarium.HomePageFragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -12,6 +15,9 @@ import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -137,6 +143,20 @@ public class LoginPageFragment extends Fragment  implements View.OnClickListener
                 nav.navigate(R.id.action_loginPage_to_placesList);
             }
         }
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item=menu.findItem(R.id.go_to_places);
+        if(item!=null)
+            item.setVisible(false);
     }
 
     public static GoogleSignInClient getmGoogleSignInClient(){

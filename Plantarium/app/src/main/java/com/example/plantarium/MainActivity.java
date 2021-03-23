@@ -1,12 +1,15 @@
 package com.example.plantarium;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,7 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Locale;
@@ -24,7 +29,9 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Main Activity";
     NavController navController;
+    BottomNavigationView bottomNavigationView;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +45,47 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFFFF")));
         actionBar.setTitle(Html.fromHtml("<font color='#008290'>Plantarium</font>"));
         navController = Navigation.findNavController(this, R.id.fragment_navhost);
-        //NavigationUI.setupActionBarWithNavController(this, navController);
+
         NavigationView navigationView = findViewById(R.id.nav_controller_view_tag);
-        //NavigationUI.setupWithNavController(navigationView, navController);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case  R.id.members_menu_item:
+                        // TODO: change and find way to pass args (maybe global place)
+                        navController.navigate(R.id.logoutDialogFragment);
+                        return true;
+                    case  R.id.plants_menu_item:
+                        navController.navigate(R.id.placePlantsFragment);
+                        return true;
+                    case  R.id.prizes_menu_item:
+                        // TODO: change and find way to pass args (maybe global place)
+                        navController.navigate(R.id.placesListFragment);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        visibilityNavElements(navController);
+
+    }
+
+    private void visibilityNavElements(NavController navController) {
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller,
+                                             @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.placePlantsFragment ||
+                   destination.getId() == R.id.emptyPlaceView ||
+                   destination.getId() == R.id.placePlantsFragment ) {
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                } else {
+                    bottomNavigationView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -53,12 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.logout_manu_button){
-            Log.w(TAG, R.id.logout_manu_button + " ");
-            navController.navigate(R.id.logoutDialogFragment);
-           return true;
+        switch (item.getItemId()){
+            case  R.id.logout_manu_button:
+                navController.navigate(R.id.logoutDialogFragment);
+                return true;
+            case  R.id.go_to_places:
+                navController.navigate(R.id.placesListFragment);
+                return true;
+            default:
+                return NavigationUI.onNavDestinationSelected(item,navController);
         }
-        return NavigationUI.onNavDestinationSelected(item,navController);
     }
-
 }

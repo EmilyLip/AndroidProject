@@ -32,6 +32,9 @@
             android:name="place"
             app:argType="com.example.plantarium.Models.Place"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_addPlaceFragment_to_placePlantsFragment"
+            app:destination="@id/placePlantsFragment" />
     </fragment>
     <dialog
         android:id="@+id/logoutDialogFragment"
