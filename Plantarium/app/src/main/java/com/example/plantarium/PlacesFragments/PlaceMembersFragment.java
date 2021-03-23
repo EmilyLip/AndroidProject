@@ -64,20 +64,20 @@ public class PlaceMembersFragment extends Fragment {
             }
         });
 
-        viewModel= new ViewModelProvider(this).get(PlaceMembersViewModel.class);
-        viewModel.getPlaceMembersList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
-            @Override
-            public void onChanged(List<PlaceMember> places) {
-                
-            }
-        });
-
-        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> placeMembers) {
-
-            }
-        });
+          //viewModel= new ViewModelProvider(this).get(PlaceMembersViewModel.class);
+//        viewModel.getPlaceMembersList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
+//            @Override
+//            public void onChanged(List<PlaceMember> places) {
+//
+//            }
+//        });
+//
+//        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
+//            @Override
+//            public void onChanged(List<User> placeMembers) {
+//
+//            }
+//        });
 
         return view;
     }
