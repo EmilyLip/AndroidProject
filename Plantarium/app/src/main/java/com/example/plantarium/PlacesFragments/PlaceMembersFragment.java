@@ -64,20 +64,31 @@ public class PlaceMembersFragment extends Fragment {
             }
         });
 
-          //viewModel= new ViewModelProvider(this).get(PlaceMembersViewModel.class);
-//        viewModel.getPlaceMembersList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
-//            @Override
-//            public void onChanged(List<PlaceMember> places) {
-//
-//            }
-//        });
-//
-//        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
-//            @Override
-//            public void onChanged(List<User> placeMembers) {
-//
-//            }
-//        });
+        viewModel= new ViewModelProvider(this).get(PlaceMembersViewModel.class);
+        viewModel.getPlaceMembersList().observe(getViewLifecycleOwner(), new Observer<List<PlaceMember>>() {
+            @Override
+            public void onChanged(List<PlaceMember> places) {
+
+            }
+        });
+
+        viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> placeMembers) {
+                boolean isAlone = true;
+                for(User user: placeMembers){
+                    if(!user.getEmail().equals(LoginPageFragment.getAccount().getEmail())){
+                        isAlone = false;
+                    }
+                }
+                if(isAlone) {
+                    view.findViewById(R.id.no_place_members_view).setVisibility(View.VISIBLE);
+                }
+                else {
+                    view.findViewById(R.id.place_members_users_list_view).setVisibility(View.VISIBLE);
+                }
+            }
+         });
 
         return view;
     }
