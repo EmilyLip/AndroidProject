@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.User;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
+    @Query("select u.* from User u, PlaceMember pm where u.email = pm.userEmail and pm.placeId = :place_id and pm.deleted = 0")
+    LiveData<List<User>> getAllPlaceMembersUser(String place_id);
 }

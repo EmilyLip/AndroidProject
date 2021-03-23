@@ -51,9 +51,9 @@ public class UserModel {
     }
 
     LiveData<List<User>> users;
-    public LiveData<List<User>> getAllUsers() {
+    public LiveData<List<User>> getAllPlaceMembersUser(String place_id) {
         if (users == null){
-            users = modelSql.getAllUsers();
+            users = modelSql.getAllPlaceMembersUser(place_id);
             refreshAllUsers(null);
         }
         return users;

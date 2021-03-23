@@ -32,6 +32,8 @@ public class PlacesListFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     private PlacesListViewModel viewModel;
     public PlacesListAdapter adapter;
+    public Place currPlace = null;
+    public final static PlacesListFragment instance = new PlacesListFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,6 +88,7 @@ public class PlacesListFragment extends Fragment {
                 Log.d("TAG","row was clicked " + viewModel.getUsersPlaceList().getValue().get(position).getName());
                 // TODO: Zohar you can navigate to place plants here
                 Place place = viewModel.getUsersPlaceList().getValue().get(position);
+                instance.currPlace = place;
                 NavController nav = Navigation.findNavController(view);
                 if (nav.getCurrentDestination().getId() == R.id.placesListFragment) {
                    PlacesListFragmentDirections.ActionPlacesListToPlacePlants action = PlacesListFragmentDirections.actionPlacesListToPlacePlants(place);
@@ -108,5 +111,9 @@ public class PlacesListFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public Place getCurrPlace() {
+        return currPlace;
     }
 }

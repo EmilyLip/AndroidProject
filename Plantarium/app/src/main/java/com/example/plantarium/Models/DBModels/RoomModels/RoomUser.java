@@ -1,5 +1,6 @@
 package com.example.plantarium.Models.DBModels.RoomModels;
 
+import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -37,5 +38,9 @@ public class RoomUser {
         };
         MyAsyncTask task = new MyAsyncTask();
         task.execute();
+    }
+
+    public LiveData<List<User>> getAllPlaceMembersUser(String place_id){
+        return AppLocalDb.db.userDao().getAllPlaceMembersUser(place_id);
     }
 }

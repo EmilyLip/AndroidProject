@@ -46,13 +46,14 @@
             app:destination="@id/loginPageFragment" />
     </dialog>
     <fragment
-        android:id="@+id/emptyPlaceView"
-        android:name="com.example.plantarium.PlacesFragments.EmptyPlaceViewFragment"
+        android:id="@+id/placeMembersFragmnet"
+        android:name="com.example.plantarium.PlacesFragments.PlaceMembersFragment"
         android:label="fragment_empty_place_view"
-        tools:layout="@layout/fragment_empty_place_view" >
+        tools:layout="@layout/fragment_place_members" >
         <argument
             android:name="Place"
-            app:argType="com.example.plantarium.Models.Place" />
+            app:argType="com.example.plantarium.Models.Place"
+            app:nullable="true" />
         <action
             android:id="@+id/action_emptyPlaceView_to_addMemberToPlace"
             app:destination="@id/addMemberToPlace" />
