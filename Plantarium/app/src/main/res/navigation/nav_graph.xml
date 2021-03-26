@@ -97,7 +97,19 @@
     <fragment
         android:id="@+id/placePlantsFragment"
         android:name="com.example.plantarium.PlaceFragments.PlacePlantsFragment"
-        android:label="PlacePlantsFragment" >
+        android:label="fragment_place_listplants">
+        <argument
+            android:name="place"
+            app:argType="com.example.plantarium.Models.Place" />
+        <action
+            android:id="@+id/action_placePlants_to_addPlantToPlace"
+            app:destination="@id/addPlantToPlace" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPlantToPlace"
+        android:name="com.example.plantarium.PlaceFragments.addPlantToPlace"
+        android:label="fragment_add_plant_to_place"
+        tools:layout="@layout/fragment_add_plant_to_place" >
         <argument
             android:name="place"
             app:argType="com.example.plantarium.Models.Place" />

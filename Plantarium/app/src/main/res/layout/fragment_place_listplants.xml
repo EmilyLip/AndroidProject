@@ -77,4 +77,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/light_blue" />
 
+    <TextView
+        android:id="@+id/plants_list_empty1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="69dp"
+        android:text="מקום חדש?"
+        android:textColor="@color/orange"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/place_plants_place_image" />
+
+    <TextView
+        android:id="@+id/plants_list_empty2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="אפשר להוסיף צמחים כאן למטה!"
+        android:textColor="@color/light_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plants_list_empty1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

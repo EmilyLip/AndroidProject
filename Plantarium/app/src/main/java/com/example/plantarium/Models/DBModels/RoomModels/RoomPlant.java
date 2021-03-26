@@ -14,9 +14,10 @@ public class RoomPlant {
         return AppLocalDb.db.plantDao().getAllPlants();
     }
 
-    public interface AddPlantListener{
-        void onComplete();
+    public LiveData<List<Plant>> getAllPlantsByPlace(String placeId){
+        return AppLocalDb.db.plantDao().getAllPlantsByPlaceId(placeId);
     }
+
     public void addPlant(final Plant plant, final PlantModel.UpdatePlantListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override

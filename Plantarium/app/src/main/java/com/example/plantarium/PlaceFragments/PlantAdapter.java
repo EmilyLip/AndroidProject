@@ -11,17 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.Plant;
 import com.example.plantarium.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHolder> {
 
     LayoutInflater inflater;
-    List<Plant> mData;
+    LiveData<List<Plant>> mData;
 
-    public PlantAdapter(List<Plant> data, LayoutInflater inflater) {
+    public PlantAdapter(LiveData<List<Plant>> data, LayoutInflater inflater) {
         mData = data;
         this.inflater = inflater;
     }
@@ -36,16 +38,15 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
 
     @Override
     public void onBindViewHolder(@NonNull PlantViewHolder holder, int i) {
-        Plant p = mData.get(i);
+        Plant p = mData.getValue().get(i);
         holder.plantName.setText(p.getName());
-        holder.lastWatering.setText("יום שלישי");
-        //holder.plantImg.setText(str);
+        holder.lastWatering.setText("לפני x ימים");
         holder.itemView.setTag(i);
     }
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData.getValue() != null ? mData.getValue().size() : 0;
     }
 
     static class PlantViewHolder extends RecyclerView.ViewHolder {

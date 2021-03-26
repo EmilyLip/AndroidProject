@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlaceFragments.addPlantToPlace">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ProgressBar
+        android:id="@+id/add_plant_progressBarImage"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="79dp"
+        android:layout_height="77dp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_plant_place_image"
+        app:layout_constraintEnd_toEndOf="@+id/add_plant_place_image"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/add_plant_place_image"
+        app:layout_constraintTop_toTopOf="@+id/add_plant_place_image"
+        app:layout_constraintVertical_bias="0.666" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/add_plant_place_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        app:civ_border_color="#008290"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.259"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.028" />
+
+    <TextView
+        android:id="@+id/add_plant_place_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="TextView"
+        android:textColor="#008290"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/add_plant_place_image"
+        app:layout_constraintEnd_toStartOf="@+id/place_image"
+        app:layout_constraintStart_toEndOf="@+id/add_plant_place_image"
+        app:layout_constraintTop_toTopOf="@+id/add_plant_place_image" />
+
+    <EditText
+        android:id="@+id/edit_plant_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:hint="סוג הצמח..."
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.213"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_plant_name" />
+
+    <EditText
+        android:id="@+id/edit_plant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:hint="שם הצמח..."
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="448dp"
+        android:text="הוו תתחדשו!"
+        android:textColor="@color/orange"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_plant_progressBarImage"
+        app:layout_constraintVertical_bias="0.087" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <CheckBox
+            android:id="@+id/wateringDays_day1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center|top"
+            android:text="א"
+            tools:layout_editor_absoluteX="327dp"
+            tools:layout_editor_absoluteY="259dp" />
+
+        <CheckBox
+            android:id="@+id/wateringDays_day2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center|top"
+            android:text="ב"
+            tools:layout_editor_absoluteX="279dp"
+            tools:layout_editor_absoluteY="259dp" />
+
+        <CheckBox
+            android:id="@+id/wateringDays_day3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center|top"
+            android:text="ג"
+            tools:layout_editor_absoluteX="231dp"
+            tools:layout_editor_absoluteY="259dp" />
+
+        <CheckBox
+            android:id="@+id/wateringDays_day4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center|top"
+            android:text="ד"
+            tools:layout_editor_absoluteX="183dp"
+            tools:layout_editor_absoluteY="259dp" />
+
+        <CheckBox
+            android:id="@+id/wateringDays_day5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center|top"
+            android:text="ה"
+            tools:layout_editor_absoluteX="135dp"
+            tools:layout_editor_absoluteY="259dp" />
+
+        <CheckBox
+            android:id="@+id/wateringDays_day6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center|top"
+            android:text="ו"
+            tools:layout_editor_absoluteX="87dp"
+            tools:layout_editor_absoluteY="259dp" />
+
+        <CheckBox
+            android:id="@+id/wateringDays_day7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center|top"
+            android:text="ש"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="259dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="21dp"
+        android:text="*"
+        android:textColor="#E60E57"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_plant_name"
+        app:layout_constraintEnd_toStartOf="@+id/edit_plant_name"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_plant_name" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:lineSpacingExtra="22sp"
+        android:text="באילו ימים צריך להשקות את הצמח?"
+        android:textColor="@color/gray_2"
+        android:textColorHint="@color/gray_2"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_plant_type" />
+
+    <ProgressBar
+        android:id="@+id/add_plant_progressbar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="70dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/save_plant" />
+
+    <Button
+        android:id="@+id/save_plant"
+        android:layout_width="135dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="32dp"
+        android:text="צור צמח"
+        android:textSize="22sp"
+        app:backgroundTint="@color/light_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

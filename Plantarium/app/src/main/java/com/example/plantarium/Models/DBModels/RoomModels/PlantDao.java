@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.Plant;
 import com.example.plantarium.Models.User;
 
@@ -22,4 +23,7 @@ public interface PlantDao {
 
     @Delete
     void delete(Plant plant);
+
+    @Query("select p.* from Plant p where p.placeId = :place_id and p.deleted = 0")
+    LiveData<List<Plant>> getAllPlantsByPlaceId(String place_id);
 }
