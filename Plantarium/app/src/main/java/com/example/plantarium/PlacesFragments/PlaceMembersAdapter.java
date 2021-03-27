@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plantarium.Models.User;
 import com.example.plantarium.MyApplication;
 import com.example.plantarium.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PlaceMembersAdapter extends RecyclerView.Adapter<PlaceMembersAdapter.PlaceMembersViewHolder>{
@@ -40,7 +44,7 @@ public class PlaceMembersAdapter extends RecyclerView.Adapter<PlaceMembersAdapte
     @Override
     public PlaceMembersAdapter.PlaceMembersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) MyApplication.context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-        View view = inflater.inflate(R.layout.row_view_places_list_item, parent, false);
+        View view = inflater.inflate(R.layout.row_view_place_members_list_item, parent, false);
         PlaceMembersViewHolder holder = new PlaceMembersViewHolder(view);
         holder.listener = mListener;
         return holder;
@@ -49,6 +53,12 @@ public class PlaceMembersAdapter extends RecyclerView.Adapter<PlaceMembersAdapte
     @Override
     public void onBindViewHolder(@NonNull PlaceMembersAdapter.PlaceMembersViewHolder holder, int position) {
         User user = mData.get(position);
+        holder.userName.setText(user.getFullname());
+        holder.userEmail.setText(user.getEmail());
+
+        if(user.getImageUrl() != null && !user.getImageUrl().equals("")){
+            Picasso.get().load(user.getImageUrl()).into(holder.userImage);
+        }
     }
 
     @Override
@@ -63,9 +73,15 @@ public class PlaceMembersAdapter extends RecyclerView.Adapter<PlaceMembersAdapte
     }
     class PlaceMembersViewHolder extends RecyclerView.ViewHolder{
         public OnItemClickListener listener;
+        CircleImageView userImage;
+        TextView userName;
+        TextView userEmail;
 
         public PlaceMembersViewHolder(@NonNull View itemView) {
             super(itemView);
+            userImage = itemView.findViewById(R.id.user_place_members_image);
+            userName = itemView.findViewById(R.id.user_place_members_name);
+            userEmail = itemView.findViewById(R.id.user_place_members_email);
         }
     }
 }
