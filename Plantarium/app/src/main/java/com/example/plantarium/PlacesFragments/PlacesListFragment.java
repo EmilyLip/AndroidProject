@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.plantarium.HomePageFragments.LoginPageFragment;
+import com.example.plantarium.Models.DBModels.PlaceMemberModel;
 import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.PlaceMember;
@@ -51,6 +52,13 @@ public class PlacesListFragment extends Fragment {
         view.findViewById(R.id.progressBarList).setVisibility(View.VISIBLE);
 
         PlaceModel.instance.refreshAllPlaces(new PlaceModel.GetAllPlacesListener() {
+            @Override
+            public void onComplete() {
+                view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
+            }
+        });
+
+        PlaceMemberModel.instance.refreshAllPlaceMembers(new PlaceMemberModel.GetAllPlaceMembersListener() {
             @Override
             public void onComplete() {
                 view.findViewById(R.id.progressBarList).setVisibility(View.INVISIBLE);
