@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plantarium.Models.DBModels.PlantModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.Plant;
+import com.example.plantarium.PlacesFragments.PlacesListFragment;
 import com.example.plantarium.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -43,7 +44,7 @@ public class PlacePlantsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_place_listplants, container, false);
 
-        Place place = PlacePlantsFragmentArgs.fromBundle(getArguments()).getPlace();
+        Place place = PlacesListFragment.instance.getCurrPlace();
         TextView placeName = view.findViewById(R.id.place_plants_place_name);
         CircleImageView placeImage = view.findViewById(R.id.place_plants_place_image);
         plantsList = view.findViewById(R.id.placef_plantslist);

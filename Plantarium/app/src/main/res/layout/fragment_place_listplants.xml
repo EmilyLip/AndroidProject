@@ -25,7 +25,7 @@
         android:layout_marginEnd="8dp"
         android:cropToPadding="true"
         android:src="@drawable/google_logo"
-        app:civ_border_color="@color/dark_blue"
+        app:civ_border_color="@color/light_blue"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toStartOf="@+id/place_plants_place_name"
         app:layout_constraintHorizontal_bias="0.5"
@@ -41,7 +41,7 @@
         android:layout_marginStart="8dp"
         android:gravity="center"
         android:text="TextView"
-        android:textColor="@color/dark_blue"
+        android:textColor="@color/light_blue"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/place_plants_place_image"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,18 +63,20 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_plant"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         android:contentDescription="הוספת צמח"
         android:src="@drawable/add_plant"
         app:backgroundTint="@color/white"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.99"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9"
         app:tint="@color/light_blue" />
 
     <TextView

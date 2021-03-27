@@ -58,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
                     case  R.id.plants_menu_item:
                         navController.navigate(R.id.placePlantsFragment);
                         return true;
-                    case  R.id.prizes_menu_item:
-                        // TODO: change and find way to pass args (maybe global place)
-                        navController.navigate(R.id.placesListFragment);
-                        return true;
                     default:
                         return false;
                 }
@@ -77,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDestinationChanged(@NonNull NavController controller,
                                              @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 if(destination.getId() == R.id.placePlantsFragment ||
-                   destination.getId() == R.id.placeMembersFragmnet ||
-                   destination.getId() == R.id.placePlantsFragment ) {
+                   destination.getId() == R.id.placeMembersFragmnet ) {
                     bottomNavigationView.setVisibility(View.VISIBLE);
                 } else {
                     bottomNavigationView.setVisibility(View.GONE);
@@ -98,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case  R.id.logout_manu_button:
+            case R.id.logout_manu_button:
                 navController.navigate(R.id.logoutDialogFragment);
                 return true;
-            case  R.id.go_to_places:
+            case R.id.go_to_places:
                 navController.navigate(R.id.placesListFragment);
                 return true;
             default:
