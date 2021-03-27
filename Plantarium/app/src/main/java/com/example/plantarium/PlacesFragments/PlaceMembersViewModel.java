@@ -17,9 +17,9 @@ public class PlaceMembersViewModel extends ViewModel {
     private LiveData<List<PlaceMember>> placeMembers;
     private LiveData<List<User>> placeMembersUsers;
 
-    public PlaceMembersViewModel(String place_id){
+    public PlaceMembersViewModel(){
         Log.d("TAG","PlaceMembersViewModel");
-        placeMembersUsers = UserModel.instance.getAllPlaceMembersUser(place_id);
+        placeMembersUsers = UserModel.instance.getAllPlaceMembersUser(PlacesListFragment.instance.getCurrPlace().getId());
         placeMembers = PlaceMemberModel.instance.getAllPlaceMembers();
     }
 

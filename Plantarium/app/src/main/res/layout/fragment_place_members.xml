@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/off_white"
     android:theme="@style/Theme.Plantarium"
     tools:context=".PlacesFragments.PlaceMembersFragment">
 
@@ -49,48 +50,101 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.051" />
 
-    <TextView
-        android:id="@+id/quite_text"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_user_place_member_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="די שקט פה.. "
-        android:textColor="#008290"
-        android:textSize="24sp"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="16dp"
+        android:contentDescription="הוספת משתמש"
+        android:src="@drawable/add_people"
+        app:backgroundTint="@color/white"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/place_image"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.915"
+        app:tint="@color/light_blue" />
 
-    <Button
-        android:id="@+id/addMemberBtn"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:text="הגיע הזמן לצרף חברים"
-        android:textColorHighlight="#FFFFFF"
-        android:textSize="18sp"
-        app:backgroundTint="#008290"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quite_text"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <TextView
-        android:id="@+id/be_alone_text"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/no_place_members_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="או שבינתיים נהיה כאן לבד"
-        android:textColor="#008290"
-        android:textSize="18sp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addMemberBtn"
-        app:layout_constraintVertical_bias="0.161" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBarImage"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/be_alone_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="או שבינתיים נהיה כאן לבד"
+            android:textColor="#008290"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addMemberBtn"
+            app:layout_constraintVertical_bias="0.112" />
+
+        <Button
+            android:id="@+id/addMemberBtn"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:text="הגיע הזמן לצרף חברים"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="18sp"
+            app:backgroundTint="#008290"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/quite_text"
+            app:layout_constraintVertical_bias="0.139" />
+
+        <TextView
+            android:id="@+id/quite_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="די שקט פה.. "
+            android:textColor="#008290"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.472"
+            app:layout_constraintStart_toStartOf="@+id/addMemberBtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.081" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/place_members_users_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/place_members_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarPlaceMembers"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="421dp"
+        android:layout_height="603dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
