@@ -170,28 +170,28 @@ public class AddPlaceFragment extends Fragment {
     }
 
     private void showFileChooser() {
-        final CharSequence[] options = { "צלם תמונה", "בחר מהגלריה","בטל" };
+        final CharSequence[] options = { "צילום תמונה", "בחירה מהגלריה","ביטול" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("בחר תמונה עבור המקום שלך");
+        builder.setTitle("בחירת תמונה עבור ההשקייה");
 
         builder.setItems(options, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int item) {
 
-                if (options[item].equals("צלם תמונה")) {
+                if (options[item].equals("צילום תמונה")) {
                     Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(takePicture, 0);
 
-                } else if (options[item].equals("בחר מהגלריה")) {
+                } else if (options[item].equals("בחירה מהגלריה")) {
                     //Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     //startActivityForResult(pickPhoto , 1);
                     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                     photoPickerIntent.setType("image/*");
                     startActivityForResult(photoPickerIntent, 1);
 
-                } else if (options[item].equals("בטל")) {
+                } else if (options[item].equals("ביטול")) {
                     dialog.dismiss();
                 }
             }

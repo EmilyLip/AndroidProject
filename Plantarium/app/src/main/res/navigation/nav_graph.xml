@@ -97,7 +97,8 @@
     <fragment
         android:id="@+id/placePlantsFragment"
         android:name="com.example.plantarium.PlaceFragments.PlacePlantsFragment"
-        android:label="fragment_place_listplants">
+        android:label="fragment_place_listplants"
+        tools:layout="@layout/fragment_place_listplants">
         <argument
             android:name="place"
             app:argType="com.example.plantarium.Models.Place"
@@ -105,6 +106,9 @@
         <action
             android:id="@+id/action_placePlants_to_addPlantToPlace"
             app:destination="@id/addPlantToPlace" />
+        <action
+            android:id="@+id/action_placePlants_to_plantWateringList"
+            app:destination="@id/plantWateringListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPlantToPlace"
@@ -114,5 +118,38 @@
         <argument
             android:name="place"
             app:argType="com.example.plantarium.Models.Place" />
+        <argument
+            android:name="plant"
+            app:argType="com.example.plantarium.Models.Plant"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/plantWateringListFragment"
+        android:name="com.example.plantarium.PlaceFragments.plantWateringListFragment"
+        android:label="fragment_plant_watering_list"
+        tools:layout="@layout/fragment_plant_watering_list" >
+        <argument
+            android:name="plant"
+            app:argType="com.example.plantarium.Models.Plant"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_plantWateringList_to_addWatering"
+            app:destination="@id/addWateringFragment" />
+        <action
+            android:id="@+id/action_plantWateringList_to_addPlantToPlace"
+            app:destination="@id/addPlantToPlace" />
+    </fragment>
+    <fragment
+        android:id="@+id/addWateringFragment"
+        android:name="com.example.plantarium.PlaceFragments.addWateringFragment"
+        android:label="fragment_add_watering"
+        tools:layout="@layout/fragment_add_watering" >
+        <argument
+            android:name="plant"
+            app:argType="com.example.plantarium.Models.Plant" />
+        <argument
+            android:name="watering"
+            app:argType="com.example.plantarium.Models.Watering"
+            app:nullable="true" />
     </fragment>
 </navigation>

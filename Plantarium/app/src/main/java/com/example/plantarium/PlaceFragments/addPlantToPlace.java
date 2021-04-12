@@ -38,8 +38,9 @@ public class addPlantToPlace extends Fragment {
     AppCompatEditText plantType;
     PlantModel plantModel = new PlantModel();
     ArrayList<CheckBox> wateringDaysCheckboxes = new ArrayList<CheckBox>();
-    ProgressBar progressBar;
+    ProgressBar progressbar;
     Place place;
+    Plant plant;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +52,6 @@ public class addPlantToPlace extends Fragment {
         plantName = view.findViewById(R.id.edit_plant_name);
         plantType = view.findViewById(R.id.edit_plant_type);
         savePlantBtn = view.findViewById(R.id.save_plant);
-        View wateringDay = view.findViewById(R.id.wateringDays_day1);
         wateringDaysCheckboxes.add(0, null);
         wateringDaysCheckboxes.add(1, (CheckBox)(view.findViewById(R.id.wateringDays_day1)));
         wateringDaysCheckboxes.add(2, (CheckBox)(view.findViewById(R.id.wateringDays_day2)));
@@ -60,30 +60,58 @@ public class addPlantToPlace extends Fragment {
         wateringDaysCheckboxes.add(5, (CheckBox)(view.findViewById(R.id.wateringDays_day5)));
         wateringDaysCheckboxes.add(6, (CheckBox)(view.findViewById(R.id.wateringDays_day6)));
         wateringDaysCheckboxes.add(7, (CheckBox)(view.findViewById(R.id.wateringDays_day7)));
-        progressBar = view.findViewById(R.id.add_plant_progressbar);
-        progressBar.setVisibility(View.INVISIBLE);
+        progressbar = view.findViewById(R.id.add_plant_progressbar);
+        progressbar.setVisibility(View.INVISIBLE);
 
         CircleImageView placeImage = view.findViewById(R.id.add_plant_place_image);
         TextView placeName = view.findViewById(R.id.add_plant_place_name);
-        ProgressBar progressBarImg = view.findViewById(R.id.add_plant_progressBarImage);
+        ProgressBar progressbarImg = view.findViewById(R.id.add_plant_progressBarImage);
 
         placeName.setText(place.getName());
         placeImage.setVisibility(View.INVISIBLE);
-        progressBarImg.setVisibility(View.VISIBLE);
+        progressbarImg.setVisibility(View.VISIBLE);
         if (place.getImageUrl() != null){
             Picasso.get().load(place.getImageUrl()).into(placeImage);
             placeImage.setVisibility(View.VISIBLE);
-            progressBarImg.setVisibility(View.INVISIBLE);
+            progressbarImg.setVisibility(View.INVISIBLE);
         }
 
-        savePlantBtn.setEnabled(false);
+        // EDIT MODE
+        plant = addPlantToPlaceArgs.fromBundle(getArguments()).getPlant();
+        if (plant != null){
+            placeName.setText(place.getName());
+            TextView title = view.findViewById(R.id.add_plant_title);
+            title.setText("מה השתנה?");
+            savePlantBtn.setText("שמור");
+            plantName.setText(plant.getName());
+            plantType.setText(plant.getType());
+            ArrayList<Integer> wateringDaysInt = plant.getWateringDays();
+
+            // TODO: fix java.lang.Double cannot be cast to java.lang.Integer
+            //Double[] wateringDaysArr = wateringDaysInt.toArray(new Double[0]);
+//            String s;
+//            String s1;
+//            for (int i = 1; i <= 7; i++) {
+//                s = wateringDaysInt.get(i).toString();
+//                s1 = "1.0";
+//                Log.d("TAG", s + ", " + s1);
+//                wateringDaysCheckboxes.get(i).setChecked(s1.equals(s));
+//            }
+
+            savePlantBtn.setEnabled(true);
+        } else { // NEW PLANT
+            savePlantBtn.setEnabled(false);
+        }
 
         savePlantBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 // save plant to db
-                savePlant();
+                if (plant == null)
+                    savePlant();
+                else
+                    editPlant();
             }
         });
 
@@ -120,15 +148,36 @@ public class addPlantToPlace extends Fragment {
                 place.getId(),
                 wateringDaysInt);
 
-        progressBar.setVisibility(View.VISIBLE);
+        progressbar.setVisibility(View.VISIBLE);
         NavController nav = Navigation.findNavController(view);
 
         plantModel.updatePlant(newPlant, new PlantModel.UpdatePlantListener() {
             @Override
             public void onComplete() {
                 if (nav.getCurrentDestination().getId() == R.id.addPlantToPlace) {
+                    progressbar.setVisibility(View.INVISIBLE);
+                    nav.popBackStack();
+                }
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void editPlant() {
+        ArrayList<Integer> wateringDaysInt = (ArrayList<Integer>) wateringDaysCheckboxes.stream().map(ch -> ch != null ? (ch.isChecked() ? 1 : 0) : 0).collect(Collectors.toList());
+
+        plant.setName(plantName.getText().toString());
+        plant.setType(plantType.getText().toString());
+        plant.setWateringDays(wateringDaysInt);
+        progressbar.setVisibility(View.VISIBLE);
+
+        NavController nav = Navigation.findNavController(view);
+        plantModel.updatePlant(plant, new PlantModel.UpdatePlantListener() {
+            @Override
+            public void onComplete() {
+                if (nav.getCurrentDestination().getId() == R.id.addPlantToPlace) {
                     //AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressbar.setVisibility(View.INVISIBLE);
                     nav.popBackStack();
                 }
             }

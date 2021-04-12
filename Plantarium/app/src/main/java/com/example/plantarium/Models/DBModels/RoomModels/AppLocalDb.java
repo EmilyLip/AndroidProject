@@ -7,12 +7,13 @@ import androidx.room.RoomDatabase;
 import com.example.plantarium.Models.*;
 import com.example.plantarium.MyApplication;
 
-@Database(entities = {User.class, Plant.class, PlaceMember.class, Watering.class, Place.class}, version = 31)
+@Database(entities = {User.class, Plant.class, PlaceMember.class, Watering.class, Place.class}, version = 36)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract PlaceDao placeDao();
     public abstract PlaceMemberDao placeMemberDao();
     public abstract PlantDao plantDao();
+    public abstract WateringDao wateringDao();
 }
 
 public class AppLocalDb{

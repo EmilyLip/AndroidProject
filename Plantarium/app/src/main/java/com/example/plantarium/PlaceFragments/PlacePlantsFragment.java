@@ -37,6 +37,10 @@ public class PlacePlantsFragment extends Fragment {
 
     RecyclerView plantsList;
     LinearLayoutManager layoutManager;
+    public PlantAdapter adapter;
+    private ProgressBar progressbarList;
+    public Plant currPlant = null;
+    public final static PlacePlantsFragment instance = new PlacePlantsFragment();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,14 +52,18 @@ public class PlacePlantsFragment extends Fragment {
         TextView placeName = view.findViewById(R.id.place_plants_place_name);
         CircleImageView placeImage = view.findViewById(R.id.place_plants_place_image);
         plantsList = view.findViewById(R.id.placef_plantslist);
-        ProgressBar progressBar = view.findViewById(R.id.listplant_progressBarImage);
+        ProgressBar progressBarImg = view.findViewById(R.id.listplant_progressBarImage);
         FloatingActionButton addPlantBtn = view.findViewById(R.id.fab_add_plant);
         TextView empty1 = view.findViewById(R.id.plants_list_empty1);
         TextView empty2 = view.findViewById(R.id.plants_list_empty2);
+        progressbarList = view.findViewById(R.id.plants_list_progressbar);
+        progressbarList.setVisibility(View.VISIBLE);
+        empty1.setVisibility(View.INVISIBLE);
+        empty2.setVisibility(View.INVISIBLE);
 
         placeName.setText(place.getName());
         placeImage.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBarImg.setVisibility(View.VISIBLE);
         if (place.getImageUrl() != null){
             Picasso.get().load(place.getImageUrl()).into(placeImage);
             placeImage.setVisibility(View.VISIBLE);
@@ -65,7 +73,20 @@ public class PlacePlantsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         plantsList.setLayoutManager(layoutManager);
         LiveData<List<Plant>> data = PlantModel.instance.getPlantsByPlaceId(place.getId());
-        PlantAdapter adapter = new PlantAdapter(data, getLayoutInflater());
+        adapter = new PlantAdapter(data, new PlantAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Plant plant = data.getValue().get(position);
+                instance.currPlant = plant;
+                Log.d("TAG","plant was clicked " + plant.getName());
+
+                NavController nav = Navigation.findNavController(view);
+                if (nav.getCurrentDestination().getId() == R.id.placePlantsFragment) {
+                    PlacePlantsFragmentDirections.ActionPlacePlantsToPlantWateringList action = PlacePlantsFragmentDirections.actionPlacePlantsToPlantWateringList(plant);
+                    nav.navigate(action);
+                }
+            }
+        });
         plantsList.setAdapter(adapter);
         plantsList.addItemDecoration(new MarginItemDecoration(40));
 
@@ -73,6 +94,7 @@ public class PlacePlantsFragment extends Fragment {
             @Override
             public void onChanged(List<Plant> plants) {
                 adapter.notifyDataSetChanged();
+                progressbarList.setVisibility(View.INVISIBLE);
 
                 if (plants != null && plants.size() > 0) {
                     empty1.setVisibility(View.INVISIBLE);
@@ -92,12 +114,16 @@ public class PlacePlantsFragment extends Fragment {
 
                 NavController nav = Navigation.findNavController(view);
                 if (nav.getCurrentDestination().getId() == R.id.placePlantsFragment) {
-                    PlacePlantsFragmentDirections.ActionPlacePlantsToAddPlantToPlace action = PlacePlantsFragmentDirections.actionPlacePlantsToAddPlantToPlace(place);
+                    PlacePlantsFragmentDirections.ActionPlacePlantsToAddPlantToPlace action = PlacePlantsFragmentDirections.actionPlacePlantsToAddPlantToPlace(place, null);
                     nav.navigate(action);
                 }
             }
         });
 
         return view;
+    }
+
+    public Plant getCurrPlant() {
+        return currPlant;
     }
 }
