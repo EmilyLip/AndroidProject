@@ -122,6 +122,9 @@
             android:name="plant"
             app:argType="com.example.plantarium.Models.Plant"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_addPlantToPlace_to_deletePlantDialog"
+            app:destination="@id/deletePlantDialog" />
     </fragment>
     <fragment
         android:id="@+id/plantWateringListFragment"
@@ -152,4 +155,17 @@
             app:argType="com.example.plantarium.Models.Watering"
             app:nullable="true" />
     </fragment>
+    <dialog
+        android:id="@+id/deletePlantDialog"
+        android:name="com.example.plantarium.PlaceFragments.deletePlantDialog"
+        android:label="fragment_delete_plant_dialog"
+        tools:layout="@layout/fragment_delete_plant_dialog" >
+        <argument
+            android:name="plant"
+            app:argType="com.example.plantarium.Models.Plant" />
+        <action
+            android:id="@+id/action_deletePlantDialog_pop"
+            app:popUpTo="@id/placePlantsFragment"
+            app:popUpToInclusive="false" />
+    </dialog>
 </navigation>

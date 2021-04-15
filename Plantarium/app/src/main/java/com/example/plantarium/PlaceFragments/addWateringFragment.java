@@ -42,6 +42,7 @@ import com.example.plantarium.Models.Watering;
 import com.example.plantarium.MyApplication;
 import com.example.plantarium.PlacesFragments.PlacesListFragment;
 import com.example.plantarium.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -57,6 +58,10 @@ import static android.app.Activity.RESULT_OK;
 
 public class addWateringFragment extends Fragment implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    private View view;
+    private Watering watering = null;
+    private Plant plant;
+    private WateringModel wateringModel = new WateringModel();
     private List<User> placeMembersUsers;
     private User wateringUser;
     private EditText wateringDateInput;
@@ -64,11 +69,8 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
     int hour, minute, day, month, year;
     private Button saveWateringBtn;
     private ImageView wateringImage;
-    private Watering watering = null;
-    private ProgressBar wateringProgressBar;
-    private Plant plant;
-    private WateringModel wateringModel = new WateringModel();
-    private View view;
+    private ProgressBar wateringProgressbar;
+    private Bitmap wateringLastImage;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -77,19 +79,21 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_add_watering, container, false);
         plant = addWateringFragmentArgs.fromBundle(getArguments()).getPlant();
+        watering = addWateringFragmentArgs.fromBundle(getArguments()).getWatering();
 
         TextView plantName = view.findViewById(R.id.add_watering_plant_name);
         Spinner userNameDropdown = view.findViewById(R.id.add_watering_user);
         wateringDateInput = view.findViewById(R.id.add_watering_date);
-        saveWateringBtn = (Button) view.findViewById(R.id.add_watering_save);
-        wateringProgressBar = view.findViewById(R.id.add_water_progressbar);
+        saveWateringBtn = (Button)view.findViewById(R.id.add_watering_save);
+        Button deleteWateringBtn = (Button) view.findViewById(R.id.add_watering_delete);
+        wateringProgressbar = view.findViewById(R.id.add_water_progressbar);
         wateringImage = view.findViewById(R.id.add_watering_image);
         ImageButton addImage = view.findViewById(R.id.add_watering_image_button);
 
         plantName.setText(plant.getName());
         wateringImage.setVisibility(View.INVISIBLE);
         saveWateringBtn.setEnabled(false);
-        wateringProgressBar.setVisibility(View.INVISIBLE);
+        wateringProgressbar.setVisibility(View.INVISIBLE);
 
         // Drop down users
         UserModel.instance.getAllPlaceMembersUser(PlacesListFragment.instance.getCurrPlace().getId())
@@ -103,6 +107,21 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     userNameDropdown.setAdapter(adapter);
                     userNameDropdown.setOnItemSelectedListener(addWateringFragment.this);
+
+                    // Edit mode = put last watering user
+                    if (watering != null && wateringUser == null) {
+
+                        wateringUser = placeMembersUsers.stream()
+                                .filter(user -> user.getId().equals(watering.getUserId()))
+                                .findAny()
+                                .orElse(null);
+
+                        userNameDropdown.setSelection(placeMembersUsers.indexOf(wateringUser));
+
+                        if (wateringUser != null) {
+                            Log.d("TAG", "watering user: " + wateringUser.fullname);
+                        }
+                    }
                 }
             }
         });
@@ -112,10 +131,15 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
         wateringDateInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
+                
+                Calendar cal = Calendar.getInstance();
+                if (wateringDate != null) {
+                    cal.setTime(wateringDate);
+                }
+                
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                int month = cal.get(Calendar.MONTH);
+                int year = cal.get(Calendar.YEAR);
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), addWateringFragment.this, year, month, day);
                 datePickerDialog.show();
@@ -129,14 +153,51 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
             }
         });
 
+        // EDIT MODE
+        if (watering != null){
+            // user in observe of list
+
+            // date
+            wateringDate = watering.getWateringDate();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(wateringDate);
+            year = cal.get(Calendar.YEAR);
+            month = cal.get(Calendar.MONTH);
+            day = cal.get(Calendar.DAY_OF_MONTH);
+            hour = cal.get(Calendar.HOUR_OF_DAY);
+            minute = cal.get(Calendar.MINUTE);
+            wateringDateInput.setText(String.format("%02d/%02d/%04d, %02d:%02d", day, month + 1, year, hour, minute));
+
+            Log.d("TAG", "watering date: " + wateringDate.toString());
+
+            // image
+            if (watering.getImageUrl() != null){
+                wateringImage.setVisibility(View.VISIBLE);
+                Picasso.get().load(watering.getImageUrl()).into(wateringImage);
+                wateringLastImage = ((BitmapDrawable) wateringImage.getDrawable()).getBitmap();
+            }
+
+            saveWateringBtn.setEnabled(true);
+        } else { // NEW Watering
+            saveWateringBtn.setEnabled(false);
+            deleteWateringBtn.setVisibility(View.INVISIBLE);
+        }
+
         saveWateringBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // save place to db
                 if(watering == null)
                     saveWatering();
-//                else
-//                    editWatering();
+                else
+                    editWatering();
+            }
+        });
+
+        deleteWateringBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteWatering();
             }
         });
 
@@ -167,9 +228,12 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
         month = _month;
         year = _year;
 
-        Calendar c = Calendar.getInstance();
-        int cHour = c.get(Calendar.HOUR_OF_DAY);
-        int cMinute = c.get(Calendar.MINUTE);
+        Calendar cal = Calendar.getInstance();
+        if (wateringDate != null) {
+            cal.setTime(wateringDate);
+        }
+        int cHour = cal.get(Calendar.HOUR_OF_DAY);
+        int cMinute = cal.get(Calendar.MINUTE);
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 getActivity(),
                 addWateringFragment.this,
@@ -266,7 +330,7 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
             Bitmap imageBitmap = ((BitmapDrawable) wateringImage.getDrawable()).getBitmap();
             watering = new Watering(plant.getId(), wateringUser.getId(), wateringDate);
 
-            wateringProgressBar.setVisibility(View.VISIBLE);
+            wateringProgressbar.setVisibility(View.VISIBLE);
             wateringModel.uploadWateringImage(imageBitmap, watering.getId(),
                     new WateringModel.UploadImageListenr() {
                         @Override
@@ -282,6 +346,57 @@ public class addWateringFragment extends Fragment implements AdapterView.OnItemS
                             });
                         }
                     });
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void editWatering() {
+        if (enableSaveButton()) {
+            Bitmap wateringNewImage = ((BitmapDrawable) wateringImage.getDrawable()).getBitmap();
+
+            watering.setUserId(wateringUser.getId());
+            watering.setWateringDate(wateringDate);
+
+            wateringProgressbar.setVisibility(View.VISIBLE);
+
+            // image changed so upload new one
+            if (!wateringLastImage.sameAs(wateringNewImage)) {
+                wateringModel.uploadWateringImage(wateringNewImage, watering.getId(),
+                        new WateringModel.UploadImageListenr() {
+                            @Override
+                            public void onComplete(String url) {
+                                // save to DB
+                                watering.setImageUrl(url);
+                                wateringModel.updateWatering(watering, new WateringModel.UpdateWateringListener() {
+                                    @Override
+                                    public void onComplete() {
+                                        Navigation.findNavController(view).popBackStack();
+                                    }
+                                });
+                            }
+                        });
+            } else {
+                // no change in image so dont upload again
+                wateringModel.updateWatering(watering, new WateringModel.UpdateWateringListener() {
+                    @Override
+                    public void onComplete() {
+                        Navigation.findNavController(view).popBackStack();
+                    }
+                });
+            }
+        }
+    }
+
+    private void deleteWatering() {
+        if (watering != null) {
+            wateringProgressbar.setVisibility(View.VISIBLE);
+            watering.setDeleted(1);
+            wateringModel.updateWatering(watering, new WateringModel.UpdateWateringListener() {
+                @Override
+                public void onComplete() {
+                    Navigation.findNavController(view).popBackStack();
+                }
+            });
         }
     }
 }

@@ -94,7 +94,6 @@ public class PlacesListFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Log.d("TAG","row was clicked " + viewModel.getUsersPlaceList().getValue().get(position).getName());
-                // TODO: Zohar you can navigate to place plants here
                 Place place = viewModel.getUsersPlaceList().getValue().get(position);
                 instance.currPlace = place;
                 NavController nav = Navigation.findNavController(view);

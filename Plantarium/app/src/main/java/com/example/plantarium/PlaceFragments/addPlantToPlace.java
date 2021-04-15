@@ -17,11 +17,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.example.plantarium.Models.DBModels.PlantModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.Plant;
+import com.example.plantarium.PlacesFragments.AddPlaceFragmentDirections;
+import com.example.plantarium.PlacesFragments.PlacesListFragment;
+import com.example.plantarium.PlacesFragments.PlacesListFragmentDirections;
 import com.example.plantarium.R;
 import com.squareup.picasso.Picasso;
 
@@ -33,14 +37,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class addPlantToPlace extends Fragment {
 
     View view;
+    Place place;
+    Plant plant;
     Button savePlantBtn;
     AppCompatEditText plantName;
     AppCompatEditText plantType;
     PlantModel plantModel = new PlantModel();
     ArrayList<CheckBox> wateringDaysCheckboxes = new ArrayList<CheckBox>();
     ProgressBar progressbar;
-    Place place;
-    Plant plant;
+
+    public final static addPlantToPlace instance = new addPlantToPlace();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +66,7 @@ public class addPlantToPlace extends Fragment {
         wateringDaysCheckboxes.add(5, (CheckBox)(view.findViewById(R.id.wateringDays_day5)));
         wateringDaysCheckboxes.add(6, (CheckBox)(view.findViewById(R.id.wateringDays_day6)));
         wateringDaysCheckboxes.add(7, (CheckBox)(view.findViewById(R.id.wateringDays_day7)));
+        Button deletePlantBtn = (Button) view.findViewById(R.id.add_plant_delete);
         progressbar = view.findViewById(R.id.add_plant_progressbar);
         progressbar.setVisibility(View.INVISIBLE);
 
@@ -101,6 +108,7 @@ public class addPlantToPlace extends Fragment {
             savePlantBtn.setEnabled(true);
         } else { // NEW PLANT
             savePlantBtn.setEnabled(false);
+            deletePlantBtn.setVisibility(View.INVISIBLE);
         }
 
         savePlantBtn.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +139,18 @@ public class addPlantToPlace extends Fragment {
                 }
                 else {
                     savePlantBtn.setEnabled(false);
+                }
+            }
+        });
+
+        deletePlantBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController nav = Navigation.findNavController(v);
+                if (nav.getCurrentDestination().getId() == R.id.addPlantToPlace) {
+                    addPlantToPlaceDirections.ActionAddPlantToPlaceToDeletePlantDialog action;
+                    action = addPlantToPlaceDirections.actionAddPlantToPlaceToDeletePlantDialog(plant);
+                    nav.navigate(action);
                 }
             }
         });
@@ -176,7 +196,6 @@ public class addPlantToPlace extends Fragment {
             @Override
             public void onComplete() {
                 if (nav.getCurrentDestination().getId() == R.id.addPlantToPlace) {
-                    //AddPlaceFragmentDirections.ActionAddPlaceToEmptyPlaceView action = AddPlaceFragmentDirections.actionAddPlaceToEmptyPlaceView(newPlace);
                     progressbar.setVisibility(View.INVISIBLE);
                     nav.popBackStack();
                 }
