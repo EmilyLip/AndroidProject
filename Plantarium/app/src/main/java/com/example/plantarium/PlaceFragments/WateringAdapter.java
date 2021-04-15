@@ -28,17 +28,23 @@ public class WateringAdapter extends RecyclerView.Adapter<WateringAdapter.Wateri
 
     LayoutInflater inflater;
     LiveData<List<Watering>> mData;
+    private OnItemClickListener mListener;
 
-    public WateringAdapter(LiveData<List<Watering>> data, LayoutInflater inflater) {
+    public WateringAdapter(LiveData<List<Watering>> data, LayoutInflater inflater, OnItemClickListener listener) {
         mData = data;
         this.inflater = inflater;
+        mListener = listener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
     }
 
     @NonNull
     @Override
     public WateringViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.row_watering, parent, false);
-        WateringViewHolder holder = new WateringViewHolder(view);
+        WateringViewHolder holder = new WateringViewHolder(view, mListener);
         return holder;
     }
 
@@ -58,7 +64,7 @@ public class WateringAdapter extends RecyclerView.Adapter<WateringAdapter.Wateri
         Locale loc = new Locale("he", "IL");
         String date = new SimpleDateFormat("dd/MM/yyyy").format(wateringDate);
         String day = new SimpleDateFormat("EEEE", loc).format(wateringDate);
-        holder.date.setText(String.format("%s, %s", day, date));
+        holder.date.setText(String.format("%s, %s", date, day));
 
         String time = new SimpleDateFormat("HH:mm", loc).format(wateringDate);
         holder.time.setText(String.format(", בשעה %s", time));
@@ -86,14 +92,31 @@ public class WateringAdapter extends RecyclerView.Adapter<WateringAdapter.Wateri
         return mData.getValue() != null ? mData.getValue().size() : 0;
     }
 
+    public interface OnItemClickListener {
+        void onClick(int position);
+    }
+
     static class WateringViewHolder extends RecyclerView.ViewHolder {
+        public OnItemClickListener listener;
         TextView date;
         TextView time;
         TextView username;
         ImageView waterImg;
 
-        public WateringViewHolder(@NonNull View view) {
+        public WateringViewHolder(@NonNull View view, final OnItemClickListener _listener) {
             super(view);
+            listener = _listener;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener !=  null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onClick(position);
+                        }
+                    }
+                }
+            });
 
             date = view.findViewById(R.id.row_watering_date);
             time = view.findViewById(R.id.row_watering_time);

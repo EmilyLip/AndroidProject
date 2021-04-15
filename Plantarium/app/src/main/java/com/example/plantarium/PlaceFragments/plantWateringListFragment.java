@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,20 @@ public class plantWateringListFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         wateringList.setLayoutManager(layoutManager);
         LiveData<List<Watering>> data = WateringModel.instance.getWateringByPlantId(PlacePlantsFragment.instance.getCurrPlant().getId());
-        WateringAdapter adapter = new WateringAdapter(data, getLayoutInflater());
+        WateringAdapter adapter = new WateringAdapter(data, getLayoutInflater(), new WateringAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Watering watering = data.getValue().get(position);
+                Log.d("TAG","watering was clicked " + watering.getWateringDate().toString());
+
+                NavController nav = Navigation.findNavController(view);
+                if (nav.getCurrentDestination().getId() == R.id.plantWateringListFragment) {
+                    plantWateringListFragmentDirections.ActionPlantWateringListToAddWatering action;
+                    action = plantWateringListFragmentDirections.actionPlantWateringListToAddWatering(plant, watering);
+                    nav.navigate(action);
+                }
+            }
+        });
         wateringList.setAdapter(adapter);
         wateringList.addItemDecoration(new WateringItemDecoration(7));
 

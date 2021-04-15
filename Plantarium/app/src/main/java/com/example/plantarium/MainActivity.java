@@ -46,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.fragment_navhost);
 
         NavigationView navigationView = findViewById(R.id.nav_controller_view_tag);
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-                    case  R.id.members_menu_item:
-                        // TODO: change and find way to pass args (maybe global place)
+                    case R.id.members_menu_item:
                         navController.navigate(R.id.placeMembersFragmnet);
                         return true;
-                    case  R.id.plants_menu_item:
+                    case R.id.plants_menu_item:
                         navController.navigate(R.id.placePlantsFragment);
                         return true;
                     default:
@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         visibilityNavElements(navController);
-
     }
 
     private void visibilityNavElements(NavController navController) {
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.logoutDialogFragment);
                 return true;
             case R.id.go_to_places:
-                navController.navigate(R.id.placesListFragment);
+                navController.popBackStack(R.id.placesListFragment, false);
                 return true;
             default:
                 return NavigationUI.onNavDestinationSelected(item,navController);

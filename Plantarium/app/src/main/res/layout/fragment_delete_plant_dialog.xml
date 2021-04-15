@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:background="#DEE8E7"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    tools:context=".PlacesFragments.leavePlaceDialog">
+
+    <ProgressBar
+        android:id="@+id/delete_plant_progressbar_dialog"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="108dp"
+        android:layout_height="79dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/delete_plant_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="למחוק את "
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#020202"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/delete_plant_cancel"
+        android:layout_width="140dp"
+        android:layout_height="70dp"
+        android:layout_gravity="left"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1"
+        android:text="לא, התחרטתי"
+        android:textColor="#1D1D1E"
+        android:textSize="14sp"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/delete_plant_confirm"
+        app:layout_constraintEnd_toStartOf="@+id/delete_plant_confirm"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/delete_plant_confirm"
+        app:layout_constraintVertical_bias="0.0"></Button>
+
+    <Button
+        android:id="@+id/delete_plant_confirm"
+        android:layout_width="140dp"
+        android:layout_height="70dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        android:text="כן לצערי :("
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:backgroundTint="#008290"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_plant_question"></Button>
+
+    <TextView
+        android:id="@+id/delete_plant_cancel_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="אפשר עוד להציל!"
+        app:layout_constraintEnd_toEndOf="@+id/delete_plant_cancel"
+        app:layout_constraintStart_toStartOf="@+id/delete_plant_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/delete_plant_cancel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

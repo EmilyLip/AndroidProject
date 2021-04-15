@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -16,6 +19,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.plantarium.MainActivity;
 import com.example.plantarium.Models.DBModels.PlantModel;
 import com.example.plantarium.Models.Place;
 import com.example.plantarium.Models.Plant;
@@ -28,11 +32,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PlacePlantsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PlacePlantsFragment extends Fragment {
 
     RecyclerView plantsList;
@@ -121,6 +120,19 @@ public class PlacePlantsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        NavController nav = Navigation.findNavController(view);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                nav.popBackStack(R.id.placesListFragment, false);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
     }
 
     public Plant getCurrPlant() {
