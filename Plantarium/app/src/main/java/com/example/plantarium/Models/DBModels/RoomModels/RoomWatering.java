@@ -22,9 +22,7 @@ public class RoomWatering {
         void onComplete(T data);
     }
 
-    // public Watering getPlantLastWatering(String plantId){
     public void getPlantLastWatering(String plantId, final WateringAsynchDaoListener<Watering> listener) {
-        // return AppLocalDb.db.wateringDao().getPlantLastWatering(plantId);
         class MyAsynchTask extends AsyncTask<String,String,Watering>{
             @Override
             protected Watering doInBackground(String... strings) {
