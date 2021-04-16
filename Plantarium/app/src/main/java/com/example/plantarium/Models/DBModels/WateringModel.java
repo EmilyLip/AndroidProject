@@ -60,9 +60,9 @@ public class WateringModel {
         return wateringsLive;
     }
 
-//    public LiveData<Watering> getPlantLastWatering(String plantId) {
-//        return modelSql.getPlantLastWatering(plantId);
-//    }
+    public void getPlantLastWatering(String plantId, RoomWatering.WateringAsynchDaoListener<Watering> listener) {
+        modelSql.getPlantLastWatering(plantId, listener);
+    }
 
     public interface  GetAllWateringListener {
         void onComplete();

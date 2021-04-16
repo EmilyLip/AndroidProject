@@ -4,9 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.plantarium.Models.DBModels.PlantModel;
 import com.example.plantarium.Models.DBModels.WateringModel;
-import com.example.plantarium.Models.Plant;
 import com.example.plantarium.Models.Watering;
 
 import java.util.List;
@@ -20,9 +18,29 @@ public class RoomWatering {
         return AppLocalDb.db.wateringDao().getWateringsByPlantId(plantId);
     }
 
-//    public LiveData<Watering> getPlantLastWatering(String plantId){
-//        return AppLocalDb.db.wateringDao().getPlantLastWatering(plantId);
-//    }
+    public interface WateringAsynchDaoListener<T>{
+        void onComplete(T data);
+    }
+
+    // public Watering getPlantLastWatering(String plantId){
+    public void getPlantLastWatering(String plantId, final WateringAsynchDaoListener<Watering> listener) {
+        // return AppLocalDb.db.wateringDao().getPlantLastWatering(plantId);
+        class MyAsynchTask extends AsyncTask<String,String,Watering>{
+            @Override
+            protected Watering doInBackground(String... strings) {
+                Watering wt = AppLocalDb.db.wateringDao().getPlantLastWatering(plantId);
+                return wt;
+            }
+            @Override
+            protected void onPostExecute(Watering wt) {
+                super.onPostExecute(wt);
+                listener.onComplete(wt);
+            }
+        }
+
+        MyAsynchTask task = new MyAsynchTask();
+        task.execute();
+    }
 
     public void addWatering(final Watering watering, final WateringModel.UpdateWateringListener listener){
         class MyAsyncTask extends AsyncTask {
