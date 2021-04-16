@@ -1,6 +1,7 @@
 package com.example.plantarium.PlaceFragments;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.plantarium.Models.DBModels.RoomModels.RoomWatering;
 import com.example.plantarium.Models.DBModels.WateringModel;
 import com.example.plantarium.Models.Plant;
 import com.example.plantarium.Models.Watering;
@@ -23,6 +25,8 @@ import com.example.plantarium.PlacesFragments.PlacesListFragmentDirections;
 import com.example.plantarium.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,18 +58,35 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantViewHol
     public void onBindViewHolder(@NonNull PlantViewHolder holder, int i) {
         Plant p = mData.getValue().get(i);
         holder.plantName.setText(p.getName());
-//        LiveData<Watering> lastWatering = WateringModel.instance.getPlantLastWatering(p.getId());
-//
-//        if (lastWatering != null) {
-//            if (lastWatering.getImageUrl() != null) {
-//                Picasso.get().load(lastWatering.getImageUrl()).into(holder.plantImg);
-//            }
-//
-//            holder.lastWatering.setText("לפני " + getDifferenceDays(lastWatering.getWateringDate(), new Date()) + " ימים");
-//        } else {
-            holder.plantImg.setImageResource(R.drawable.plant2);
-            holder.lastWatering.setText("לא הושקה עדיין");
-//        }
+
+        WateringModel.instance.getPlantLastWatering(p.getId(), new RoomWatering.WateringAsynchDaoListener<Watering>() {
+            @Override
+            public void onComplete(Watering lastWatering) {
+                if (lastWatering != null) {
+
+                    if (lastWatering.getImageUrl() != null) {
+                        Picasso.get().load(lastWatering.getImageUrl()).into(holder.plantImg);
+                    }
+
+                    int nowDays = (int) (new Date()).getTime() / (1000 * 60 * 60 * 24);
+                    int lastWateringDays = (int) lastWatering.getWateringDate().getTime() / (1000 * 60 * 60 * 24);
+
+                    int days = nowDays - lastWateringDays;
+
+                    if (days == 0) {
+                        holder.lastWatering.setText("היום");
+                    } else if (days == 1) {
+                        holder.lastWatering.setText("אתמול");
+                    } else {
+                        holder.lastWatering.setText("לפני " + days + " ימים");
+                    }
+
+                } else {
+                    holder.plantImg.setImageResource(R.drawable.plants_backgrounds);
+                    holder.lastWatering.setText("לא הושקה");
+                }
+            }
+        });
 
         holder.drop.setImageResource(R.drawable.drop);
         holder.itemView.setTag(i);

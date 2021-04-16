@@ -25,6 +25,6 @@ public interface WateringDao {
     @Query("select w.* from Watering w where w.plantId = :plant_id and w.deleted = 0 ORDER BY wateringDate DESC")
     LiveData<List<Watering>> getWateringsByPlantId(String plant_id);
 
-//    @Query("select w.* from Watering w where w.plantId = :plant_id and w.deleted = 0 ORDER BY wateringDate DESC")
-//    Watering getPlantLastWatering(String plant_id);
+    @Query("select w.* from Watering w where w.plantId = :plant_id and w.deleted = 0 ORDER BY wateringDate DESC")
+    Watering getPlantLastWatering(String plant_id);
 }
