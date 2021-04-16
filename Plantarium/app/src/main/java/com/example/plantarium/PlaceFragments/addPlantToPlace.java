@@ -92,18 +92,11 @@ public class addPlantToPlace extends Fragment {
             savePlantBtn.setText("שמור");
             plantName.setText(plant.getName());
             plantType.setText(plant.getType());
-            ArrayList<Integer> wateringDaysInt = plant.getWateringDays();
+            ArrayList<Double> wateringDays = plant.getWateringDays();
 
-            // TODO: fix java.lang.Double cannot be cast to java.lang.Integer
-            //Double[] wateringDaysArr = wateringDaysInt.toArray(new Double[0]);
-//            String s;
-//            String s1;
-//            for (int i = 1; i <= 7; i++) {
-//                s = wateringDaysInt.get(i).toString();
-//                s1 = "1.0";
-//                Log.d("TAG", s + ", " + s1);
-//                wateringDaysCheckboxes.get(i).setChecked(s1.equals(s));
-//            }
+            for (int i = 1; i <= 7; i++) {
+                wateringDaysCheckboxes.get(i).setChecked(wateringDays.get(i).intValue() == 1);
+            }
 
             savePlantBtn.setEnabled(true);
         } else { // NEW PLANT
@@ -160,13 +153,13 @@ public class addPlantToPlace extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void savePlant() {
-        ArrayList<Integer> wateringDaysInt = (ArrayList<Integer>) wateringDaysCheckboxes.stream().map(ch -> ch != null ? (ch.isChecked() ? 1 : 0) : 0).collect(Collectors.toList());
+        ArrayList<Double> wateringDays = (ArrayList<Double>) wateringDaysCheckboxes.stream().map(ch -> ch != null ? (ch.isChecked() ? 1.0 : 0.0) : 0.0).collect(Collectors.toList());
 
         Plant newPlant = new Plant(
                 plantName.getText().toString(),
                 plantType.getText().toString(),
                 place.getId(),
-                wateringDaysInt);
+                wateringDays);
 
         progressbar.setVisibility(View.VISIBLE);
         NavController nav = Navigation.findNavController(view);
@@ -184,7 +177,7 @@ public class addPlantToPlace extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void editPlant() {
-        ArrayList<Integer> wateringDaysInt = (ArrayList<Integer>) wateringDaysCheckboxes.stream().map(ch -> ch != null ? (ch.isChecked() ? 1 : 0) : 0).collect(Collectors.toList());
+        ArrayList<Double> wateringDaysInt = (ArrayList<Double>) wateringDaysCheckboxes.stream().map(ch -> ch != null ? (ch.isChecked() ? 1.0 : 0.0) : 0.0).collect(Collectors.toList());
 
         plant.setName(plantName.getText().toString());
         plant.setType(plantType.getText().toString());
