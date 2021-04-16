@@ -26,7 +26,7 @@ public class Plant implements Serializable {
     private String placeId;
     // if watering is on sunday array[1] = 1
     @TypeConverters(WateringDaysTypeConverter.class)
-    private ArrayList<Integer> wateringDays;
+    private ArrayList<Double> wateringDays;
     private Long lastUpdated;
     private int deleted; // 0 no 1 yes
 
@@ -34,7 +34,7 @@ public class Plant implements Serializable {
 
     }
 
-    public Plant(String _name, String _type, String _place_id, ArrayList<Integer> _watering_days) {
+    public Plant(String _name, String _type, String _place_id, ArrayList<Double> _watering_days) {
         UUID uuid = UUID.randomUUID();
         String uuidAsString = uuid.toString();
 
@@ -98,11 +98,11 @@ public class Plant implements Serializable {
         this.placeId = placeId;
     }
 
-    public ArrayList<Integer> getWateringDays() {
+    public ArrayList<Double> getWateringDays() {
         return wateringDays;
     }
 
-    public void setWateringDays(ArrayList<Integer> wateringDays) {
+    public void setWateringDays(ArrayList<Double> wateringDays) {
         this.wateringDays = wateringDays;
     }
 
@@ -117,16 +117,16 @@ public class Plant implements Serializable {
     public static class WateringDaysTypeConverter {
 
         @TypeConverter
-        public static ArrayList<Integer> fromString(String wateringDaysJson) {
+        public static ArrayList<Double> fromString(String wateringDaysJson) {
             if (wateringDaysJson == null) return null;
 
             Gson gson = new Gson();
-            ArrayList<Integer> wateringDays = gson.fromJson(wateringDaysJson, ArrayList.class);
+            ArrayList<Double> wateringDays = gson.fromJson(wateringDaysJson, ArrayList.class);
             return wateringDays;
         }
 
         @TypeConverter
-        public static String toString(ArrayList<Integer> wateringDays) {
+        public static String toString(ArrayList<Double> wateringDays) {
             if (wateringDays == null) return null;
 
             Gson gson = new Gson();
