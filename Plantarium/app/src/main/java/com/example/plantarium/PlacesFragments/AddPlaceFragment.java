@@ -71,6 +71,7 @@ public class AddPlaceFragment extends Fragment {
         if (place != null){
             Picasso.get().load(place.getImageUrl()).into(placeImage);
             placeName.setText(place.getName());
+            savePlaceBtn.setText("שמור");
         }
 
         ImageButton createPlaceBtn =  (ImageButton) view.findViewById(R.id.addImageButton);
@@ -135,6 +136,7 @@ public class AddPlaceFragment extends Fragment {
                             @Override
                             public void onComplete() {
                                 if (nav.getCurrentDestination().getId() == R.id.addPlaceFragment) {
+                                    PlacesListFragment.instance.currPlace = newPlace;
                                     AddPlaceFragmentDirections.ActionAddPlaceFragmentToPlacePlantsFragment action = AddPlaceFragmentDirections.actionAddPlaceFragmentToPlacePlantsFragment(newPlace);
                                     progressBar.setVisibility(View.INVISIBLE);
                                     nav.navigate(action);

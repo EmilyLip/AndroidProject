@@ -30,4 +30,9 @@ public class PlacesListViewModel extends ViewModel {
     LiveData<List<PlaceMember>> getPlaceMembersListList(){
         return placeMembers;
     }
+
+    public void refreshPlaces() {
+       PlaceModel.instance.refreshAllPlaces(null);
+       PlaceMemberModel.instance.refreshAllPlaceMembers(null);
+    }
 }

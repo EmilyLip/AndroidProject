@@ -1,6 +1,7 @@
 package com.example.plantarium.PlacesFragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.plantarium.HomePageFragments.LoginPageFragment;
 import com.example.plantarium.Models.DBModels.UserModel;
@@ -41,7 +43,7 @@ public class PlaceMembersFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     RecyclerView placeMembersList;
     public PlaceMembersAdapter adapter;
-    //LiveData<List<User>> placeMembersUsers;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +51,7 @@ public class PlaceMembersFragment extends Fragment {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_place_members, container, false);
         view.findViewById(R.id.progressBarPlaceMembers).setVisibility(View.VISIBLE);
-        //placeMembersUsers = UserModel.instance.getAllPlaceMembersUser(PlacesListFragment.instance.getCurrPlace().getId());
+        mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh_items_members);
 
         place = PlacesListFragment.instance.getCurrPlace();
         CircleImageView placeImage = view.findViewById(R.id.place_image);
@@ -74,7 +76,6 @@ public class PlaceMembersFragment extends Fragment {
                 }
             }
         });
-
 
         viewModel= new ViewModelProvider(this).get(PlaceMembersViewModel.class);
 
@@ -117,6 +118,7 @@ public class PlaceMembersFragment extends Fragment {
                     view.findViewById(R.id.progressBarPlaceMembers).setVisibility(View.INVISIBLE);
                     adapter.updateList(placeMembers);
                     view.findViewById(R.id.place_members_users_list_view).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.no_place_members_view).setVisibility(View.INVISIBLE);
                 }
             }
          });
@@ -131,6 +133,24 @@ public class PlaceMembersFragment extends Fragment {
                     PlaceMembersFragmentDirections.ActionEmptyPlaceViewToAddMemberToPlace action = PlaceMembersFragmentDirections.actionEmptyPlaceViewToAddMemberToPlace(place);
                     nav.navigate(action);
                 }
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to make your refresh action
+                // CallYourRefreshingMethod();
+                viewModel.refresh();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mSwipeRefreshLayout.isRefreshing()) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }, 1000);
             }
         });
 

@@ -9,7 +9,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,7 @@ public class PlacesListFragment extends Fragment {
     public PlacesListAdapter adapter;
     public Place currPlace = null;
     public final static PlacesListFragment instance = new PlacesListFragment();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +45,7 @@ public class PlacesListFragment extends Fragment {
         // Inflate the layout for this fragment
         view=  inflater.inflate(R.layout.fragment_places_list, container, false);
         viewModel= new ViewModelProvider(this).get(PlacesListViewModel.class);
+        mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh_items);
 
         placesList = view.findViewById(R.id.places_list_rv);
         placesList.setHasFixedSize(true);
@@ -114,6 +118,24 @@ public class PlacesListFragment extends Fragment {
                     PlacesListFragmentDirections.ActionPlacesListToAddPlace action = PlacesListFragmentDirections.actionPlacesListToAddPlace(null);
                     nav.navigate(action);
                 }
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to make your refresh action
+                // CallYourRefreshingMethod();
+                viewModel.refreshPlaces();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mSwipeRefreshLayout.isRefreshing()) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }, 1000);
             }
         });
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 
 import com.example.plantarium.Models.DBModels.PlaceMemberModel;
+import com.example.plantarium.Models.DBModels.PlaceModel;
 import com.example.plantarium.Models.DBModels.UserModel;
 import com.example.plantarium.Models.PlaceMember;
 import com.example.plantarium.Models.User;
@@ -28,5 +29,10 @@ public class PlaceMembersViewModel extends ViewModel {
     }
     LiveData<List<PlaceMember>> getPlaceMembersList(){
         return placeMembers;
+    }
+
+    public void refresh() {
+        UserModel.instance.refreshAllUsers(null);
+        PlaceMemberModel.instance.refreshAllPlaceMembers(null);
     }
 }
