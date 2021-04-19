@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.plantarium.Models.DBModels.RoomModels.RoomWatering;
 import com.example.plantarium.Models.DBModels.WateringModel;
 import com.example.plantarium.Models.Plant;
+import com.example.plantarium.Models.User;
 import com.example.plantarium.Models.Watering;
 import com.example.plantarium.MyApplication;
 import com.example.plantarium.PlacesFragments.PlacesListAdapter;
@@ -26,6 +27,7 @@ import com.example.plantarium.R;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;

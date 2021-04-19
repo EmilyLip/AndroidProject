@@ -56,10 +56,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/place_plants_place_image"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/place_plants_place_image">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/placef_plantslist"
             android:layout_width="match_parent"
