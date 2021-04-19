@@ -2,6 +2,7 @@ package com.example.plantarium.Models.DBModels;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -67,6 +68,8 @@ public class PlantModel {
                         lastU = p.getLastUpdated();
                     }
                 }
+                Log.d("TAG", "refreshed all plants");
+
                 //4. update the local last update date
                 sp.edit().putLong("lastUpdatedPlant", lastU).commit();
                 //5. return the updates data to the listeners

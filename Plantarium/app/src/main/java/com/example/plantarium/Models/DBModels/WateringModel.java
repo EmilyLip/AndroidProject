@@ -3,6 +3,7 @@ package com.example.plantarium.Models.DBModels;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -83,6 +84,8 @@ public class WateringModel {
                         lastU = w.getLastUpdated();
                     }
                 }
+
+                Log.d("TAG", "waterings refreshed");
                 //4. update the local last update date
                 sp.edit().putLong("lastUpdatedWatering", lastU).commit();
                 //5. return the updates data to the listeners
