@@ -23,6 +23,6 @@ public interface PlaceDao {
     @Delete
     void delete(Place place);
 
-    @Query("select p.* from Place p, PlaceMember pm where pm.placeId=p.id and pm.userEmail = :user_email and pm.deleted = 0")
+    @Query("select p.* from Place p, PlaceMember pm where pm.deleted = 0 and pm.placeId=p.id and pm.userEmail = :user_email")
     LiveData<List<Place>> getAllPlacesByUser(String user_email);
 }

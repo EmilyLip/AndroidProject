@@ -104,6 +104,7 @@ public class PlaceMembersFragment extends Fragment {
             @Override
             public void onChanged(List<User> placeMembers) {
                 boolean isAlone = true;
+                adapter.updateList(placeMembers);
                 for(User user: placeMembers){
                     if(!user.getEmail().equals(LoginPageFragment.getAccount().getEmail())){
                         isAlone = false;

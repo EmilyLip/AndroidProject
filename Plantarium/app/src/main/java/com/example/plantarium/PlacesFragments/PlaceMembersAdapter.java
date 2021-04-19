@@ -58,6 +58,8 @@ public class PlaceMembersAdapter extends RecyclerView.Adapter<PlaceMembersAdapte
 
         if(user.getImageUrl() != null && !user.getImageUrl().equals("")){
             Picasso.get().load(user.getImageUrl()).into(holder.userImage);
+        } else {
+            holder.userImage.setImageResource(R.drawable.user_placeholder);
         }
     }
 
