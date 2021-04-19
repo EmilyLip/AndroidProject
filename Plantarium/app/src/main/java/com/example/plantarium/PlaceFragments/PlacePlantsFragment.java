@@ -1,6 +1,7 @@
 package com.example.plantarium.PlaceFragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.plantarium.MainActivity;
 import com.example.plantarium.Models.DBModels.PlantModel;
@@ -40,6 +42,7 @@ public class PlacePlantsFragment extends Fragment {
     private ProgressBar progressbarList;
     public Plant currPlant = null;
     public final static PlacePlantsFragment instance = new PlacePlantsFragment();
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +51,7 @@ public class PlacePlantsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_place_listplants, container, false);
 
         Place place = PlacesListFragment.instance.getCurrPlace();
+        mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh_items_plants);
         TextView placeName = view.findViewById(R.id.place_plants_place_name);
         CircleImageView placeImage = view.findViewById(R.id.place_plants_place_image);
         plantsList = view.findViewById(R.id.placef_plantslist);
@@ -116,6 +120,23 @@ public class PlacePlantsFragment extends Fragment {
                     PlacePlantsFragmentDirections.ActionPlacePlantsToAddPlantToPlace action = PlacePlantsFragmentDirections.actionPlacePlantsToAddPlantToPlace(place, null);
                     nav.navigate(action);
                 }
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                PlantModel.instance.refreshAllPlants(null);
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mSwipeRefreshLayout.isRefreshing()) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }, 1000);
             }
         });
 

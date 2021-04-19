@@ -9,7 +9,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.plantarium.Models.DBModels.PlantModel;
 import com.example.plantarium.Models.DBModels.WateringModel;
 import com.example.plantarium.Models.Plant;
 import com.example.plantarium.Models.Watering;
@@ -29,18 +32,20 @@ import java.util.List;
 
 public class plantWateringListFragment extends Fragment {
 
-    RecyclerView wateringList;
-    LinearLayoutManager layoutManager;
-    private ProgressBar progressbarList;
     private View view;
+    RecyclerView wateringList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ProgressBar progressbarList;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_plant_watering_list, container, false);
-        Plant plant = plantWateringListFragmentArgs.fromBundle(getArguments()).getPlant();
 
+        Plant plant = plantWateringListFragmentArgs.fromBundle(getArguments()).getPlant();
+        mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh_items_waterings);
         TextView plantName = view.findViewById(R.id.wateringlist_plant_name);
         TextView empty1 = view.findViewById(R.id.watering_list_empty1);
         TextView empty2 = view.findViewById(R.id.watering_list_empty2);
@@ -56,7 +61,7 @@ public class plantWateringListFragment extends Fragment {
 
         wateringList = view.findViewById(R.id.plant_watering_list_recycle);
         wateringList.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         wateringList.setLayoutManager(layoutManager);
         LiveData<List<Watering>> data = WateringModel.instance.getWateringByPlantId(PlacePlantsFragment.instance.getCurrPlant().getId());
         WateringAdapter adapter = new WateringAdapter(data, getLayoutInflater(), new WateringAdapter.OnItemClickListener() {
@@ -127,6 +132,23 @@ public class plantWateringListFragment extends Fragment {
                             plant);
                     nav.navigate(action);
                 }
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                WateringModel.instance.refreshAllWaterings(null);
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mSwipeRefreshLayout.isRefreshing()) {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }, 1000);
             }
         });
 
