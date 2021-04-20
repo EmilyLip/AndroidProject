@@ -71,7 +71,7 @@ public class WateringModel {
     public void refreshAllWaterings(final GetAllWateringListener listener) {
         //1. get local last update date
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        long lastUpdated = sp.getLong("lastUpdatedWatering",0);
+        long lastUpdated = sp.getLong("lastUpdatedWateringClean",0);
         //2. get all updated record from firebase from the last update date
         modelFirebase.getAllWaterings(lastUpdated, new FirebaseWatering.GetAllWateringsListener() {
             @Override

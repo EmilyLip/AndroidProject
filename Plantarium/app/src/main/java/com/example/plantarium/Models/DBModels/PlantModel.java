@@ -55,7 +55,7 @@ public class PlantModel {
     public void refreshAllPlants(final GetAllPlantsListener listener) {
         //1. get local last update date
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        long lastUpdated = sp.getLong("lastUpdatedPlant",0);
+        long lastUpdated = sp.getLong("lastUpdatedPlantClean",0);
         //2. get all updated record from firebase from the last update date
         modelFirebase.getAllPlants(lastUpdated, new FirebasePlant.GetAllPlantsListener() {
             @Override

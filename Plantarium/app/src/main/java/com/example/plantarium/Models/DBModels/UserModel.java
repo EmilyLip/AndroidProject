@@ -63,7 +63,7 @@ public class UserModel {
     public void refreshAllUsers(final UserModel.GetAllUsersListener listener) {
         //1. get local last update date
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        long lastUpdated = sp.getLong("lastUpdatedUser",0);
+        long lastUpdated = sp.getLong("lastUpdatedUserClean",0);
         //2. get all updated record from firebase from the last update date
         modelFirebase.getAllUsers(lastUpdated, new FirebaseUser.GetAllUsersListener() {
             @Override

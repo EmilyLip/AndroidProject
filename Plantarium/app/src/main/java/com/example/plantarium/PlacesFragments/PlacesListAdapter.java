@@ -122,7 +122,6 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.My
             placeName = itemView.findViewById(R.id.place_name_title);
             editPlace = itemView.findViewById(R.id.edit_place);
             leavePlace = itemView.findViewById(R.id.leave_place);
-
         }
     }
 }

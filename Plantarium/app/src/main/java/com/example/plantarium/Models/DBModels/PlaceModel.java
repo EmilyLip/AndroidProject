@@ -82,7 +82,7 @@ public class PlaceModel {
                     }
                 }
                 //4. update the local last update date
-                sp.edit().putLong("lastUpdatedPlace", lastU).commit();
+                sp.edit().putLong("lastUpdatedPlaceClean", lastU).commit();
                 //5. return the updates data to the listeners
                 if(listener != null){
                     listener.onComplete();

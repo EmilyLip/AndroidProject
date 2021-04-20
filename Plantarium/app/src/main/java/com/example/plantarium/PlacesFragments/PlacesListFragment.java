@@ -90,6 +90,8 @@ public class PlacesListFragment extends Fragment {
                     if(!isFoundInPlace){
                         Navigation.findNavController(view).navigate(R.id.action_placesList_to_noPlaces);
                     }
+                } else if(placeMembers.size() == 0) {
+                    Navigation.findNavController(view).navigate(R.id.action_placesList_to_noPlaces);
                 }
             }
         });

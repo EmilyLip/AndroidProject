@@ -52,7 +52,7 @@ public class PlaceMemberModel {
                     }
                 }
                 //4. update the local last update date
-                sp.edit().putLong("lastUpdatedPlaceMember", lastU).commit();
+                sp.edit().putLong("lastUpdatedPlaceMemberClean", lastU).commit();
                 //5. return the updates data to the listeners
                 if(listener != null){
                     listener.onComplete();
