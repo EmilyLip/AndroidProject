@@ -25,6 +25,6 @@ public interface PlaceMemberDao {
     @Delete
     void delete(PlaceMember placeMember);
 
-    @Query("select * from PlaceMember pm where pm.placeId= :place_id and pm.userEmail = :user_email")
+    @Query("select * from PlaceMember pm where pm.placeId= :place_id and pm.userEmail = :user_email and pm.deleted=0")
     PlaceMember getPlaceMemberByPlaceAndUser(String user_email, String place_id);
 }

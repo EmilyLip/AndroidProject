@@ -103,24 +103,7 @@ public class PlaceMembersFragment extends Fragment {
         viewModel.getUsersPlaceList().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> placeMembers) {
-                boolean isAlone = true;
-                adapter.updateList(placeMembers);
-                for(User user: placeMembers){
-                    if(!user.getEmail().equals(LoginPageFragment.getAccount().getEmail())){
-                        isAlone = false;
-                    }
-                }
-                if(isAlone) {
-                    view.findViewById(R.id.progressBarPlaceMembers).setVisibility(View.INVISIBLE);
-                    view.findViewById(R.id.add_user_place_member_btn).setVisibility(View.INVISIBLE);
-                    view.findViewById(R.id.no_place_members_view).setVisibility(View.VISIBLE);
-                }
-                else {
-                    view.findViewById(R.id.progressBarPlaceMembers).setVisibility(View.INVISIBLE);
-                    adapter.updateList(placeMembers);
-                    view.findViewById(R.id.place_members_users_list_view).setVisibility(View.VISIBLE);
-                    view.findViewById(R.id.no_place_members_view).setVisibility(View.INVISIBLE);
-                }
+                updateUI(placeMembers);
             }
          });
 
@@ -143,6 +126,7 @@ public class PlaceMembersFragment extends Fragment {
                 // Your code to make your refresh action
                 // CallYourRefreshingMethod();
                 viewModel.refresh();
+                updateUI(viewModel.getUsersPlaceList().getValue());
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -169,5 +153,27 @@ public class PlaceMembersFragment extends Fragment {
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+    }
+
+    private void updateUI(List<User> placeMembers){
+        boolean isAlone = true;
+        adapter.updateList(placeMembers);
+        for(User user: placeMembers){
+            if(!user.getEmail().equals(LoginPageFragment.getAccount().getEmail())){
+                isAlone = false;
+            }
+        }
+        if(isAlone) {
+            view.findViewById(R.id.progressBarPlaceMembers).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.add_user_place_member_btn).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.no_place_members_view).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.place_members_users_list_view).setVisibility(View.INVISIBLE);
+        }
+        else {
+            view.findViewById(R.id.progressBarPlaceMembers).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.place_members_users_list_view).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.no_place_members_view).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.add_user_place_member_btn).setVisibility(View.VISIBLE);
+        }
     }
 }
