@@ -77,7 +77,7 @@ public class UserModel {
                     }
                 }
                 //4. update the local last update date
-                sp.edit().putLong("lastUpdatedUser", lastU).commit();
+                sp.edit().putLong("lastUpdatedUserClean", lastU).commit();
                 //5. return the updates data to the listeners
                 if(listener != null){
                     listener.onComplete();

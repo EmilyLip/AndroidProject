@@ -68,7 +68,7 @@ public class PlaceModel {
     public void refreshAllPlaces(final PlaceModel.GetAllPlacesListener listener) {
         //1. get local last update date
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        long lastUpdated = sp.getLong("lastUpdatedPlace",0);
+        long lastUpdated = sp.getLong("lastUpdatedPlaceClean",0);
         //2. get all updated record from firebase from the last update date
         modelFirebase.getAllPlaces(lastUpdated, new FirebasePlace.GetAllPlacesListener() {
             @Override

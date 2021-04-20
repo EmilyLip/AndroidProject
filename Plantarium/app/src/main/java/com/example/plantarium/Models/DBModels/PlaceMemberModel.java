@@ -38,7 +38,7 @@ public class PlaceMemberModel {
     public void refreshAllPlaceMembers(final GetAllPlaceMembersListener listener) {
         //1. get local last update date
         final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
-        long lastUpdated = sp.getLong("lastUpdatedPlaceMember",0);
+        long lastUpdated = sp.getLong("lastUpdatedPlaceMemberClean",0);
         //2. get all updated record from firebase from the last update date
         modelFirebase.getAllPlaceMembers(lastUpdated, new FirebasePlaceMember.GetAllPlaceMembersListener() {
             @Override

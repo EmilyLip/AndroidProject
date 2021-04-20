@@ -71,7 +71,7 @@ public class PlantModel {
                 Log.d("TAG", "refreshed all plants");
 
                 //4. update the local last update date
-                sp.edit().putLong("lastUpdatedPlant", lastU).commit();
+                sp.edit().putLong("lastUpdatedPlantClean", lastU).commit();
                 //5. return the updates data to the listeners
                 if(listener != null){
                     listener.onComplete();
